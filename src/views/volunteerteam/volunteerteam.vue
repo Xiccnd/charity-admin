@@ -30,7 +30,7 @@
                    <el-table-column prop="joinTime" label="加入时间" width="190" />
                 <el-table-column prop="list.operate" label="操作" >
             <template #default>
-             <el-button link type="primary" size="small" @click="handleClick()">踢出</el-button>
+             <el-button link type="primary" size="small"  @click="handleClick($event)">踢出</el-button>
              <el-button link type="primary" size="small">查看</el-button>
              </template>
                 </el-table-column>
@@ -95,7 +95,7 @@ const onSubmit = () => {
               })
 }
 const handleClick = () => {
-  console.log(multipleTable.value);
+  // console.log();
   //  const _selectData =ref.multipleTable;
   //     console.log(_selectData);
   // console.log(tableRowClassName)

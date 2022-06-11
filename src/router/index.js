@@ -170,6 +170,28 @@ export const asyncRoutes = [
       },
     ],
   },
+  {
+    path: '/userPage',
+    name: 'UserPage',
+    component: Layout,
+    meta: {
+      title: '个人中心',
+      icon: 'icon-link-cloud-faild',
+    },
+    children: [
+      {
+        path: '/information',
+        name: 'Information',
+        component: () => import('@/views/user/information.vue'),
+        meta: {
+          title: '个人中心',
+          icon: 'icon-link-cloud-faild',
+        },
+      },
+    ],
+  },
+
+
 ];
 
 const router = createRouter({
