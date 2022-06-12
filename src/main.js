@@ -13,6 +13,7 @@ import App from './App.vue';
 const app = createApp(App);
 
 
+
 import axios from 'axios'
 //请求根路径
 axios.defaults.baseURL = 'http://192.168.1.147:8088'

@@ -147,7 +147,7 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
       title:"志愿队伍",
-      icon: 'icon-people',
+      icon: 'icon-peoples',
     },
     children: [
       {
@@ -156,7 +156,7 @@ export const asyncRoutes = [
         component: () => import('../views/volunteerteam/volunteerteam.vue'),
         meta: {
           title: "正式队员",
-          icon: 'icon-people',
+          icon: 'icon-personal-collection',
         },
       },
       {

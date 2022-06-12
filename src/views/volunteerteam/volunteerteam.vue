@@ -19,29 +19,44 @@
   <div class="index-conntainer" style="margin-top:10px;">
     <div class="head-card" style="width:100%;">
       <div class="head-card-content" style="width:100%;">
-          <el-table :row-class-name="tableRowClassName" @row-click="onRowClick" 
-          :data="tableDatalist.list" ref="multipleTable"
+          <el-table :row-class-name="tableRowClassName" 
+          :cell-style="{textAlign:'center'}"
+          :header-cell-style="{textAlign:'center'}"
+          @row-click="onRowClick" 
+          :data="tableDatalist.list.slice((tableDatalist.currentPage-1)*tableDatalist.pageSize,tableDatalist.currentPage*tableDatalist.pageSize)" ref="multipleTable"
           stripe style="width: 100%;" >
-              <el-table-column prop="id" label="ID" width="80"/>
-              <el-table-column prop="name" label="姓名" width="80" />
-               <el-table-column prop="telephone" label="手机" width="150"/>
-                 <el-table-column prop="sex" label="性别" width="80" />
-                  <el-table-column prop="nativeplace" label="居住地" width="150" />
-                   <el-table-column prop="joinTime" label="加入时间" width="190" />
+              <el-table-column prop="id" label="ID" width="100"/>
+              <el-table-column prop="name" label="姓名" width="100" />
+               <el-table-column prop="telephone" label="手机" width="170"/>
+                 <el-table-column prop="sex" label="性别" width="100" />
+                  <el-table-column prop="nativeplace" label="居住地" width="170" />
+                   <el-table-column prop="joinTime" label="加入时间" width="210" />
                 <el-table-column prop="list.operate" label="操作" >
             <template #default>
-             <el-button link type="primary" size="small"  @click="handleClick($event)">踢出</el-button>
-             <el-button link type="primary" size="small">查看</el-button>
+             <el-button link type="danger" size="small"  @click="handleClick($event)">踢出</el-button>
+             <!-- <el-button link type="primary" size="small">查看</el-button> -->
              </template>
                 </el-table-column>
                
             </el-table>
+
+<div style="width: 300px;margin:20px auto;">
+  <el-pagination background
+          :current-page.sync="tableDatalist.currentPage"
+          @current-change="handlePageChange"
+          :page-size="3"
+          layout="total, prev, pager, next" 
+          :total="tableDatalist.list.length"
+          >
+      </el-pagination>
+</div>
+    
      </div>
     </div>
+  
+  
+  
   </div>
-  <div>
-  </div>
-
 </template>
 
 <script setup>
@@ -68,18 +83,20 @@ const formInline = reactive({
       })
 
 const tableDatalist = reactive({
-    currentRowIndex:1,
+     currentRowIndex:1,
+     pageSize:3,
+     currentPage:1,
      teamid:1,
      id:1,
      list:[{
               id:'',  
-              telephone: '2016-05-03',
-              name: 'Tom',
-              telephone:'',
+              telephone: '',
+              name: '',
               sex:'',
-              nativeplace: 'No. 189, Grove St, Los Angeles',
+              nativeplace: '',
               joinTime:''
-     }
+     },
+   
      
      ]
     
@@ -87,43 +104,59 @@ const tableDatalist = reactive({
 
 const onSubmit = () => {
   search(tableDatalist.teamid,formInline.id,formInline.name).then(res => {
-                console.log(res.data)  
+            console.log(tableDatalist.teamid)  
+            console.log(res.data)  
                  tableDatalist.list=res.data
               })
               .catch(err => {
                 console.error(err); 
               })
 }
-const handleClick = () => {
-  // console.log();
-  //  const _selectData =ref.multipleTable;
-  //     console.log(_selectData);
-  // console.log(tableRowClassName)
-  // console.log(tableDatalist.list[tableDatalist.currentRowIndex])
-  // console.log(tableDatalist.id)
-  //  del(tableDatalist.id).then(res => {
-  //             location. reload()
-  //             this.$router.go(0)
+const handleClick = (e) => {
+      var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText  
+    if(vid != '' && vid != null)  
+    console.log(vid);
+    else {
+      vid=e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText
+      console.log(vid);
+    }  
 
-  //             })
-  //             .catch(err => {
-  //               console.error(err); 
-  //             })
+  if (window.confirm("是否将该成员踢出队伍")==true){
+   del(vid).then(res => {
+      selectAll();
+              })
+              .catch(err => {
+                console.error(err); 
+              })
+    }
+    else{
+         console.log("你取消了操作")
+    }
+
+   
 }
 const selectAll = () => {
  tableData(tableDatalist.teamid).then(res => {
-                console.log(res.data)  
-                 tableDatalist.list=res.data
+                console.log(res.data) 
+                tableDatalist.list=res.data
+                console.log (tableDatalist.list.length)
+                 
               })
               .catch(err => {
                 console.error(err); 
               })
 }
-
+const handlePageChange = (pageNum) =>{
+      console.log(pageNum)
+      tableDatalist.currentPage=pageNum
+      // this.searchItem.limit = this.pageSize;
+      // this.searchItem.page = pageNum;
+      // this.currentPageNum = this.searchItem.page;
+      // this.search(this.searchItem);
+    }
 onMounted(() => {
      selectAll();
     });
-
 </script>
 <style lang="scss" scoped>  
   .index-conntainer {
