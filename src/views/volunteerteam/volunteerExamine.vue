@@ -108,7 +108,7 @@ const onSubmit = () => {
               })
 }
 const refusevo = (e) => {
-    var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText  
+    let vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText  
     if(vid != '' && vid != null)  
     console.log(vid);
     else {
