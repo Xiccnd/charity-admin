@@ -6,7 +6,7 @@
     <el-form-item label="志愿者ID">
       <el-input v-model="formInline.id" placeholder="请输入" />
     </el-form-item>
-     <el-form-item label="志愿者姓名">
+    <el-form-item label="志愿者姓名">
       <el-input v-model="formInline.name" placeholder="请输入" />
     </el-form-item>
     <el-form-item>
@@ -152,6 +152,7 @@ const agreevo = (e) => {
 }
 const selectAll = () => {
  cencortableData(tableDatalist.teamid).then(res => {
+                console.log(res) 
                 console.log(res.data) 
                 tableDatalist.list=res.data
                 console.log (tableDatalist.list.length)

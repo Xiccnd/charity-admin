@@ -107,40 +107,41 @@ export const asyncRoutes = [
       },
     ],
   },
-  {
-    path: '/errorPage',
-    name: 'ErrorPage',
-    component: Layout,
-    meta: {
-      title: global.t('route.errorPages'),
-      icon: 'icon-link-cloud-faild',
-    },
-    children: [
-      {
-        path: '/404Page',
-        name: '404Page',
-        component: () => import('@/views/errorPage/404.vue'),
-        meta: {
-          title: global.t('route.page404'),
-          icon: 'icon-link-cloud-faild',
-        },
-      },
-      {
-        path: '/401Page',
-        name: '401Page',
-        component: () => import('@/views/errorPage/401.vue'),
-        meta: {
-          title: global.t('route.page401'),
-          icon: 'icon-link-interrupt',
-        },
-      },
-    ],
-  },
+
   // {
   //   path: '*',
   //   redirect: '/404',
   //   hidden: true,
   // },
+  {
+    path: '/volunteerprogram',
+    name: 'Volunteerprogram',
+    component: Layout,
+    meta: {
+      title:"志愿项目",
+      icon: 'icon-peoples',
+    },
+    children: [
+      {
+        path: '/volunteerprogram',
+        name: 'Volunteerprogram',
+        component: () => import('../views/volunteerprogram/volunteerprogram.vue'),
+        meta: {
+          title: "已过审",
+          icon: 'icon-personal-collection',
+        },
+      },
+      {
+        path: '/programExamine',
+        name: 'ProgramExamine',
+        component: () => import('../views/volunteerprogram/test1.vue'),
+        meta: {
+          title: "待审批",
+          icon: 'icon-people',
+        },
+      },
+    ],
+  },
   {
     path: '/volunteerteam',
     name: 'Volunteerteam',
