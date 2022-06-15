@@ -1,4 +1,5 @@
 <template>
+<div id="main"></div>
   <div class="index-conntainer">
     <div class="head-card">
       <div class="avatar">
@@ -15,29 +16,37 @@
     </div>
     <div class="content">
       <el-row :gutter="10">
-        <el-col :xs="24" :sm="24" :md="24" :lg="16" :xl="16">
-        
-                
-          
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"> 
+          <el-card class="card" shadow="hover">
+            <template #header>
+              <h3 class="title">队伍信息</h3>
+            </template>
+            <description></description>
+            <collapse></collapse>
+          </el-card>
+        </el-col>
+      </el-row>
+      <el-row :gutter="10">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"> 
           <el-card class="card" shadow="hover">
             <template #header>
               <h3 class="title">待办事项</h3>
             </template>
-            
+            <Tab></Tab>
           </el-card>
         </el-col>
-
-        <el-col :xs="24" :sm="24" :md="24" :lg="8" :xl="8">
+      </el-row>
+       <el-row :gutter="10">
+         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <el-card class="card" shadow="hover">
             <template #header>
               <h3 class="title">数据统计</h3>
             </template>
-            
+              <chart></chart>
           </el-card>
-         
-         
         </el-col>
       </el-row>
+     
     </div>
   </div>
 </template>
@@ -52,13 +61,17 @@
   import { ref, computed, reactive, onBeforeMount } from 'vue';
 
   import { CountTo } from 'vue3-count-to';
-  import Echarts from '@/components/Echarts/index.vue';
-
+  import Description from 'views/index/descriptions/Description.vue';
+  import Collapse from 'views/index/descriptions/Collapse.vue';
+  import Tab from 'views/index/tabs/Tab.vue';
+  // import TabSecond from 'views/index/tabs/Tabs.vue';
+  import Chart from 'views/index/tabs/Chart.vue';
   import packpage from '../../../package.json';
   import { useI18n } from 'vue-i18n';
   import { getResouceList } from '@/api/index';
 
   import { useStore } from 'vuex';
+
   const store = useStore();
 
   const { t } = useI18n();
@@ -69,7 +82,6 @@
     orderList: [],
     skillList: [],
   });
-
   const hour = new Date().getHours();
   const thisTime =
     hour < 8
