@@ -35,117 +35,128 @@
 </template>
 
 <script>
-  export default {
-    name: 'Horizontal',
-  };
+export default {
+  name: "Horizontal"
+};
 </script>
 
 <script setup>
-  import { computed, ref } from 'vue';
-  import { setting } from '@/config/setting';
-  const { uniqueOpened } = setting;
+import { computed, ref } from "vue";
+import { setting } from "@/config/setting";
 
-  import { useStore } from 'vuex';
-  import { useRouter } from 'vue-router';
+const { uniqueOpened } = setting;
 
-  import { themeConfig } from '@/config/theme';
-  const { themeOptions } = themeConfig;
+import { useStore } from "vuex";
+import { useRouter } from "vue-router";
 
-  const whiteColors = ['#fff', '#ffffff', '#FFF', '#FFF', 'rgb(255, 255, 255)'];
+import { themeConfig } from "@/config/theme";
 
-  const uniqueOpenedFlag = ref(uniqueOpened);
-  const store = useStore();
-  const router = useRouter();
+const { themeOptions } = themeConfig;
 
-  const routes = computed(() => {
-    return store.getters['routes/routes'];
-  });
+const whiteColors = ["#fff", "#ffffff", "#FFF", "#FFF", "rgb(255, 255, 255)"];
 
-  const settings = computed(() => {
-    return store.getters['setting/settings'];
-  });
+const uniqueOpenedFlag = ref(uniqueOpened);
+const store = useStore();
+const router = useRouter();
 
-  const tag = computed(() => {
-    return store.getters['setting/tag'];
-  });
+const routes = computed(() => {
+  return store.getters["routes/routes"];
+});
 
-  const theme = computed(() => {
-    return store.getters['setting/theme'];
-  });
+const settings = computed(() => {
+  return store.getters["setting/settings"];
+});
 
-  const menuBgColor = computed(() => {
-    return themeOptions[theme.value].menuBgColor;
-  });
+const tag = computed(() => {
+  return store.getters["setting/tag"];
+});
 
-  const isBlack = computed(() => {
-    return whiteColors.indexOf(menuBgColor.value) === -1;
-  });
+const theme = computed(() => {
+  return store.getters["setting/theme"];
+});
 
-  const textColor = computed(() => {
-    return whiteColors.indexOf(menuBgColor.value) !== -1 ? '#333' : '#fff';
-  });
+const menuBgColor = computed(() => {
+  return themeOptions[theme.value].menuBgColor;
+});
 
-  const activeTextColor = computed(() => {
-    const mcolor = whiteColors.indexOf(menuBgColor.value) !== -1;
-    return mcolor ? theme : '#fff';
-  });
+const isBlack = computed(() => {
+  return whiteColors.indexOf(menuBgColor.value) === -1;
+});
 
-  const defaultActive = computed(() => {
-    const { fullPath } = router.currentRoute.value;
-    return fullPath || '/index';
-  });
+const textColor = computed(() => {
+  return whiteColors.indexOf(menuBgColor.value) !== -1 ? "#333" : "#fff";
+});
+
+const activeTextColor = computed(() => {
+  const mcolor = whiteColors.indexOf(menuBgColor.value) !== -1;
+  return mcolor ? theme : "#fff";
+});
+
+const defaultActive = computed(() => {
+  const { fullPath } = router.currentRoute.value;
+  return fullPath || "/index";
+});
 </script>
 
 <style lang="scss" scoped>
-  .horizontal-container {
-    position: relative;
-    align-items: center;
-    .head {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: $base-width;
-      transition: background-color $base-transition-time;
-      &-nav {
-        display: flex;
-        align-items: center;
-        justify-content: space-between;
-        width: 90%;
-      }
+.horizontal-container {
+  position: relative;
+  align-items: center;
 
-      .menu {
-        flex: 1;
-      }
-      &.fixed {
-        position: fixed;
-        top: 0;
-        right: 0;
-        left: 0;
-        z-index: 99;
-      }
-      .tag {
-        width: $base-width;
-        padding: 5px 5%;
-        margin-top: -1px;
-      }
+  .head {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: $base-width;
+    transition: background-color $base-transition-time;
+
+    &-nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 90%;
     }
-    .main {
-      width: calc(90% + 40px);
-      margin: 50px 20px 0 20px;
-      &[class='el-main main fixed istag'] {
-        margin-top: $base-main-fixed-top;
-      }
-      &[class='el-main main fixed'] {
-        margin-top: $base-main-vertical-fixed-notag-top;
-      }
-      &[class='el-main main'] {
-        margin-top: $base-main-notag-top;
-      }
+
+    .menu {
+      flex: 1;
     }
-    .is-black {
-      :deep(.icon-hover:hover) {
-        background-color: transparent;
-      }
+
+    &.fixed {
+      position: fixed;
+      top: 0;
+      right: 0;
+      left: 0;
+      z-index: 99;
+    }
+
+    .tag {
+      width: $base-width;
+      padding: 5px 5%;
+      margin-top: -1px;
     }
   }
+
+  .main {
+    width: calc(90% + 40px);
+    margin: 50px 20px 0 20px;
+
+    &[class='el-main main fixed istag'] {
+      margin-top: $base-main-fixed-top;
+    }
+
+    &[class='el-main main fixed'] {
+      margin-top: $base-main-vertical-fixed-notag-top;
+    }
+
+    &[class='el-main main'] {
+      margin-top: $base-main-notag-top;
+    }
+  }
+
+  .is-black {
+    :deep(.icon-hover:hover) {
+      background-color: transparent;
+    }
+  }
+}
 </style>

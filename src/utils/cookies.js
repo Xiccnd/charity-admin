@@ -1,6 +1,7 @@
-import { setting } from '@/config/setting';
+import { setting } from "@/config/setting";
+
 const { langKey, themeKey } = setting;
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 export function getLanguage() {
   return Cookies.get(langKey);

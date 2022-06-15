@@ -1,10 +1,8 @@
 $base-color-primary: #7e9cff;
-$--colors: 
-(
-    'primary': (
-        'base': $base-color-primary,
-    ),
-        
+$--colors: (
+  'primary': (
+    'base': $base-color-primary,
+  ),
 );
 
 @forward "element-plus/theme-chalk/src/common/var.scss" with

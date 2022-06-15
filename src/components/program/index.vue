@@ -1,4 +1,5 @@
 <template>
+
   <el-form
     ref="ruleFormRef"
     :model="ruleForm"
@@ -209,6 +210,7 @@ const options = Array.from({ length: 10000 }).map((_, idx) => ({
   value: `${idx + 1}`,
   label: `${idx + 1}`,
 }))
+
 
 
 </script>

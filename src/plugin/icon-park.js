@@ -7,7 +7,7 @@
  * @example <icon-user theme="outline" size="16" fill="#999" />
  * @example <el-icon :size="20"> <edit /> </el-icon>
  */
-import { install } from '@icon-park/vue-next/es/all';
+import { install } from "@icon-park/vue-next/es/all";
 // iconpark
 import {
   User,
@@ -57,9 +57,9 @@ import {
   ChartHistogram,
   MultiPictureCarousel,
   Theme,
-  Translate,
-} from '@icon-park/vue-next';
-import '@icon-park/vue-next/styles/index.css';
+  Translate
+} from "@icon-park/vue-next";
+import "@icon-park/vue-next/styles/index.css";
 // el-icon
 // 所需的组件
 export const components = [
@@ -110,12 +110,12 @@ export const components = [
   ChartHistogram,
   MultiPictureCarousel,
   Theme,
-  Translate,
+  Translate
 ];
 
-import SvgIcon from '@/components/SvgIcon/index.vue';
+import SvgIcon from "@/components/SvgIcon/index.vue";
 // 注册
 export default (app) => {
-  app.component('svg-icon', SvgIcon);
+  app.component("svg-icon", SvgIcon);
   install(app);
 };

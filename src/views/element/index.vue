@@ -4,7 +4,7 @@
       <template #descrition>
         Vue3-admin-element-template使用的是
         <a href="https://element-plus.gitee.io/#/zh-CN/component/installation" target="_blank"
-          >Element-Plus</a
+        >Element-Plus</a
         >
         UI组件库，以下是常用的组件
       </template>
@@ -24,7 +24,10 @@
       <el-button-group>
         <el-button type="primary" :icon="ArrowLeft">上一页</el-button>
         <el-button type="primary"
-          >下一页<el-icon class="el-icon--right"><ArrowRight /></el-icon>
+        >下一页
+          <el-icon class="el-icon--right">
+            <ArrowRight />
+          </el-icon>
         </el-button>
       </el-button-group>
       <el-button-group class="group">
@@ -54,8 +57,9 @@
       <el-checkbox v-model="checked2" label="备选项1"></el-checkbox>
       <el-checkbox-group class="group" v-model="checkbox">
         <el-checkbox-button v-for="city in cities" :label="city" :key="city">{{
-          city
-        }}</el-checkbox-button>
+            city
+          }}
+        </el-checkbox-button>
       </el-checkbox-group>
     </el-row>
     <Descrition :showDesc="false" :title="t('element.datePicker')" />
@@ -82,31 +86,34 @@
 </template>
 
 <script setup>
-  import { ArrowLeft, ArrowRight, Delete, Edit, Share } from '@element-plus/icons-vue';
-  import Descrition from '@/components/Descrition/index.vue';
-  import { ref, reactive } from 'vue';
-  import { useI18n } from 'vue-i18n';
-  const { t } = useI18n();
-  const cityOptions = ['上海', '北京', '广州', '深圳'];
-  const radio = ref(3);
-  const radio2 = ref('上海');
-  const checked1 = ref(true);
-  const checked2 = ref();
-  const checkbox = ref(['上海']);
-  const date = ref();
-  const dateTime = ref();
-  const cities = reactive(cityOptions);
+import { ArrowLeft, ArrowRight, Delete, Edit, Share } from "@element-plus/icons-vue";
+import Descrition from "@/components/Descrition/index.vue";
+import { ref, reactive } from "vue";
+import { useI18n } from "vue-i18n";
+
+const { t } = useI18n();
+const cityOptions = ["上海", "北京", "广州", "深圳"];
+const radio = ref(3);
+const radio2 = ref("上海");
+const checked1 = ref(true);
+const checked2 = ref();
+const checkbox = ref(["上海"]);
+const date = ref();
+const dateTime = ref();
+const cities = reactive(cityOptions);
 </script>
 
 <style lang="scss" scoped>
-  .element-container {
-    padding: $base-main-padding;
-    background-color: $base-color-white;
-    .row {
-      margin: 20px 0;
-    }
-    .group {
-      margin: 0 20px;
-    }
+.element-container {
+  padding: $base-main-padding;
+  background-color: $base-color-white;
+
+  .row {
+    margin: 20px 0;
   }
+
+  .group {
+    margin: 0 20px;
+  }
+}
 </style>

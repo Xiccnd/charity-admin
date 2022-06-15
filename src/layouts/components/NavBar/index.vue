@@ -26,63 +26,68 @@
 </template>
 
 <script>
-  export default {
-    name: 'NavBar',
-  };
+export default {
+  name: "NavBar"
+};
 </script>
 
 <script setup>
-  import { computed } from 'vue';
-  import { useStore } from 'vuex';
+import { computed } from "vue";
+import { useStore } from "vuex";
 
-  import { useI18n } from 'vue-i18n';
-  const { t } = useI18n();
+import { useI18n } from "vue-i18n";
 
-  const store = useStore();
+const { t } = useI18n();
 
-  const collapse = computed(() => {
-    return store.getters.collapse;
-  });
+const store = useStore();
 
-  const isBreadcrumb = computed(() => {
-    return store.getters['setting/isBreadcrumb'];
-  });
+const collapse = computed(() => {
+  return store.getters.collapse;
+});
 
-  const settings = computed(() => {
-    return store.getters['setting/settings'];
-  });
+const isBreadcrumb = computed(() => {
+  return store.getters["setting/isBreadcrumb"];
+});
 
-  const emit = defineEmits(['handleCollapse']);
+const settings = computed(() => {
+  return store.getters["setting/settings"];
+});
 
-  const handleCollapse = () => {
-    emit('handleCollapse');
-  };
+const emit = defineEmits(["handleCollapse"]);
+
+const handleCollapse = () => {
+  emit("handleCollapse");
+};
 </script>
 
 <style lang="scss" scoped>
-  .nav-bar-container {
-    position: relative;
+.nav-bar-container {
+  position: relative;
+  height: $base-nav-bar-height;
+  padding-right: $base-padding;
+  overflow: hidden;
+  user-select: none;
+  background: $base-color-white;
+  box-shadow: $base-box-shadow;
+
+  .left-panel {
+    display: flex;
+    align-items: center;
+    justify-items: center;
     height: $base-nav-bar-height;
-    padding-right: $base-padding;
-    overflow: hidden;
-    user-select: none;
-    background: $base-color-white;
-    box-shadow: $base-box-shadow;
-    .left-panel {
-      display: flex;
-      align-items: center;
-      justify-items: center;
-      height: $base-nav-bar-height;
-      .fold-unfold {
-        color: $base-color-gray;
-        cursor: pointer;
-      }
-      .fold {
-        padding: $base-padding-20-10;
-      }
-      :deep(.breadcrumb-container) {
-        margin-left: $base-margin-10;
-      }
+
+    .fold-unfold {
+      color: $base-color-gray;
+      cursor: pointer;
+    }
+
+    .fold {
+      padding: $base-padding-20-10;
+    }
+
+    :deep(.breadcrumb-container) {
+      margin-left: $base-margin-10;
     }
   }
+}
 </style>

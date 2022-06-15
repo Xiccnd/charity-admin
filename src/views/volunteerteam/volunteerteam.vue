@@ -3,63 +3,64 @@
     <div class="head-card">
       <div class="head-card-content">
         <el-form :inline="true" :model="formInline" class="demo-form-inline">
-    <el-form-item label="志愿者ID">
-      <el-input v-model="formInline.id" placeholder="请输入" />
-    </el-form-item>
-     <el-form-item label="志愿者姓名">
-      <el-input v-model="formInline.name" placeholder="请输入" />
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit">查询</el-button>
-    </el-form-item>
-  </el-form>
+          <el-form-item label="志愿者ID">
+            <el-input v-model="formInline.id" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item label="志愿者姓名">
+            <el-input v-model="formInline.name" placeholder="请输入" />
+          </el-form-item>
+          <el-form-item>
+            <el-button type="primary" @click="onSubmit">查询</el-button>
+          </el-form-item>
+        </el-form>
       </div>
     </div>
   </div>
   <div class="index-conntainer" style="margin-top:10px;">
     <div class="head-card" style="width:100%;">
       <div class="head-card-content" style="width:100%;">
-          <el-table :row-class-name="tableRowClassName" 
-          :cell-style="{textAlign:'center'}"
-          :header-cell-style="{textAlign:'center'}"
-          @row-click="onRowClick" 
-          :data="tableDatalist.list.slice((tableDatalist.currentPage-1)*tableDatalist.pageSize,tableDatalist.currentPage*tableDatalist.pageSize)" ref="multipleTable"
-          stripe style="width: 100%;" >
-              <el-table-column prop="id" label="ID" width="100"/>
-              <el-table-column prop="name" label="姓名" width="100" />
-               <el-table-column prop="telephone" label="手机" width="170"/>
-                 <el-table-column prop="sex" label="性别" width="100" />
-                  <el-table-column prop="nativeplace" label="居住地" width="170" />
-                   <el-table-column prop="joinTime" label="加入时间" width="210" />
-                <el-table-column prop="list.operate" label="操作" >
+        <el-table :row-class-name="tableRowClassName"
+                  :cell-style="{textAlign:'center'}"
+                  :header-cell-style="{textAlign:'center'}"
+                  @row-click="onRowClick"
+                  :data="tableDatalist.list.slice((tableDatalist.currentPage-1)*tableDatalist.pageSize,tableDatalist.currentPage*tableDatalist.pageSize)"
+                  ref="multipleTable"
+                  stripe style="width: 100%;">
+          <el-table-column prop="id" label="ID" width="100" />
+          <el-table-column prop="name" label="姓名" width="100" />
+          <el-table-column prop="telephone" label="手机" width="170" />
+          <el-table-column prop="sex" label="性别" width="100" />
+          <el-table-column prop="nativeplace" label="居住地" width="170" />
+          <el-table-column prop="joinTime" label="加入时间" width="210" />
+          <el-table-column prop="list.operate" label="操作">
             <template #default>
-             <el-button link type="danger" size="small"  @click="handleClick($event)">踢出</el-button>
-             <!-- <el-button link type="primary" size="small">查看</el-button> -->
-             </template>
-                </el-table-column>
-               
-            </el-table>
+              <el-button link type="danger" size="small" @click="handleClick($event)">踢出</el-button>
+              <!-- <el-button link type="primary" size="small">查看</el-button> -->
+            </template>
+          </el-table-column>
 
-<div style="width: 300px;margin:20px auto;">
-  <el-pagination background
-          :current-page.sync="tableDatalist.currentPage"
-          @current-change="handlePageChange"
-          :page-size="3"
-          layout="total, prev, pager, next" 
-          :total="tableDatalist.list.length"
+        </el-table>
+
+        <div style="width: 300px;margin:20px auto;">
+          <el-pagination background
+                         :current-page.sync="tableDatalist.currentPage"
+                         @current-change="handlePageChange"
+                         :page-size="3"
+                         layout="total, prev, pager, next"
+                         :total="tableDatalist.list.length"
           >
-      </el-pagination>
-</div>
-    
-     </div>
+          </el-pagination>
+        </div>
+
+      </div>
     </div>
-  
-  
-  
+
+
   </div>
 </template>
 
 <script setup>
+
   import store from '@/store';
   import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,getTeamid} from '@/utils/accessToken';
   import { ref, computed, reactive, onBeforeMount } from 'vue';
@@ -75,33 +76,33 @@ let multipleTable =ref(null)
 const tableRowClassName=({row, rowIndex}) =>{
     row.row_index = rowIndex;
 }
-
 const formInline = reactive({
-        name: '',
-        id: '',
-      })
+  name: "",
+  id: ""
+});
 
 const tableDatalist = reactive({
-     currentRowIndex:1,
-     pageSize:3,
-     currentPage:1,
-     teamid:1,
-     id:1,
-     list:[{
-              id:'',  
-              telephone: '',
-              name: '',
-              sex:'',
-              nativeplace: '',
-              joinTime:''
-     },
-   
-     
-     ]
-    
-})
+  currentRowIndex: 1,
+  pageSize: 3,
+  currentPage: 1,
+  teamid: 1,
+  id: 1,
+  list: [{
+    id: "",
+    telephone: "",
+    name: "",
+    sex: "",
+    nativeplace: "",
+    joinTime: ""
+  }
+
+
+  ]
+
+});
 
 const onSubmit = () => {
+
   search(tableDatalist.teamid,formInline.id,formInline.name).then(res => {
             console.log(tableDatalist.teamid)  
             console.log(res.data)  
@@ -162,21 +163,24 @@ onMounted(() => {
     });
     
 </script>
-<style lang="scss" scoped>  
-  .index-conntainer {
-    width: $base-width;
-    .head-card {
-      display: flex;
-      align-items: center;
-      padding: $base-main-padding;
-      background-color: $base-color-white;
-      &-content {
-        padding-left: 15px;
-        .desc {
-          color: $base-font-color;
-        }
+<style lang="scss" scoped>
+.index-conntainer {
+  width: $base-width;
+
+  .head-card {
+    display: flex;
+    align-items: center;
+    padding: $base-main-padding;
+    background-color: $base-color-white;
+
+    &-content {
+      padding-left: 15px;
+
+      .desc {
+        color: $base-font-color;
       }
     }
-   
   }
+
+}
 </style>

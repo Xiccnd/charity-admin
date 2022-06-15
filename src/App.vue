@@ -7,50 +7,51 @@
 </template>
 
 <script setup>
-  import { onMounted, computed, ref, watch } from 'vue';
-  import { useStore } from 'vuex';
+import { onMounted, computed, ref, watch } from "vue";
+import { useStore } from "vuex";
 
-  import i18n from '@/locales';
-  import { useRouter } from 'vue-router';
-  const locale = i18n.global.locale;
+import i18n from "@/locales";
+import { useRouter } from "vue-router";
 
-  const store = useStore();
+const locale = i18n.global.locale;
 
-  const localLanguage = computed(() => {
-    return i18n.global.messages[locale];
-  });
+const store = useStore();
 
-  const scroll = ref(null);
+const localLanguage = computed(() => {
+  return i18n.global.messages[locale];
+});
 
-  const router = useRouter();
-  onMounted(() => {
-    changeBodyWidth();
-    window.addEventListener('resize', changeResize);
-  });
+const scroll = ref(null);
 
-  watch(
-    () => router.currentRoute.value,
-    () => {
-      scroll.value.setScrollTop(0);
-    }
-  );
+const router = useRouter();
+onMounted(() => {
+  changeBodyWidth();
+  window.addEventListener("resize", changeResize);
+});
 
-  const changeBodyWidth = () => {
-    const flag = document.body.getBoundingClientRect().width - 1 < 992;
-    store.dispatch('setting/changeMobile', flag);
-  };
+watch(
+  () => router.currentRoute.value,
+  () => {
+    scroll.value.setScrollTop(0);
+  }
+);
 
-  const changeResize = () => {
-    changeBodyWidth();
-  };
+const changeBodyWidth = () => {
+  const flag = document.body.getBoundingClientRect().width - 1 < 992;
+  store.dispatch("setting/changeMobile", flag);
+};
+
+const changeResize = () => {
+  changeBodyWidth();
+};
 </script>
 
 <style lang="scss">
-  #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    font-size: $base-font-size-default;
-    color: #2c3e50;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-  }
+#app {
+  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-size: $base-font-size-default;
+  color: #2c3e50;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 </style>
