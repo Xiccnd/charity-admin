@@ -21,19 +21,12 @@
       </div>
 
  <el-dialog v-model="dialogFormVisible" title="项目详情" 
- @close="resetForm('form')"
+ @close="resetForm('ruleForm')"
  :close-on-click-modal="false"
-      :close-on-press-escape="false">
-    <el-form :model="form" ref="refform">
-      <el-form-item label="项目名称" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
-      </el-form-item>
-      <el-form-item label="Zones" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="Please select a zone">
-          <el-option label="Zone No.1" value="shanghai" />
-          <el-option label="Zone No.2" value="beijing" />
-        </el-select>
-      </el-form-item>
+      :close-on-press-escape="false"
+      width="1100px" top="10px">
+    <el-form :model="form">
+      <Addform ref="addform" v-model:ruleForm="ruleForm" v-model="ruleForm"></Addform>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
@@ -98,7 +91,7 @@
 <script setup>
   import { ref, computed, reactive, onBeforeMount } from 'vue';
   import { CountTo } from 'vue3-count-to';
-  import addform from '@/components/program/index.vue';
+  import Addform from '@/components/program/index.vue';
   import packpage from '../../../package.json';
   import { useI18n } from 'vue-i18n';
   import { getResouceList } from '@/api/index';
@@ -106,28 +99,38 @@
   import { method } from 'lodash-unified';
   import { tableData,search} from '@/api/program';
   import { ElMessage, ElMessageBox } from 'element-plus'
-const dialogFormVisible = ref(false)
+  components: {
+    Addform
+  }
 const refform = ref(false)
+const dialogFormVisible = ref(false)
+const addform = ref(false)
 const formLabelWidth = '140px'
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+const ruleForm = reactive({
+pname:'',
+location:'',
+releaseDate:'',
+projectDate:'',
+recruitDate:'',
+serviceObject:'',
+volunteerUpport:'',
+serviceDescription:'',
+projectDetails:'',
+postDesc:'',
+postCondition:'',
+postName:'',
+targetNum:'',
+type: [],
 })
+
 const submitpro = () =>{
-  console.log(form.name)
-
-
-
+  console.log(addform.value)
+  // addform.value.handleClose()
+  console.log(ruleForm.pname)
 }
 const resetForm = () =>{
-    Object.keys(form).map(key => {
-      delete form[key]
+    Object.keys(ruleForm).map(key => {
+      delete ruleForm[key]
     })
 }
 
@@ -209,6 +212,14 @@ onMounted(() => {
     });
 </script>
 <style lang="scss" scoped>  
+.el-dialog {
+    .el-form {
+      max-height: 500px !important;
+      min-height: 50px;
+      overflow-y: auto;
+    }
+  }
+
 .el-button--text {
   margin-right: 15px;
 }

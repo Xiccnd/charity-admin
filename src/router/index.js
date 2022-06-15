@@ -134,7 +134,7 @@ export const asyncRoutes = [
       {
         path: '/programExamine',
         name: 'ProgramExamine',
-        component: () => import('../views/volunteerprogram/test1.vue'),
+        component: () => import('../views/volunteerprogram/programExamine.vue'),
         meta: {
           title: "待审批",
           icon: 'icon-people',

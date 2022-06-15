@@ -1,43 +1,213 @@
 <template>
- <el-dialog v-model="dialogFormVisible" title="Shipping address">
-    <el-form :model="form">
-      <el-form-item label="Promotion name" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
-      </el-form-item>
-      <el-form-item label="Zones" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="Please select a zone">
-          <el-option label="Zone No.1" value="shanghai" />
-          <el-option label="Zone No.2" value="beijing" />
-        </el-select>
-      </el-form-item>
-    </el-form>
-    <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false"
-          >Confirm</el-button
-        >
-      </span>
-    </template>
-  </el-dialog>
+  <el-form
+    ref="ruleFormRef"
+    :model="ruleForm"
+    :rules="rules"
+    label-width="120px"
+    class="demo-ruleForm"
+    :size="formSize"
+    status-icon
+  >
+    <el-form-item label="项目名称" prop="pname">
+      <el-input v-model="ruleForm.pname" />
+    </el-form-item>
+
+    <el-form-item label="项目地点" prop="location">
+      <el-input v-model="ruleForm.location" />
+    </el-form-item>
+    <el-form-item label="服务对象" prop="serviceObject">
+      <el-input v-model="ruleForm.serviceObject" />
+    </el-form-item>
+    <el-form-item label="志愿者保障" prop="volunteerUpport">
+      <el-input v-model="ruleForm.volunteerUpport" />
+    </el-form-item>
+    <el-form-item label="服务时间描述" prop="serviceDescription">
+      <el-input v-model="ruleForm.serviceDescription" type="textarea" />
+    </el-form-item>
+    
+    <el-form-item label="招募日期" required>
+      <el-col :span="11">
+        <el-form-item prop="recruitDate">
+          <el-date-picker
+            v-model="ruleForm.recruitDate"
+            type="date"
+            label="选择日期"
+            placeholder="选择日期"
+            style="width: 100%"
+          />
+        </el-form-item>
+      </el-col>
+      <el-col class="text-center" :span="2">
+        <span class="text-gray-500" style="margin-left:5px">项目日期</span>
+      </el-col>
+      <el-col :span="11">
+        <el-form-item prop="projectDate">
+          <el-date-picker
+            type="date"
+            v-model="ruleForm.projectDate"
+            label="选择日期"
+            placeholder="选择日期"
+            style="width: 100%"
+          />
+        </el-form-item>
+      </el-col>
+    </el-form-item>
+
+    <el-form-item label="岗位名称" prop="postName">
+      <el-input v-model="ruleForm.postName" />
+    </el-form-item>
+     <el-form-item label="岗位条件" prop="postCondition">
+      <el-input v-model="ruleForm.postCondition" />
+    </el-form-item>
+    <el-form-item label="岗位描述" prop="postDesc">
+      <el-input v-model="ruleForm.postDesc" type="textarea" />
+    </el-form-item>
+    <el-form-item label="岗位计划招募数" prop="targetNum">
+      <el-select-v2
+        v-model="ruleForm.targetNum"
+        placeholder="选择人数"
+        :options="options"
+        v-on:change="fun(ruleForm.targetNum)"
+      />
+    </el-form-item>
+
+
+    <el-form-item label="服务类别" prop="type">
+      <el-checkbox-group v-model="ruleForm.type">
+        <el-checkbox label="Online activities" name="type" />
+        <el-checkbox label="Promotion activities" name="type" />
+        <el-checkbox label="Offline activities" name="type" />
+        <el-checkbox label="Simple brand exposure" name="type" />
+      </el-checkbox-group>
+    </el-form-item>
+
+    <el-form-item label="项目详情" prop="projectDetails">
+      <el-input v-model="ruleForm.projectDetails" type="textarea" />
+    </el-form-item>
+    <el-form-item>
+      <el-button type="primary" @click="submitForm(ruleFormRef)"
+        >Create</el-button
+      >
+      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
+        <el-button @click="handleClose">Cancel</el-button>
+    </el-form-item>
+  </el-form>
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
+import type { FormInstance, FormRules } from 'element-plus'
 
-// do not use same name with ref
-const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
-  delivery: false,
-  type: [],
-  resource: '',
-  desc: '',
+const formSize = ref('default')
+const ruleFormRef = ref<FormInstance>()
+const ruleForm = reactive({
+pname:'',
+location:'',
+releaseDate:'',
+projectDate:'',
+recruitDate:'',
+serviceObject:'',
+volunteerUpport:'',
+serviceDescription:'',
+projectDetails:'',
+postDesc:'',
+postCondition:'',
+postName:'',
+targetNum:'',
+type: [],
 })
 
-const onSubmit = () => {
-  console.log('submit!')
+const fun = (count) =>{
+console.log(count)
 }
+const rules = reactive<FormRules>({
+postDesc: [
+    { required: true, message: '请输入岗位描述', trigger: 'blur' },
+  ],
+  postCondition: [
+    { required: true, message: '请输入岗位条件', trigger: 'blur' },
+  ],
+  postName: [
+    { required: true, message: '请输入岗位名称', trigger: 'blur' },
+  ],
+  targetNum: [
+    { required: true, message: '请输入岗位计划招募数', trigger: 'blur' },
+  ],
+
+releaseDate: [
+    { required: true, message: '请输入发布日期', trigger: 'blur' },
+  ],
+  recruitDate: [
+    { required: true, message: '请输入招募日期', trigger: 'blur' },
+  ],
+  projectDate: [
+    { required: true, message: '请输入项目日期', trigger: 'blur' },
+  ],
+  serviceObject: [
+    { required: true, message: '请输入服务对象', trigger: 'blur' },
+  ],
+  volunteerUpport: [
+    { required: true, message: '请输入志愿者保障', trigger: 'blur' },
+  ],
+  serviceDescription: [
+    { required: true, message: '请输入服务时间描述', trigger: 'blur' },
+  ],
+projectDetails: [
+    { required: true, message: '请输入项目详情', trigger: 'blur' },
+  ],
+pname: [
+    { required: true, message: '请输入项目名称', trigger: 'blur' },
+  ],
+  location: [
+    { required: true, message: '请输入项目地点', trigger: 'blur' },
+  ],
+  // name: [
+  //   { required: true, message: 'Please input Activity name', trigger: 'blur' },
+  //   { min: 3, max: 5, message: 'Length should be 3 to 5', trigger: 'blur' },
+  // ],
+  type: [
+    {
+      type: 'array',
+      required: true,
+      message: '请选择至少一个服务类别',
+      trigger: 'change',
+    },
+  ],
+})
+
+const submitForm = async (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  await formEl.validate((valid, fields) => {
+    if (valid) {
+    console.log(ruleForm)
+    
+    Object.keys(ruleForm).map(key => {
+    delete ruleForm[key]
+    })
+    } else {
+      console.log('error submit!', fields)
+      alert("请完善相关信息")
+    }
+  })
+}
+
+const emits = defineEmits(['update:ruleForm'])
+ 
+//关闭的点击事件
+  const handleClose = () => {
+  console.log(1111111)
+  emits('update:ruleForm', false)
+
+  }
+
+const resetForm = (formEl: FormInstance | undefined) => {
+  if (!formEl) return
+  formEl.resetFields()
+}
+const options = Array.from({ length: 10000 }).map((_, idx) => ({
+  value: `${idx + 1}`,
+  label: `${idx + 1}`,
+}))
+
+
 </script>
