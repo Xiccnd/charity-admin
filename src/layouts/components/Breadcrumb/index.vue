@@ -15,32 +15,35 @@
 </template>
 
 <script>
-  export default {
-    name: 'Breadcrumb',
-  };
+export default {
+  name: "Breadcrumb"
+};
 </script>
 
 <script setup>
-  import { computed } from 'vue';
-  import { useRouter } from 'vue-router';
-  const router = useRouter();
-  let list = computed(() => {
-    const { matched } = router.currentRoute.value;
-    return matched.filter((item) => item.name && item.meta.title);
-  });
+import { computed } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+let list = computed(() => {
+  const { matched } = router.currentRoute.value;
+  return matched.filter((item) => item.name && item.meta.title);
+});
 </script>
 
 <style lang="scss" scoped>
-  .breadcrumb-container {
-    display: flex;
+.breadcrumb-container {
+  display: flex;
+  align-items: center;
+
+  :deep(.el-breadcrumb__inner, .el-breadcrumb__item) {
+    display: inline-flex;
     align-items: center;
-    :deep(.el-breadcrumb__inner, .el-breadcrumb__item) {
-      display: inline-flex;
-      align-items: center;
-      margin: 1px;
-    }
-    .menu-icon {
-      padding-right: 5px;
-    }
+    margin: 1px;
   }
+
+  .menu-icon {
+    padding-right: 5px;
+  }
+}
 </style>

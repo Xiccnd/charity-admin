@@ -9,11 +9,11 @@
       </el-col>
       <el-col :xs="24" :sm="24" :md="10" :lg="10" :xl="10">
         <div class="error-content">
-          <h2 class="error-title">{{ t('errorPages.title') }}</h2>
+          <h2 class="error-title">{{ t("errorPages.title") }}</h2>
           <h3>{{ title }}</h3>
           <p class="desc"> {{ msg }} </p>
           <div class="btn">
-            <el-button type="primary" @click="handleBack">{{ t('errorPages.btn') }}</el-button>
+            <el-button type="primary" @click="handleBack">{{ t("errorPages.btn") }}</el-button>
           </div>
         </div>
       </el-col>
@@ -22,73 +22,82 @@
 </template>
 
 <script>
-  import { useRouter } from 'vue-router';
-  import { useI18n } from 'vue-i18n';
-  export default {
-    props: {
-      src: {
-        type: String,
-        default: '',
-      },
-      type: {
-        type: String,
-        default: '',
-      },
-      title: {
-        type: String,
-        default: '',
-      },
-      msg: {
-        type: String,
-        default: '',
-      },
+import { useRouter } from "vue-router";
+import { useI18n } from "vue-i18n";
+
+export default {
+  props: {
+    src: {
+      type: String,
+      default: ""
     },
-    setup() {
-      const { t } = useI18n();
-      const router = useRouter();
-      const handleBack = () => {
-        router.replace('/');
-      };
-      return {
-        t,
-        handleBack,
-      };
+    type: {
+      type: String,
+      default: ""
     },
-  };
+    title: {
+      type: String,
+      default: ""
+    },
+    msg: {
+      type: String,
+      default: ""
+    }
+  },
+  setup() {
+    const { t } = useI18n();
+    const router = useRouter();
+    const handleBack = () => {
+      router.replace("/");
+    };
+    return {
+      t,
+      handleBack
+    };
+  }
+};
 </script>
 
 <style lang="scss" scoped>
-  .errorPage-container {
-    display: flex;
-    align-items: center;
-    padding: $base-main-padding;
-    background-color: $base-color-white;
-    .error-row {
-      flex: 1;
-      justify-content: center;
-      .error-col {
-        text-align: center;
+.errorPage-container {
+  display: flex;
+  align-items: center;
+  padding: $base-main-padding;
+  background-color: $base-color-white;
+
+  .error-row {
+    flex: 1;
+    justify-content: center;
+
+    .error-col {
+      text-align: center;
+    }
+
+    .error-img {
+      width: 100%;
+
+      .img {
+        width: 80%;
       }
-      .error-img {
-        width: 100%;
-        .img {
-          width: 80%;
-        }
+    }
+
+    .error-content {
+      padding: 40px 20px;
+
+      .error-title {
+        font-size: 36px;
+        color: $base-color-primary;
       }
-      .error-content {
-        padding: 40px 20px;
-        .error-title {
-          font-size: 36px;
-          color: $base-color-primary;
-        }
-        .desc {
-          width: 290px;
-          line-height: 1.5;
-        }
-        .btn {
-          margin: 20px 0;
-        }
+
+      .desc {
+        width: 290px;
+        line-height: 1.5;
+      }
+
+      .btn {
+        margin: 20px 0;
       }
     }
   }
+}
 </style>

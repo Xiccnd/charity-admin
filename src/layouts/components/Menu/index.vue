@@ -26,99 +26,102 @@
 </template>
 
 <script>
-  export default {
-    name: 'Menu',
-  };
+export default {
+  name: "Menu"
+};
 </script>
 
 <script setup>
-  import { computed, ref } from 'vue';
-  import { useRouter } from 'vue-router';
-  import { useStore } from 'vuex';
+import { computed, ref } from "vue";
+import { useRouter } from "vue-router";
+import { useStore } from "vuex";
 
-  import { setting } from '@/config/setting';
-  const { defaultOpeneds, uniqueOpened } = setting;
+import { setting } from "@/config/setting";
 
-  import { themeConfig } from '@/config/theme';
-  const { themeOptions } = themeConfig;
+const { defaultOpeneds, uniqueOpened } = setting;
 
-  const whiteColors = ['#fff', '#ffffff', '#FFF', '#FFF', 'rgb(255, 255, 255)'];
+import { themeConfig } from "@/config/theme";
 
-  defineProps({
-    isCollapse: {
-      type: Boolean,
-      default: false,
-    },
-    mode: {
-      type: String,
-      default: 'vertical',
-    },
-  });
+const { themeOptions } = themeConfig;
 
-  const uniqueOpenedFlag = ref(uniqueOpened);
+const whiteColors = ["#fff", "#ffffff", "#FFF", "#FFF", "rgb(255, 255, 255)"];
 
-  const store = useStore();
-  const router = useRouter();
+defineProps({
+  isCollapse: {
+    type: Boolean,
+    default: false
+  },
+  mode: {
+    type: String,
+    default: "vertical"
+  }
+});
 
-  const theme = computed(() => {
-    return store.getters['setting/theme'];
-  });
+const uniqueOpenedFlag = ref(uniqueOpened);
 
-  const menuBgColor = computed(() => {
-    return themeOptions[theme.value].menuBgColor;
-  });
+const store = useStore();
+const router = useRouter();
 
-  const isBlack = computed(() => {
-    return whiteColors.indexOf(menuBgColor.value) === -1;
-  });
+const theme = computed(() => {
+  return store.getters["setting/theme"];
+});
 
-  const textColor = computed(() => {
-    return whiteColors.indexOf(menuBgColor.value) !== -1 ? '#333' : '#fff';
-  });
+const menuBgColor = computed(() => {
+  return themeOptions[theme.value].menuBgColor;
+});
 
-  const activeTextColor = computed(() => {
-    const mcolor = whiteColors.indexOf(menuBgColor.value) !== -1;
-    return mcolor ? theme : '#fff';
-  });
+const isBlack = computed(() => {
+  return whiteColors.indexOf(menuBgColor.value) === -1;
+});
 
-  const routes = computed(() => {
-    return store.getters['routes/routes'];
-  });
+const textColor = computed(() => {
+  return whiteColors.indexOf(menuBgColor.value) !== -1 ? "#333" : "#fff";
+});
 
-  const isLogo = computed(() => {
-    return store.getters['setting/isLogo'];
-  });
+const activeTextColor = computed(() => {
+  const mcolor = whiteColors.indexOf(menuBgColor.value) !== -1;
+  return mcolor ? theme : "#fff";
+});
 
-  const defaultOpened = computed(() => {
-    return defaultOpeneds;
-  });
+const routes = computed(() => {
+  return store.getters["routes/routes"];
+});
 
-  const defaultActive = computed(() => {
-    const { fullPath } = router.currentRoute.value;
-    return fullPath || '/index';
-  });
+const isLogo = computed(() => {
+  return store.getters["setting/isLogo"];
+});
 
-  const handleOpen = (key, keyPath) => {
-    console.log('open:', key, keyPath);
-  };
+const defaultOpened = computed(() => {
+  return defaultOpeneds;
+});
 
-  const handleClose = (key, keyPath) => {
-    console.log('close:', key, keyPath);
-  };
+const defaultActive = computed(() => {
+  const { fullPath } = router.currentRoute.value;
+  return fullPath || "/index";
+});
+
+const handleOpen = (key, keyPath) => {
+  console.log("open:", key, keyPath);
+};
+
+const handleClose = (key, keyPath) => {
+  console.log("close:", key, keyPath);
+};
 </script>
 
 <style lang="scss" scoped>
-  .el-menu-vertical {
-    position: fixed;
-    top: 0;
-    bottom: 0;
-    left: 0;
-    height: 100vh;
-    overflow-x: hidden;
-    overflow-y: auto;
-    @include base-scrollbar;
-    &:not(.el-menu--collapse) {
-      width: $base-menu-width;
-    }
+.el-menu-vertical {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  @include base-scrollbar;
+
+  &:not(.el-menu--collapse) {
+    width: $base-menu-width;
   }
+}
 </style>

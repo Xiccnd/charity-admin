@@ -1,4 +1,5 @@
-import { asyncRoutes } from '@/router';
+import { asyncRoutes } from "@/router";
+
 export function convertRouter(routers) {
   return routers.map((route) => {
     return setRoutes(route, asyncRoutes);

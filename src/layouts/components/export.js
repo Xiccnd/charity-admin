@@ -1,4 +1,4 @@
-const modulesFiles = import.meta.globEager('./*/*.vue');
+const modulesFiles = import.meta.globEager("./*/*.vue");
 
 // 注册
 export default (app) => {

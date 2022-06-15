@@ -1,6 +1,8 @@
-import { setting } from '@/config/setting';
+import { setting } from "@/config/setting";
+
 const { tokenTableName } = setting;
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
+
 export function getAccessToken() {
   return Cookies.get(tokenTableName);
 }

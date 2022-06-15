@@ -3,9 +3,9 @@
  * @author hu-snail 1217437592@qq.com
  */
 
-import { themeConfig } from '@/config/theme';
-import { setting } from '@/config/setting';
-import { getLanguage, setLanguage, setSettings, getSettings } from '@/utils/cookies';
+import { themeConfig } from "@/config/theme";
+import { setting } from "@/config/setting";
+import { getLanguage, setLanguage, setSettings, getSettings } from "@/utils/cookies";
 
 const { mode, theme, fixedHead, fullScreen, refresh, collapse, notice, isBreadcrumb, isLogo, tag } =
   themeConfig;
@@ -28,7 +28,7 @@ const state = {
   isBreadcrumb,
   isLogo,
   tag,
-  lang: getLanguage() || lang,
+  lang: getLanguage() || lang
 };
 
 const getters = {
@@ -47,7 +47,7 @@ const getters = {
   tag: (state) => state.tag,
   mode: (state) => state.mode,
   settings: (state) => state,
-  lang: (state) => state.lang,
+  lang: (state) => state.lang
 };
 
 const mutations = {
@@ -88,7 +88,7 @@ const mutations = {
   CHANGE_LANGUAGE: (state, lang) => {
     setLanguage(lang);
     state.lang = lang;
-  },
+  }
 };
 
 const actions = {
@@ -96,42 +96,42 @@ const actions = {
    * @description 切换展开收起
    */
   changeCollapse: ({ commit }) => {
-    commit('CHANGE_COLLAPSE');
+    commit("CHANGE_COLLAPSE");
   },
   /**
    * @description 切换是否全屏
    *  @param {boolean} flag true|false
    */
   changeFullScreen: ({ commit }, flag) => {
-    commit('CHANGE_FULL_SCREEN', flag);
+    commit("CHANGE_FULL_SCREEN", flag);
   },
   /**
    * @description 是否刷新路由
    *  @param {boolean} flag true|false
    */
   setRouterView: ({ commit }, flag) => {
-    commit('SET_ROUTER_VIEW', flag);
+    commit("SET_ROUTER_VIEW", flag);
   },
   /**
    * @description 是否为移动端
    *  @param {boolean} flag true|false
    */
   changeMobile: ({ commit }, flag) => {
-    commit('CHANGE_IS_MOBILE', flag);
+    commit("CHANGE_IS_MOBILE", flag);
   },
   /**
    * @description 是否展开移动端菜单
    *  @param {boolean} flag true|false
    */
   changeDrawer: ({ commit }, flag) => {
-    commit('CHANGE_IS_DRAWER', flag);
+    commit("CHANGE_IS_DRAWER", flag);
   },
   /**
    * @description 设置主题
    * @param {strinng} theme 系统默认：blue|green|red|default
    */
   setTheme: ({ commit }, theme) => {
-    commit('SET_THEME', theme);
+    commit("SET_THEME", theme);
   },
 
   /**
@@ -139,21 +139,21 @@ const actions = {
    * @param {boolean} flag true|false
    */
   setSettingDrawer: ({ commit }, flag) => {
-    commit('CHANGE_SETTING_DRAWER', flag);
+    commit("CHANGE_SETTING_DRAWER", flag);
   },
   /**
    * @description 是否显示面包导航
    * @param {boolean} flag true|false
    */
   setBreadcrumb: ({ commit }, flag) => {
-    commit('CHANGE_BREADCRUMB', flag);
+    commit("CHANGE_BREADCRUMB", flag);
   },
   /**
    * @description 是否显示标签
    * @param {boolean} flag true|false
    */
   setTag: ({ commit }, flag) => {
-    commit('CHANGE_TAG', flag);
+    commit("CHANGE_TAG", flag);
   },
 
   /**
@@ -161,7 +161,7 @@ const actions = {
    * @param {string} mode 可选值：vertical|horizontal
    */
   setMode: ({ commit }, mode) => {
-    commit('CHANE_MODE', mode);
+    commit("CHANE_MODE", mode);
   },
 
   /**
@@ -169,7 +169,7 @@ const actions = {
    * @param {string} lang 语言 可选值： zh-cn|en
    */
   changeLanguage: ({ commit }, lang) => {
-    commit('CHANGE_LANGUAGE', lang);
+    commit("CHANGE_LANGUAGE", lang);
   },
 
   /**
@@ -177,13 +177,13 @@ const actions = {
    * @param {object} options 配置项
    */
   setSettingOptions: ({ commit }, options) => {
-    commit('SET_SETTING_OPTIONS', options);
-  },
+    commit("SET_SETTING_OPTIONS", options);
+  }
 };
 
 export default {
   getters,
   state,
   mutations,
-  actions,
+  actions
 };

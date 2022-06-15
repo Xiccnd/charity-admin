@@ -50,52 +50,53 @@
 </template>
 
 <script>
-  export default {
-    name: 'MenuItem',
-  };
+export default {
+  name: "MenuItem"
+};
 </script>
 
 <script setup>
-  import { computed } from 'vue';
-  import { useStore } from 'vuex';
+import { computed } from "vue";
+import { useStore } from "vuex";
 
-  import { themeConfig } from '@/config/theme';
-  const { themeOptions } = themeConfig;
+import { themeConfig } from "@/config/theme";
 
-  const whiteColors = ['#fff', '#ffffff', '#FFF', '#FFF', 'rgb(255, 255, 255)'];
+const { themeOptions } = themeConfig;
 
-  defineProps({
-    item: {
-      type: Object,
-      default: () => {
-        return {};
-      },
-    },
-  });
+const whiteColors = ["#fff", "#ffffff", "#FFF", "#FFF", "rgb(255, 255, 255)"];
 
-  const store = useStore();
+defineProps({
+  item: {
+    type: Object,
+    default: () => {
+      return {};
+    }
+  }
+});
 
-  const theme = computed(() => {
-    return store.getters['setting/theme'];
-  });
+const store = useStore();
 
-  const menuBgColor = computed(() => {
-    return themeOptions[theme.value].menuBgColor;
-  });
+const theme = computed(() => {
+  return store.getters["setting/theme"];
+});
 
-  const isBlack = computed(() => {
-    return whiteColors.indexOf(menuBgColor.value) === -1;
-  });
+const menuBgColor = computed(() => {
+  return themeOptions[theme.value].menuBgColor;
+});
+
+const isBlack = computed(() => {
+  return whiteColors.indexOf(menuBgColor.value) === -1;
+});
 </script>
 <style lang="scss" scoped>
-  .menu-icon,
-  .icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: $base-icon-width-big !important;
-    height: $base-icon-height-super-max !important;
-    margin-right: $base-margin-5;
-    visibility: initial !important;
-  }
+.menu-icon,
+.icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: $base-icon-width-big !important;
+  height: $base-icon-height-super-max !important;
+  margin-right: $base-margin-5;
+  visibility: initial !important;
+}
 </style>

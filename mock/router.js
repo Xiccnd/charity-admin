@@ -1,71 +1,71 @@
 const data = [
   {
-    path: '/',
-    component: 'Layout',
-    redirect: 'index',
+    path: "/",
+    component: "Layout",
+    redirect: "index",
     children: [
       {
-        path: '/index',
-        name: 'Index',
-        component: '',
+        path: "/index",
+        name: "Index",
+        component: "",
         meta: {
-          title: '首页',
-          icon: 'home',
+          title: "首页",
+          icon: "home",
           affix: true,
-          noKeepAlive: true,
-        },
-      },
-    ],
+          noKeepAlive: true
+        }
+      }
+    ]
   },
   {
-    path: '/comp',
-    component: 'Layout',
-    name: 'Comp',
-    meta: { title: '组件', icon: '' },
+    path: "/comp",
+    component: "Layout",
+    name: "Comp",
+    meta: { title: "组件", icon: "" },
     children: [
       {
-        path: '/iconPark',
-        name: 'IconPark',
-        component: '',
+        path: "/iconPark",
+        name: "IconPark",
+        component: "",
         meta: {
-          title: '图标',
+          title: "图标"
         },
         children: [
           {
-            path: '/iconPark2',
-            name: 'IconPark2',
-            component: '',
+            path: "/iconPark2",
+            name: "IconPark2",
+            component: "",
             meta: {
-              title: '图标2211',
-            },
-          },
-        ],
+              title: "图标2211"
+            }
+          }
+        ]
       },
       {
-        path: '/iconPark233',
-        name: 'IconPark3',
-        component: () => '',
+        path: "/iconPark233",
+        name: "IconPark3",
+        component: () => "",
         meta: {
-          title: '图标2233',
-        },
+          title: "图标2233"
+        }
       },
       {
-        path: '/iconPark234',
-        name: 'IconPark3',
-        component: () => '',
+        path: "/iconPark234",
+        name: "IconPark3",
+        component: () => "",
         meta: {
-          title: '测试',
-        },
-      },
-    ],
-  },
+          title: "测试"
+        }
+      }
+    ]
+  }
 ];
 export default [
   {
-    url: '/api/menu/navigate',
-    type: 'post',
+    url: "/api/menu/navigate",
+    type: "post",
     response() {
-      return { code: 200, msg: 'success', data: data };
-    },
-  },
+      return { code: 200, msg: "success", data: data };
+    }
+  }
 ];

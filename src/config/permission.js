@@ -2,33 +2,34 @@
  * @author hujiangjun 1217437592@qq.com
  * @description 路由控制
  */
-import router from '@/router';
-import store from '@/store';
-import NProgress from 'nprogress';
-import 'nprogress/nprogress.css';
-import { getPageTitle } from '@/utils/index';
-import { setting } from '@/config/setting';
+import router from "@/router";
+import store from "@/store";
+import NProgress from "nprogress";
+import "nprogress/nprogress.css";
+import { getPageTitle } from "@/utils/index";
+import { setting } from "@/config/setting";
+
 const { authentication, loginInterception, progressBar, routesWhiteList, recordRoute } = setting;
 
 NProgress.configure({
-  easing: 'ease',
+  easing: "ease",
   speed: 500,
   trickleSpeed: 200,
-  showSpinner: false,
+  showSpinner: false
 });
 router.beforeEach(async (to, from, next) => {
   if (progressBar) NProgress.start();
 
-  let hasToken = store.getters['user/accessToken'];
+  let hasToken = store.getters["user/accessToken"];
   if (!loginInterception) hasToken = true;
 
   if (hasToken) {
-    if (to.path === '/login') {
-      next({ path: '/' });
+    if (to.path === "/login") {
+      next({ path: "/" });
       if (progressBar) NProgress.done();
     } else {
       const hasPermissions =
-        store.getters['user/permissions'] && store.getters['user/permissions'].length > 0;
+        store.getters["user/permissions"] && store.getters["user/permissions"].length > 0;
       if (hasPermissions) {
         next();
       } else {
@@ -36,24 +37,24 @@ router.beforeEach(async (to, from, next) => {
           let permissions;
           if (!loginInterception) {
             //settings.js loginInterception为false时，创建虚拟权限
-            await store.dispatch('user/setPermissions', ['admin']);
-            permissions = ['admin'];
+            await store.dispatch("user/setPermissions", ["admin"]);
+            permissions = ["admin"];
           } else {
-            permissions = await store.dispatch('user/getUserInfo');
+            permissions = await store.dispatch("user/getUserInfo");
           }
 
           let accessRoutes = [];
-          if (authentication === 'intelligence') {
-            accessRoutes = await store.dispatch('routes/setRoutes', permissions);
-          } else if (authentication === 'all') {
-            accessRoutes = await store.dispatch('routes/setAllRoutes');
+          if (authentication === "intelligence") {
+            accessRoutes = await store.dispatch("routes/setRoutes", permissions);
+          } else if (authentication === "all") {
+            accessRoutes = await store.dispatch("routes/setAllRoutes");
           }
           accessRoutes.forEach((item) => {
             router.addRoute(item);
           });
           next({ ...to, replace: true });
         } catch {
-          await store.dispatch('user/resetAccessToken');
+          await store.dispatch("user/resetAccessToken");
           if (progressBar) NProgress.done();
         }
       }
@@ -66,7 +67,7 @@ router.beforeEach(async (to, from, next) => {
       if (recordRoute) {
         next(`/login?redirect=${to.path}`);
       } else {
-        next('/login');
+        next("/login");
       }
       if (progressBar) NProgress.done();
     }

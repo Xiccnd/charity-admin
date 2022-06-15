@@ -148,45 +148,45 @@
 </template>
 
 <script setup>
-  import { ref, reactive, onMounted, computed, onBeforeMount } from 'vue';
-  import { getTeamInformation } from '@/api/team';
+import { ref, reactive, onMounted, computed, onBeforeMount } from "vue";
+import { getTeamInformation } from "@/api/team";
 
-  const value1 = ref('');
-  const textarea = ref('');
-  const formInline = reactive({
-    user: '',
-    message: 'hello',
-    region: '',
+const value1 = ref("");
+const textarea = ref("");
+const formInline = reactive({
+  user: "",
+  message: "hello",
+  region: ""
+});
+const teamInformation = reactive({
+  list: [
+    {
+      teamName: "",
+      teamid: "123",
+      contact: "",
+      telephone: "",
+      address: "",
+      detailedAddress: "",
+      regisDepartment: "",
+      registrationAuthority: "",
+      registerDate: "",
+      liaisonOrganization: "",
+      teamProfile: ""
+    }
+  ]
+});
+onMounted(() => {
+  console.log("1222222222");
+  console.log(localStorage.getItem("tokenName"));
+  getTeamInformation().then((res) => {
+    console.log(res.data);
+    teamInformation.list = res.data;
+    console.log(teamInformation);
   });
-  const teamInformation = reactive({
-    list: [
-      {
-        teamName: '',
-        teamid: '123',
-        contact: '',
-        telephone: '',
-        address: '',
-        detailedAddress: '',
-        regisDepartment: '',
-        registrationAuthority: '',
-        registerDate: '',
-        liaisonOrganization: '',
-        teamProfile: '',
-      },
-    ],
-  });
-  onMounted(() => {
-    console.log('1222222222');
-    console.log(localStorage.getItem('tokenName'));
-    getTeamInformation().then((res) => {
-      console.log(res.data);
-      teamInformation.list = res.data;
-      console.log(teamInformation);
-    });
-  });
-  const labelPosition = ref('left');
-  const onSubmit = () => {
-    console.log('submit!');
-  };
-  const url = 'https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg';
+});
+const labelPosition = ref("left");
+const onSubmit = () => {
+  console.log("submit!");
+};
+const url = "https://fuss10.elemecdn.com/e/5d/4a731a90594a4af544c0c25941171jpeg.jpeg";
 </script>

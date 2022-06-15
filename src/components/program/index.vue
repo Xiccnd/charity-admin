@@ -1,5 +1,5 @@
 <template>
- <el-dialog v-model="dialogFormVisible" title="Shipping address">
+  <el-dialog v-model="dialogFormVisible" title="Shipping address">
     <el-form :model="form">
       <el-form-item label="Promotion name" :label-width="formLabelWidth">
         <el-input v-model="form.name" autocomplete="off" />
@@ -15,7 +15,7 @@
       <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">Cancel</el-button>
         <el-button type="primary" @click="dialogFormVisible = false"
-          >Confirm</el-button
+        >Confirm</el-button
         >
       </span>
     </template>
@@ -23,21 +23,21 @@
 </template>
 
 <script lang="ts" setup>
-import { reactive } from 'vue'
+import { reactive } from "vue";
 
 // do not use same name with ref
 const form = reactive({
-  name: '',
-  region: '',
-  date1: '',
-  date2: '',
+  name: "",
+  region: "",
+  date1: "",
+  date2: "",
   delivery: false,
   type: [],
-  resource: '',
-  desc: '',
-})
+  resource: "",
+  desc: ""
+});
 
 const onSubmit = () => {
-  console.log('submit!')
-}
+  console.log("submit!");
+};
 </script>

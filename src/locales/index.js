@@ -1,23 +1,23 @@
-import { createI18n } from 'vue-i18n';
+import { createI18n } from "vue-i18n";
 
-import { getLanguage } from '@/utils/cookies';
+import { getLanguage } from "@/utils/cookies";
 
-import elementEnLocale from 'element-plus/lib/locale/lang/en';
-import elementZhLocale from 'element-plus/lib/locale/lang/zh-cn';
+import elementEnLocale from "element-plus/lib/locale/lang/en";
+import elementZhLocale from "element-plus/lib/locale/lang/zh-cn";
 
 // User defined lang
-import enLocale from './lang/en';
-import zhLocale from './lang/zh-cn';
+import enLocale from "./lang/en";
+import zhLocale from "./lang/zh-cn";
 
 const messages = {
   en: {
     ...enLocale,
-    ...elementEnLocale,
+    ...elementEnLocale
   },
-  'zh-cn': {
+  "zh-cn": {
     ...zhLocale,
-    ...elementZhLocale,
-  },
+    ...elementZhLocale
+  }
 };
 
 export const getLocale = () => {
@@ -33,12 +33,12 @@ export const getLocale = () => {
     }
   }
 
-  return 'zh';
+  return "zh";
 };
 
 const i18n = createI18n({
   locale: getLocale(),
-  messages: messages,
+  messages: messages
 });
 
 export default i18n;

@@ -33,8 +33,8 @@ import {
   ElScrollbar,
   ElTableColumn,
   ElTag,
-  ElTable,
-} from 'element-plus';
+  ElTable
+} from "element-plus";
 
 // 所需的组件
 export const components = [
@@ -72,7 +72,7 @@ export const components = [
   ElScrollbar,
   ElTableColumn,
   ElTag,
-  ElTable,
+  ElTable
 ];
 // 注册
 export default (app) => {
