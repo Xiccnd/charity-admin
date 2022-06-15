@@ -110,3 +110,17 @@ export const deleteUser= async (id, perName) => {
     }
   });
 };
+
+export const addOneUser= async (name, password, telephone, perid) => {
+  return request({
+    url: "user/end/addUser",
+    method: "post",
+    baseURL: "http://192.168.1.147:8088",
+    data: {
+      name,
+      password,
+      telephone,
+      perid,
+    }
+  });
+};

@@ -39,24 +39,22 @@
       </div>
     </div>
   </div>
-  <el-dialog v-model="dialogFormVisible" title="Shipping address">
-    <el-form :model="form">
-      <el-form-item label="Promotion name" :label-width="formLabelWidth">
-        <el-input v-model="form.name" autocomplete="off" />
+  <el-dialog v-model="dialogFormVisible" title="添加用户">
+    <el-form :model="addUser">
+      <el-form-item label="用户名" :label-width="formLabelWidth">
+        <el-input v-model="addUser.name" autocomplete="off" />
       </el-form-item>
-      <el-form-item label="Zones" :label-width="formLabelWidth">
-        <el-select v-model="form.region" placeholder="Please select a zone">
-          <el-option label="Zone No.1" value="shanghai" />
-          <el-option label="Zone No.2" value="beijing" />
-        </el-select>
+      <el-form-item label="密码" :label-width="formLabelWidth">
+        <el-input v-model="addUser.password" autocomplete="off" />
+      </el-form-item>
+      <el-form-item label="电话号码" :label-width="formLabelWidth">
+        <el-input v-model="addUser.telephone" autocomplete="off" />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">Cancel</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false"
-        >Confirm</el-button
-        >
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="addUserMethod(); dialogFormVisible = false">添加</el-button>
       </span>
     </template>
   </el-dialog>
@@ -65,12 +63,29 @@
 <script lang="ts" setup>
 import { Search } from '@element-plus/icons-vue'
 import { onMounted, reactive, ref} from "vue";
-import { getAllUser, getDetail, deleteUser } from "../../api/volunteer";
+import { getAllUser, getDetail, deleteUser,addOneUser } from "../../api/volunteer";
 import { h } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
 import type { Action } from 'element-plus'
 
 const dialogFormVisible = ref(false)
+
+const formLabelWidth = '140px'
+
+const addUser = reactive({
+  name: "",
+  perid: "2",
+  telephone: "",
+  password: ""
+})
+
+const addUserMethod = () => {
+  addOneUser(addUser.name, addUser.password, addUser.telephone, addUser.perid).then(res => {
+    selectAll("", "");
+  }).catch(err => {
+    console.log(err);
+  })
+}
 
 const openDetail = (e) => {
   let id
@@ -81,7 +96,7 @@ const openDetail = (e) => {
   }
   getDetail(id).then(res => {
     userDetail = res.data;
-    console.log(res.data);
+    console.log(userDetail);
     ElMessageBox({
       title: "用户详情",
       draggable: true,
@@ -132,7 +147,7 @@ const openDelete = (e) => {
       beforeClose: (action, instance, done) => {
         if (action === 'confirm') {
           deleteUser(userDetail.id, perName).then(res => {
-            location.reload();
+            selectAll("", "");
             done();
           }).catch(err => {
             console.log(err);
