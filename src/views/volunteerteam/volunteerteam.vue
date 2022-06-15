@@ -60,6 +60,8 @@
 </template>
 
 <script setup>
+  import store from '@/store';
+  import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,getTeamid} from '@/utils/accessToken';
   import { ref, computed, reactive, onBeforeMount } from 'vue';
   import { CountTo } from 'vue3-count-to';
   import Echarts from '@/components/Echarts/index.vue';
@@ -153,7 +155,12 @@ const handlePageChange = (pageNum) =>{
     }
 onMounted(() => {
      selectAll();
+    //  console.log(hasto)
+    let num = getTeamid()
+    console.log("getTeamid:"+getTeamid())
+    console.log("num:"+num)
     });
+    
 </script>
 <style lang="scss" scoped>  
   .index-conntainer {

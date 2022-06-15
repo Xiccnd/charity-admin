@@ -8,6 +8,8 @@ import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { getPageTitle } from '@/utils/index';
 import { setting } from '@/config/setting';
+import { LoginTeam } from '@/api/user';
+import Cookies from 'js-cookie';
 const { authentication, loginInterception, progressBar, routesWhiteList, recordRoute } = setting;
 
 NProgress.configure({
@@ -20,8 +22,25 @@ router.beforeEach(async (to, from, next) => {
   if (progressBar) NProgress.start();
 
   let hasToken = store.getters['user/accessToken'];
-  if (!loginInterception) hasToken = true;
 
+  if (!hasToken) {
+    console.log('即将执行LoginTeam');
+    const { data } = await LoginTeam();
+    hasToken = data.accessToken;
+    console.log('hasToken:'+hasToken);
+    if (hasToken != 999) {
+      await store.dispatch('user/setTeamid', hasToken);
+      await store.dispatch('user/setAccessToken', 'user-accessToken');
+    }else{
+      await store.dispatch('user/setTeamid', hasToken);
+      await store.dispatch('user/setAccessToken', 'admin-accessToken');
+    }
+  }
+
+
+
+  console.log('hasToken======:'+hasToken);
+  if (!loginInterception) hasToken = true;
   if (hasToken) {
     if (to.path === '/login') {
       next({ path: '/' });
@@ -40,6 +59,7 @@ router.beforeEach(async (to, from, next) => {
             permissions = ['admin'];
           } else {
             permissions = await store.dispatch('user/getUserInfo');
+            console.log("执行完getUserInfo后的permissions:"+permissions);
           }
 
           let accessRoutes = [];

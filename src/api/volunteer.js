@@ -6,7 +6,7 @@ export const tableData = async(teamid) => {
       params:{
         teamid:teamid
       },
-      baseURL: 'http://192.168.1.147:8088',
+      baseURL: 'http://192.168.1.142:8282',
     });
   };
 export const search = async(teamid,id,name) => {

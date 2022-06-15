@@ -1,5 +1,5 @@
 import { getUserInfo, login } from '@/api/user';
-import { getAccessToken, removeAccessToken, setAccessToken } from '@/utils/accessToken';
+import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid} from '@/utils/accessToken';
 
 import { setting } from '@/config/setting';
 const { title, tokenName } = setting;
@@ -28,6 +28,9 @@ const mutations = {
     state.accessToken = accessToken;
     setAccessToken(accessToken);
   },
+  setTeamid(state, teamid) {
+    setTeamid(teamid);
+  },
   setUsername(state, username) {
     state.username = username;
   },
@@ -41,6 +44,12 @@ const mutations = {
 const actions = {
   setPermissions({ commit }, permissions) {
     commit('setPermissions', permissions);
+  },
+  async setAccessToken({ commit }, accessToken) {
+    commit('setAccessToken', accessToken);
+  },
+  async setTeamid({ commit }, teamid) {
+    commit('setTeamid', teamid);
   },
   async login({ commit }, userInfo) {
     const { data } = await login(userInfo);
@@ -68,6 +77,7 @@ const actions = {
     }
   },
   async getUserInfo({ commit, state }) {
+    console.log("state.accessToken:"+state.accessToken);
     const { data } = await getUserInfo(state.accessToken);
     if (!data) {
       ElMessage.error('验证失败，请重新登录...');

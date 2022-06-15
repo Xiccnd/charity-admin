@@ -195,7 +195,8 @@ const emits = defineEmits(['update:ruleForm'])
  
 //关闭的点击事件
   const handleClose = () => {
-  console.log(1111111)
+  console.log(1111111);
+  // emit("searchdata",123);
   emits('update:ruleForm', false)
 
   }

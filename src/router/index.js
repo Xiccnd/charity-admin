@@ -46,6 +46,7 @@ export const asyncRoutes = [
       },
     ],
   },
+  //组件
   {
     path: '/comp',
     component: Layout,
@@ -113,6 +114,7 @@ export const asyncRoutes = [
   //   redirect: '/404',
   //   hidden: true,
   // },
+
   {
     path: '/volunteerprogram',
     name: 'Volunteerprogram',
@@ -129,6 +131,7 @@ export const asyncRoutes = [
         meta: {
           title: "已过审",
           icon: 'icon-personal-collection',
+          permissions:['user']
         },
       },
       {
@@ -138,6 +141,7 @@ export const asyncRoutes = [
         meta: {
           title: "待审批",
           icon: 'icon-people',
+          permissions:['admin']
         },
       },
     ],
@@ -178,6 +182,7 @@ export const asyncRoutes = [
     meta: {
       title: '个人中心',
       icon: 'icon-link-cloud-faild',
+      permissions:['admin']
     },
     children: [
       {
