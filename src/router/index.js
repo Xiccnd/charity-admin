@@ -55,9 +55,9 @@ export const asyncRoutes = [
     meta: { title: global.t("route.components"), icon: "icon-code" },
     children: [
       {
-        path: "/element",
-        name: "ElementComp",
-        component: () => import("@/views/element/index.vue"),
+        path: "/map",
+        name: "map",
+        component: () => import("../views/index/tabs/map.vue"),
         meta: {
           title: global.t("route.eleComponents"),
           icon: "icon-code"

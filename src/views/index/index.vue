@@ -37,7 +37,7 @@
          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <el-card class="card" shadow="hover">
             <template #header>
-              <h3 class="title">数据统计</h3>
+              <h3 class="title">人员分布</h3>
             </template>
               <Map></Map>
           </el-card>
