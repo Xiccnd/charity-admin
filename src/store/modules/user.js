@@ -1,6 +1,6 @@
 
 import { getUserInfo, login } from "@/api/user";
-import { getAccessToken, removeAccessToken, setAccessToken } from "@/utils/accessToken";
+import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid} from "@/utils/accessToken";
 
 import { setting } from "@/config/setting";
 

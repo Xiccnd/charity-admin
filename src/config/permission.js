@@ -22,19 +22,19 @@ NProgress.configure({
 router.beforeEach(async (to, from, next) => {
   if (progressBar) NProgress.start();
   let hasToken = store.getters['user/accessToken'];
-  // if (!hasToken) {
-  //   console.log('即将执行LoginTeam');
-  //   const { data } = await LoginTeam();
-  //   hasToken = data.accessToken;
-  //   console.log('hasToken:'+hasToken);
-  //   if (hasToken != 999) {
-  //     await store.dispatch('user/setTeamid', hasToken);
-  //     await store.dispatch('user/setAccessToken', 'user-accessToken');
-  //   }else{
-  //     await store.dispatch('user/setTeamid', hasToken);
-  //     await store.dispatch('user/setAccessToken', 'admin-accessToken');
-  //   }
-  // }
+  if (!hasToken) {
+    console.log('即将执行LoginTeam');
+    const { data } = await LoginTeam();
+    hasToken = data.accessToken;
+    console.log('hasToken:'+hasToken);
+    if (hasToken != 999) {
+      await store.dispatch('user/setTeamid', hasToken);
+      await store.dispatch('user/setAccessToken', 'user-accessToken');
+    }else{
+      await store.dispatch('user/setTeamid', hasToken);
+      await store.dispatch('user/setAccessToken', 'admin-accessToken');
+    }
+  }
   console.log('hasToken======:'+hasToken);
   if (!loginInterception) hasToken = true;
   if (hasToken) {
