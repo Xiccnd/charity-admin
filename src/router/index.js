@@ -47,6 +47,7 @@ export const asyncRoutes = [
       }
     ]
   },
+  //组件
   {
     path: "/comp",
     component: Layout,
@@ -114,6 +115,7 @@ export const asyncRoutes = [
   //   redirect: '/404',
   //   hidden: true,
   // },
+
   {
     path: "/volunteerprogram",
     name: "Volunteerprogram",
@@ -129,19 +131,23 @@ export const asyncRoutes = [
         component: () => import("../views/volunteerprogram/volunteerprogram.vue"),
         meta: {
           title: "已过审",
-          icon: "icon-personal-collection"
-        }
+
+          icon: 'icon-personal-collection',
+          permissions:['user']
+        },
       },
       {
-        path: "/programExamine",
-        name: "ProgramExamine",
-        component: () => import("../views/volunteerprogram/test1.vue"),
+        path: '/programExamine',
+        name: 'ProgramExamine',
+        component: () => import('../views/volunteerprogram/programExamine.vue'),
         meta: {
           title: "待审批",
-          icon: "icon-people"
-        }
-      }
-    ]
+          icon: 'icon-people',
+          permissions:['admin']
+        },
+      },
+    ],
+
   },
   {
     path: "/volunteerteam",
@@ -177,8 +183,11 @@ export const asyncRoutes = [
     name: "UserPage",
     component: Layout,
     meta: {
-      title: "个人中心",
-      icon: "icon-link-cloud-faild"
+
+      title: '个人中心',
+      icon: 'icon-link-cloud-faild',
+      permissions:['admin']
+
     },
     children: [
       {

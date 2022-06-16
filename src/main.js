@@ -17,7 +17,6 @@ import axios from "axios";
 axios.defaults.baseURL = "http://192.168.1.147:8088";
 app.config.globalProperties.$http = axios;
 
-
 import { VueClipboard } from "@soerenmartius/vue3-clipboard";
 
 app.use(VueClipboard);
