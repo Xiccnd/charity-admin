@@ -146,3 +146,13 @@ export const reviewed = async (teamid) => {
     baseURL: 'http://192.168.1.147:8088',
   });
 };
+export const proejectinfo = async (teamid) => {
+  return request({
+    url: 'volunteerProgramDetailscensor/getAll',
+    method: 'get',
+    params: {
+      teamid: teamid
+    },
+    baseURL: 'http://192.168.1.147:8088',
+  });
+};
