@@ -29,7 +29,7 @@
             <template #header>
               <h3 class="title">待办事项</h3>
             </template>
-            <Tab :tableData="review.list"></Tab>
+            <Tab :tableData="review.list" :tableData2="project.list"></Tab>
           </el-card>
         </el-col>
       </el-row>
@@ -56,7 +56,7 @@
 
 <script setup>
   import { ref, computed, reactive, onBeforeMount, onMounted,toRaw} from 'vue';
-  import {indexinfo,reviewed} from  '../../api/volunteer';
+  import {indexinfo,reviewed,proejectinfo} from  '../../api/volunteer';
   import { CountTo } from 'vue3-count-to';
   import Description from 'views/index/descriptions/Description.vue';
   import Collapse from 'views/index/descriptions/Collapse.vue';
@@ -101,6 +101,16 @@
       address:'',
       telephone:'',
       mailbox:''
+    }]
+  })
+  let project = reactive({
+    list: [{
+      pid:'',
+      pname:'',
+      postName:'',
+      location:'',
+      mark:'',
+      state:''
     }]
   })
   
@@ -169,11 +179,28 @@
       console.log(err)
     })
   }
+  const baseproject = (teamid) =>{
+    proejectinfo(teamid).then(res =>{
+      project.list = res.data 
+      for(let i = 0;i<project.list.length;i++){
+        if(project.list[i].mark == '1'){
+          project.list[i].state="待审核"
+          console.log(project.list[i].state)
+        }else{
+          console.log(project.list[i].state="已审核")
+          console.log("error")
+        }
+      }
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
   onBeforeMount(() => {
-    
     onGetResouceList();
     baseinfo(1)
     basereviewed(1)
+    baseproject(1)
+    
   });
 </script>
 
