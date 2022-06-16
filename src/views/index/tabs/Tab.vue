@@ -1,5 +1,5 @@
 <template>
-  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
+  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick" max-height="250">
     <el-tab-pane label="待审核项目" name="first">
       <el-table :data="tableData2" style="width: 100%">
         <el-table-column fixed prop="pid" label="项目id" width="150" />
@@ -18,7 +18,7 @@
     </el-tab-pane>
     <el-tab-pane label="待审核人员" name="second">
  
-      <el-table :data="tableData" style="width: 100%">
+      <el-table :data="tableData" style="width: 100%" max-height="250">
         <el-table-column fixed prop="name" label="姓名" width="150" />
         <el-table-column prop="sex" label="性别" width="120" />
         <el-table-column prop="telephone" label="联系电话" width="120" />

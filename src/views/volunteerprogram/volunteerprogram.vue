@@ -23,19 +23,20 @@
 
  <el-dialog v-model="dialogFormVisible" title="项目详情" 
  @close="resetForm('ruleForm')"
+ :draggable="true"
  :close-on-click-modal="false"
       :close-on-press-escape="false"
       width="1100px" top="10px">
-    <el-form :model="form">
-      <Addform ref="addform" v-model:ruleForm="ruleForm" v-model="ruleForm"></Addform>
+    <el-form :model="form" >
+      <Addform ref="addform" @callback="callback"  v-model:ruleForm="ruleForm" v-model="ruleForm"></Addform>
     </el-form>
     <template #footer>
 
-      <span class="dialog-footer">
+      <!-- <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false,submitpro()">
-        提交</el-button>
-      </span>
+         <el-button type="primary" @click="dialogFormVisible = false,submitpro()">
+        提交</el-button> 
+      </span> -->
         </template>
       </el-dialog>
     </div>
@@ -101,26 +102,28 @@
     Addform
   }
 const refform = ref(false)
-const dialogFormVisible = ref(false)
+let dialogFormVisible = ref(false)
 const addform = ref(false)
 const formLabelWidth = '140px'
 const ruleForm = reactive({
-pname:'',
-location:'',
-releaseDate:'',
-projectDate:'',
-recruitDate:'',
-serviceObject:'',
-volunteerUpport:'',
-serviceDescription:'',
-projectDetails:'',
-postDesc:'',
-postCondition:'',
-postName:'',
-targetNum:'',
-type: [],
+  pname:'',
+  location:'',
+  releaseDate:'',
+  projectDate:'',
+  recruitDate:'',
+  serviceObject:'',
+  volunteerUpport:'',
+  serviceDescription:'',
+  projectDetails:'',
+  postDesc:'',
+  postCondition:'',
+  postName:'',
+  targetNum:'',
+  type: [],
 })
-
+const callback = () =>{
+  dialogFormVisible.value = false
+}
 const submitpro = () =>{
   console.log(addform.value)
   // addform.value.handleClose()

@@ -156,3 +156,29 @@ export const proejectinfo = async (teamid) => {
     baseURL: 'http://192.168.1.147:8088',
   });
 };
+export const datasubmit = async (
+  teamid, pname, location, releaseDate, projectDate, recruitDate, serviceObject,
+  volunteerUpport, serviceDescription, projectDetails, postDesc, postCondition, postName, targetNum, type) => {
+  return request({
+    url: 'volunteerProgramDetailscensor/addTeamProject',
+    method: 'post',
+    data: {
+      teamid,
+      pname,
+      location,
+      releaseDate,
+      projectDate,
+      recruitDate,
+      serviceObject,
+      volunteerUpport,
+      serviceDescription,
+      projectDetails,
+      postDesc,
+      postCondition,
+      postName,
+      targetNum,
+      type
+    },
+    baseURL: 'http://192.168.1.147:8088',
+  });
+};
