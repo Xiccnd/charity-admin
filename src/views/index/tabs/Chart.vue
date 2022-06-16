@@ -14,7 +14,7 @@
             legend
           }"
         />
-  <Echarts
+  <!-- <Echarts
     :index="1"
     :title="t('进行中项目')"
     headerIcon="icon-chart-histogram"
@@ -27,7 +27,7 @@
       grid:grid1,
       legend:legend1
     }"
-        />
+        /> -->
 </template>
 
 <script>
@@ -59,7 +59,7 @@ import { useI18n } from 'vue-i18n';
         },
         yAxis: {
           type: 'category',
-          data: ['15-20', '21-25', '26-30', '31-35']
+          data: ['重庆', '河南', '北京', '江苏']
         },
         series: [
           {
