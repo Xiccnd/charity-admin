@@ -6,13 +6,9 @@
           <div class="title">队伍简介</div>
         </template>
         <div class="narrative">
-          Consistent with real life: in line with the process and logic of real
-          life, and comply with languages and habits that the users are used to;
+          {{info.teamProfile}}
         </div>
-        <div class="narrative">
-          Consistent within interface: all elements should be consistent, such
-          as: design style, icons and texts, position of elements, etc.
-        </div>
+      
       </el-collapse-item>
 
     </el-collapse>
@@ -26,6 +22,15 @@ const activeNames = ref(['1'])
 const handleChange = (val: string[]) => {
   console.log(val)
 }
+const props = defineProps({
+	info: {
+		type: Object,
+		default: () => {
+        return {};
+      },
+		required: true,
+	},
+})
 </script>
 <style scoped>
 .title {

@@ -8,10 +8,7 @@
       <div class="head-card-content">
         <h2 class="title">{{ sayHi }}! Admin, {{ t('indexPage.descTitle') }}</h2>
         <p class="desc">
-         
         </p>
-
-
       </div>
     </div>
     <div class="content">
@@ -21,8 +18,8 @@
             <template #header>
               <h3 class="title">队伍信息</h3>
             </template>
-            <description></description>
-            <collapse></collapse>
+            <description :info="teaminfo"></description>
+            <collapse :info="teaminfo"></collapse>
           </el-card>
         </el-col>
       </el-row>
@@ -32,7 +29,7 @@
             <template #header>
               <h3 class="title">待办事项</h3>
             </template>
-            <Tab></Tab>
+            <Tab :tableData="review.list"></Tab>
           </el-card>
         </el-col>
       </el-row>
@@ -42,7 +39,7 @@
             <template #header>
               <h3 class="title">数据统计</h3>
             </template>
-              <chart></chart>
+              <Map></Map>
           </el-card>
         </el-col>
       </el-row>
@@ -58,20 +55,21 @@
 </script>
 
 <script setup>
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
-
+  import { ref, computed, reactive, onBeforeMount, onMounted,toRaw} from 'vue';
+  import {indexinfo,reviewed} from  '../../api/volunteer';
   import { CountTo } from 'vue3-count-to';
   import Description from 'views/index/descriptions/Description.vue';
   import Collapse from 'views/index/descriptions/Collapse.vue';
-  import Tab from 'views/index/tabs/Tab.vue';
+  import Table from 'views/index/tabs/Table.vue'
+  import Tab from 'views/index/tabs/Tab.vue'
+  import Map from 'views/index/tabs/map.vue'
   // import TabSecond from 'views/index/tabs/Tabs.vue';
-  import Chart from 'views/index/tabs/Chart.vue';
+  // import Chart from 'views/index/tabs/Chart.vue';
   import packpage from '../../../package.json';
   import { useI18n } from 'vue-i18n';
   import { getResouceList } from '@/api/index';
-
   import { useStore } from 'vuex';
-
+  const activeName = ref('first')
   const store = useStore();
 
   const { t } = useI18n();
@@ -82,6 +80,31 @@
     orderList: [],
     skillList: [],
   });
+  
+  const teaminfo = reactive({
+      teamid: '',
+      teamName: '',
+      contact: '',
+      telephone: '',
+      address: '',
+      detailedAddress: '',
+      registrationAuthority: '',
+      regisDepartment: '',
+      teamProfile:'',
+  })
+
+  let review = reactive({
+    list: [{
+      name:'',
+      sex:'',
+      area:'',
+      address:'',
+      telephone:'',
+      mailbox:''
+    }]
+  })
+  
+ 
   const hour = new Date().getHours();
   const thisTime =
     hour < 8
@@ -120,24 +143,48 @@
   const isMobile = computed(() => {
     return store.getters['setting/isMobile'];
   });
-
+      
   const onGetResouceList = () => {
     getResouceList().then((res) => {
       const { list, prefix, orderList, skillList } = res.data;
-      Object.assign(state, { list, prefix, orderList, skillList });
+      Object.assign(state, { list, prefix, orderList, skillList});
     });
   };
-
+ 
   const handleToDetail = (url) => {
     window.open(url);
   };
-
+  const baseinfo = (teamid) =>{
+    indexinfo(teamid).then(res =>{
+      const {teamid,contact,teamName,telephone,address,detailedAddress,registrationAuthority,regisDepartment,teamProfile} = res.data;
+      Object.assign(teaminfo,{ teamid,contact,teamName,telephone,address,detailedAddress,registrationAuthority,regisDepartment,teamProfile})
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+  const basereviewed = (teamid) =>{
+    reviewed(teamid).then(res =>{
+      review.list = res.data 
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
   onBeforeMount(() => {
+    
     onGetResouceList();
+    baseinfo(1)
+    basereviewed(1)
   });
 </script>
 
+
 <style lang="scss" scoped>
+.demo-tabs > .el-tabs__content {
+  padding: 32px;
+  color: #6b778c;
+  font-size: 32px;
+  font-weight: 600;
+}
   .index-conntainer {
     width: $base-width;
     .head-card {

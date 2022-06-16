@@ -123,4 +123,25 @@ export const addOneUser= async (name, password, telephone, perid) => {
       perid,
     }
   });
+  
+};
+export const indexinfo = async (teamid) => {
+  return request({
+    url: 'volunteerTeam/selectOne',
+    method: 'get',
+    params: {
+      id: teamid
+    },
+    baseURL: 'http://192.168.1.147:8088',
+  });
+};
+export const reviewed = async (teamid) => {
+  return request({
+    url: 'personalData/end/getJoinIn',
+    method: 'get',
+    params: {
+      teamid: teamid
+    },
+    baseURL: 'http://192.168.1.147:8088',
+  });
 };
