@@ -21,21 +21,22 @@
       </div>
 
 
-      <el-dialog v-model="dialogFormVisible" title="项目详情"
-                 @close="resetForm('ruleForm')"
-                 :close-on-click-modal="false"
-                 :close-on-press-escape="false"
-                 width="1100px" top="10px">
-        <el-form :model="form">
-          <Addform ref="addform" v-model:ruleForm="ruleForm" v-model="ruleForm"></Addform>
-        </el-form>
-        <template #footer>
+ <el-dialog v-model="dialogFormVisible" title="项目详情" 
+ @close="resetForm('ruleForm')"
+ :draggable="true"
+ :close-on-click-modal="false"
+      :close-on-press-escape="false"
+      width="1100px" top="10px">
+    <el-form :model="form" >
+      <Addform ref="addform" @callback="callback"  v-model:ruleForm="ruleForm" v-model="ruleForm"></Addform>
+    </el-form>
+    <template #footer>
 
-      <span class="dialog-footer">
+      <!-- <span class="dialog-footer">
         <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false,submitpro()">
-        提交</el-button>
-      </span>
+         <el-button type="primary" @click="dialogFormVisible = false,submitpro()">
+        提交</el-button> 
+      </span> -->
         </template>
       </el-dialog>
     </div>
@@ -87,51 +88,52 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive, onBeforeMount } from "vue";
-import { CountTo } from "vue3-count-to";
-import Addform from "@/components/program/index.vue";
-import packpage from "../../../package.json";
-import { useI18n } from "vue-i18n";
-import { getResouceList } from "@/api/index";
-import { useStore } from "vuex";
-import { method } from "lodash-unified";
-import { tableData, search } from "@/api/program";
-import { ElMessage, ElMessageBox } from "element-plus";
-
-components: {
-  Addform;
-}
-const refform = ref(false);
-const dialogFormVisible = ref(false);
-const addform = ref(false);
-const formLabelWidth = "140px";
+  import { ref, computed, reactive, onBeforeMount } from 'vue';
+  import { CountTo } from 'vue3-count-to';
+  import Addform from '@/components/program/index.vue';
+  import packpage from '../../../package.json';
+  import { useI18n } from 'vue-i18n';
+  import { getResouceList } from '@/api/index';
+  import { useStore } from 'vuex';
+  import { method } from 'lodash-unified';
+  import { tableData,search} from '@/api/program';
+  import { ElMessage, ElMessageBox } from 'element-plus'
+  components: {
+    Addform
+  }
+const refform = ref(false)
+let dialogFormVisible = ref(false)
+const addform = ref(false)
+const formLabelWidth = '140px'
 const ruleForm = reactive({
-  pname: "",
-  location: "",
-  releaseDate: "",
-  projectDate: "",
-  recruitDate: "",
-  serviceObject: "",
-  volunteerUpport: "",
-  serviceDescription: "",
-  projectDetails: "",
-  postDesc: "",
-  postCondition: "",
-  postName: "",
-  targetNum: "",
-  type: []
-});
-
-const submitpro = () => {
-  console.log(addform.value);
+  pname:'',
+  location:'',
+  releaseDate:'',
+  projectDate:'',
+  recruitDate:'',
+  serviceObject:'',
+  volunteerUpport:'',
+  serviceDescription:'',
+  projectDetails:'',
+  postDesc:'',
+  postCondition:'',
+  postName:'',
+  targetNum:'',
+  type: [],
+})
+const callback = () =>{
+  dialogFormVisible.value = false
+}
+const submitpro = () =>{
+  console.log(addform.value)
   // addform.value.handleClose()
-  console.log(ruleForm.pname);
-};
-const resetForm = () => {
-  Object.keys(ruleForm).map(key => {
-    delete ruleForm[key];
-  });
-};
+  console.log(ruleForm.pname)
+}
+const resetForm = () =>{
+    Object.keys(ruleForm).map(key => {
+      delete ruleForm[key]
+    })
+}
 
 
 const formInline = reactive({
@@ -211,14 +213,14 @@ onMounted(() => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss" scoped>  
 .el-dialog {
-  .el-form {
-    max-height: 500px !important;
-    min-height: 50px;
-    overflow-y: auto;
+    .el-form {
+      max-height: 500px !important;
+      min-height: 50px;
+      overflow-y: auto;
+    }
   }
-}
 
 
 .el-button--text {

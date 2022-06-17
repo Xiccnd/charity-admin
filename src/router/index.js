@@ -48,67 +48,67 @@ export const asyncRoutes = [
     ]
   },
   //组件
-  {
-    path: "/comp",
-    component: Layout,
-    name: "Comp",
-    meta: { title: global.t("route.components"), icon: "icon-code" },
-    children: [
-      {
-        path: "/map",
-        name: "map",
-        component: () => import("../views/index/tabs/map.vue"),
-        meta: {
-          title: global.t("route.eleComponents"),
-          icon: "icon-code"
-        }
-      },
-      {
-        path: "/iconPark",
-        name: "IconPark",
-        component: () => import("@/views/icon/index.vue"),
-        meta: {
-          title: global.t("route.icons"),
-          icon: "icon-like"
-        }
-      },
-      {
-        path: "/chart",
-        name: "Chart",
-        component: () => import("@/views/echarts/index.vue"),
-        meta: {
-          title: global.t("route.charts"),
-          icon: "icon-chart-line"
-        },
-        children: [
-          {
-            path: "/line",
-            name: "Line",
-            component: () => import("@/views/echarts/line.vue"),
-            meta: {
-              title: global.t("route.lineChart")
-            }
-          },
-          {
-            path: "/bar",
-            name: "Bar",
-            component: () => import("@/views/echarts/bar.vue"),
-            meta: {
-              title: global.t("route.barChart")
-            }
-          },
-          {
-            path: "/otherChart",
-            name: "OtherChart",
-            component: () => import("@/views/echarts/other.vue"),
-            meta: {
-              title: global.t("route.mixedChart")
-            }
-          }
-        ]
-      }
-    ]
-  },
+  // {
+  //   path: "/comp",
+  //   component: Layout,
+  //   name: "Comp",
+  //   meta: { title: global.t("route.components"), icon: "icon-code" },
+  //   children: [
+  //     {
+  //       path: "/map",
+  //       name: "map",
+  //       component: () => import("../views/index/tabs/map.vue"),
+  //       meta: {
+  //         title: global.t("route.eleComponents"),
+  //         icon: "icon-code"
+  //       }
+  //     },
+  //     {
+  //       path: "/iconPark",
+  //       name: "IconPark",
+  //       component: () => import("@/views/icon/index.vue"),
+  //       meta: {
+  //         title: global.t("route.icons"),
+  //         icon: "icon-like"
+  //       }
+  //     },
+  //     {
+  //       path: "/chart",
+  //       name: "Chart",
+  //       component: () => import("@/views/echarts/index.vue"),
+  //       meta: {
+  //         title: global.t("route.charts"),
+  //         icon: "icon-chart-line"
+  //       },
+  //       children: [
+  //         {
+  //           path: "/line",
+  //           name: "Line",
+  //           component: () => import("@/views/echarts/line.vue"),
+  //           meta: {
+  //             title: global.t("route.lineChart")
+  //           }
+  //         },
+  //         {
+  //           path: "/bar",
+  //           name: "Bar",
+  //           component: () => import("@/views/echarts/bar.vue"),
+  //           meta: {
+  //             title: global.t("route.barChart")
+  //           }
+  //         },
+  //         {
+  //           path: "/otherChart",
+  //           name: "OtherChart",
+  //           component: () => import("@/views/echarts/other.vue"),
+  //           meta: {
+  //             title: global.t("route.mixedChart")
+  //           }
+  //         }
+  //       ]
+  //     }
+  //   ]
+  // },
   // {
   //   path: "/comp",
   //   component: Layout,
