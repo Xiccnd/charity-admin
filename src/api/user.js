@@ -12,8 +12,8 @@ export const login = async (data) => {
 
 export const getUserInfo = (accessToken) => {
   return request({
-    url: '/userInfo',
-    method: 'post',
+    url: "/userInfo",
+    method: "post",
     data: {
       [tokenName]: accessToken
     }
@@ -35,8 +35,10 @@ export const register = async () => {
 };
 export const LoginTeam = async () => {
   return request({
-    url: '/user/LoginTeam',
-    method: 'get',
-    baseURL: 'http://192.168.1.142:8282',
+
+    url: "/user/LoginTeam",
+    method: "get",
+    baseURL: "http://192.168.1.147:8088"
+
   });
 };

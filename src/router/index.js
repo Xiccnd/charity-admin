@@ -68,15 +68,16 @@ export const asyncRoutes = [
         },
       },
       {
-        path: '/programExamine',
-        name: 'ProgramExamine',
-        component: () => import('../views/volunteerprogram/programExamine.vue'),
+        path: "/programExamine",
+        name: "ProgramExamine",
+        component: () => import("../views/volunteerprogram/programExamine.vue"),
         meta: {
           title: "待审批",
           icon: 'icon-people',
         },
       },
     ],
+
 
   },
   {
@@ -114,10 +115,10 @@ export const asyncRoutes = [
     name: "UserPage",
     component: Layout,
     meta: {
-
       title: '个人中心',
       icon: 'icon-link-cloud-faild',
       permissions:['user']
+
 
     },
     children: [
@@ -212,7 +213,7 @@ export const asyncRoutes = [
         }
       }
     ]
-  },
+  }
 ];
 
 const router = createRouter({

@@ -1,4 +1,3 @@
-
 import request from "@/utils/request.js";
 
 export const tableData = async (teamid) => {
@@ -77,6 +76,7 @@ export const agree = async (id, teamid) => {
     baseURL: "http://192.168.1.142:8282"
   });
 };
+
 export const getAllUser = async (id, name) => {
   return request({
     url: "/user/usersUpData",
@@ -84,7 +84,31 @@ export const getAllUser = async (id, name) => {
     baseURL: "http://192.168.1.147:8088",
     data: {
       id,
-      name,
+      name
+    }
+  });
+};
+
+export const getAllTeam = async (teamid, teamName) => {
+  return request({
+    url: "/volunteerTeam/end/queryAll",
+    method: "get",
+    baseURL: "http://192.168.1.147:8088",
+    params: {
+      teamid,
+      teamName
+    }
+  });
+};
+
+export const getAllProject = async (pid, pname) => {
+  return request({
+    url: "/volunteerProgramDetails/end/selectAll",
+    method: "get",
+    baseURL: "http://192.168.1.147:8088",
+    params: {
+      pid,
+      pname
     }
   });
 };
@@ -95,24 +119,46 @@ export const getDetail = async (id) => {
     method: "get",
     baseURL: "http://192.168.1.147:8088",
     params: {
-      id,
+      id
     }
   });
 };
 
-export const deleteUser= async (id, perName) => {
+export const deleteUser = async (id, perName) => {
   return request({
     url: "user/deleteUser",
     method: "post",
     baseURL: "http://192.168.1.147:8088",
     data: {
       id,
-      perName,
+      perName
     }
   });
 };
 
-export const addOneUser= async (name, password, telephone, perid) => {
+export const deleteTeam = async (teamid) => {
+  return request({
+    url: "/volunteerTeam/delateByTeamID",
+    method: "get",
+    baseURL: "http://192.168.1.147:8088",
+    params: {
+      teamid,
+    }
+  });
+};
+
+export const deleteProject = async (pid) => {
+  return request({
+    url: "volunteerProgramDetails/end/DeleteProject",
+    method: "get",
+    baseURL: "http://192.168.1.147:8088",
+    params: {
+      pid,
+    }
+  });
+};
+
+export const addOneUser = async (name, password, telephone, perid) => {
   return request({
     url: "user/end/addUser",
     method: "post",
@@ -121,47 +167,67 @@ export const addOneUser= async (name, password, telephone, perid) => {
       name,
       password,
       telephone,
-      perid,
+      perid
     }
   });
-  
+
 };
 export const indexinfo = async (teamid) => {
   return request({
-    url: 'volunteerTeam/selectOne',
-    method: 'get',
+    url: "volunteerTeam/selectOne",
+    method: "get",
     params: {
       id: teamid
     },
-    baseURL: 'http://192.168.1.147:8088',
+    baseURL: "http://192.168.1.147:8088"
   });
 };
 export const reviewed = async (teamid) => {
   return request({
-    url: 'personalData/end/getJoinIn',
-    method: 'get',
+    url: "personalData/end/getJoinIn",
+    method: "get",
     params: {
       teamid: teamid
     },
-    baseURL: 'http://192.168.1.147:8088',
+    baseURL: "http://192.168.1.147:8088"
   });
 };
 export const proejectinfo = async (teamid) => {
   return request({
-    url: 'volunteerProgramDetailscensor/getAll',
-    method: 'get',
+    url: "volunteerProgramDetailscensor/getAll",
+    method: "get",
     params: {
       teamid: teamid
     },
-    baseURL: 'http://192.168.1.147:8088',
+    baseURL: "http://192.168.1.147:8088"
   });
 };
+
+export const updateInfo = async (uid, id, name, password, telephone, mailbox, qq, weixin, area) => {
+  return request({
+    url: "personalData/end/upData",
+    method: "post",
+    data: {
+      uid,
+      id,
+      name,
+      password,
+      telephone,
+      mailbox,
+      qq,
+      weixin,
+      area
+    },
+    baseURL: "http://192.168.1.147:8088"
+  });
+};
+
 export const datasubmit = async (
   teamid, pname, location, releaseDate, projectDate, recruitDate, serviceObject,
   volunteerUpport, serviceDescription, projectDetails, postDesc, postCondition, postName, targetNum, type) => {
   return request({
-    url: 'volunteerProgramDetailscensor/addTeamProject',
-    method: 'post',
+    url: "volunteerProgramDetailscensor/addTeamProject",
+    method: "post",
     data: {
       teamid,
       pname,
@@ -179,6 +245,6 @@ export const datasubmit = async (
       targetNum,
       type
     },
-    baseURL: 'http://192.168.1.147:8088',
+    baseURL: "http://192.168.1.147:8088"
   });
 };

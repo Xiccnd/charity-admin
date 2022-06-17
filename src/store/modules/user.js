@@ -1,4 +1,3 @@
-
 import { getUserInfo, login } from "@/api/user";
 import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,setUname,getUname,removeUname} from "@/utils/accessToken";
 
@@ -54,10 +53,10 @@ const actions = {
     commit("setPermissions", permissions);
   },
   async setAccessToken({ commit }, accessToken) {
-    commit('setAccessToken', accessToken);
+    commit("setAccessToken", accessToken);
   },
   async setTeamid({ commit }, teamid) {
-    commit('setTeamid', teamid);
+    commit("setTeamid", teamid);
   },
   async setUname({ commit }, uname) {
     commit('setUname', uname);
@@ -88,7 +87,7 @@ const actions = {
     }
   },
   async getUserInfo({ commit, state }) {
-    console.log("state.accessToken:"+state.accessToken);
+    console.log("state.accessToken:" + state.accessToken);
     const { data } = await getUserInfo(state.accessToken);
     if (!data) {
       ElMessage.error("验证失败，请重新登录...");
