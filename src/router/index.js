@@ -47,6 +47,7 @@ export const asyncRoutes = [
       }
     ]
   },
+
   {
     path: "/volunteerprogram",
     name: "Volunteerprogram",
@@ -64,7 +65,6 @@ export const asyncRoutes = [
         meta: {
           title: "已过审",
           icon: 'icon-personal-collection',
-          
         },
       },
       {
@@ -195,28 +195,6 @@ export const asyncRoutes = [
     ]
   },
   //管理员用户相关
-  // {
-  //   path: "/adminUser",
-  //   name: "adminUser",
-  //   component: Layout,
-  //   meta: {
-  //     title: "队伍相关",
-  //     icon: "icon-every-user",
-  //     permissions:['admin']
-  //   },
-  //   children: [
-  //     {
-  //       path: "/user_manage",
-  //       name: "user_manage",
-  //       component: () => import("../views/admin/user_manage.vue"),
-  //       meta: {
-  //         title: "用户管理",
-  //         icon: "icon-baby",
-  //         permissions:['admin'],
-  //       }
-  //     }
-  //   ]
-  // },
   {
     path: "/adminUser",
     component: Layout,

@@ -74,12 +74,12 @@
 
 
     <el-form-item label="服务类别" prop="type">
-      <el-checkbox-group v-model="ruleForm.type">
-        <el-checkbox label="Online activities" name="type" />
-        <el-checkbox label="Promotion activities" name="type" />
-        <el-checkbox label="Offline activities" name="type" />
-        <el-checkbox label="Simple brand exposure" name="type" />
-      </el-checkbox-group>
+      <el-radio-group v-model="ruleForm.type">
+        <el-radio label="Online activities" name="type" />
+        <el-radio label="Promotion activities" name="type" />
+        <el-radio label="Offline activities" name="type" />
+        <el-radio label="Simple brand exposure" name="type" />
+      </el-radio-group>
     </el-form-item>
 
     <el-form-item label="项目详情" prop="projectDetails">
@@ -87,7 +87,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="submitForm(ruleFormRef)"
-        >Create</el-button
+        >提交</el-button
       >
       <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
         <el-button @click="handleClose">Cancel</el-button>
@@ -98,24 +98,25 @@
 <script lang="ts" setup>
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
+import {datasubmit} from  '../../api/volunteer';
 
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
-pname:'',
-location:'',
-releaseDate:'',
-projectDate:'',
-recruitDate:'',
-serviceObject:'',
-volunteerUpport:'',
-serviceDescription:'',
-projectDetails:'',
-postDesc:'',
-postCondition:'',
-postName:'',
-targetNum:'',
-type: [],
+ pname:'',
+  location:'',
+  releaseDate:'',
+  projectDate:'',
+  recruitDate:'',
+  serviceObject:'',
+  volunteerUpport:'',
+  serviceDescription:'',
+  projectDetails:'',
+  postDesc:'',
+  postCondition:'',
+  postName:'',
+  targetNum:'',
+  type: [],
 })
 
 const fun = (count) =>{
@@ -168,20 +169,26 @@ pname: [
   // ],
   type: [
     {
-      type: 'array',
       required: true,
-      message: '请选择至少一个服务类别',
+      message: '请选择一个服务类别',
       trigger: 'change',
     },
   ],
 })
-
+const props = defineProps({
+  callback: Function
+})
 const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
     console.log(ruleForm)
-    
+    datasubmit(1, ruleForm.pname, ruleForm.location, ruleForm.releaseDate, ruleForm.projectDate, ruleForm.recruitDate, ruleForm.serviceObject,
+    ruleForm.volunteerUpport, ruleForm.serviceDescription, ruleForm.projectDetails, ruleForm.postDesc, ruleForm.postCondition, ruleForm.postName, ruleForm.targetNum, ruleForm.type)
+    .then(res =>{
+      alert("提交成功")
+      emits("callback")
+    })
     Object.keys(ruleForm).map(key => {
     delete ruleForm[key]
     })
@@ -192,15 +199,15 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   })
 }
 
-const emits = defineEmits(['update:ruleForm'])
+const emits = defineEmits(['update:ruleForm','callback'])
  
 //关闭的点击事件
-  const handleClose = () => {
-  console.log(1111111);
-  // emit("searchdata",123);
-  emits('update:ruleForm', false)
+  // const handleClose = () => {
+  // console.log(1111111);
+  // // emit("searchdata",123);
+  // emits('update:ruleForm', false)
 
-  }
+  // }
 
 const resetForm = (formEl: FormInstance | undefined) => {
   if (!formEl) return

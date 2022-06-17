@@ -8,7 +8,7 @@ export const tableData = async (teamid) => {
     params: {
       teamid: teamid
     },
-    baseURL: "http://192.168.1.147:8088"
+    baseURL: "http://192.168.1.142:8282"
   });
 };
 export const search = async (teamid, id, name) => {
@@ -20,7 +20,7 @@ export const search = async (teamid, id, name) => {
       id: id,
       name: name
     },
-    baseURL: "http://192.168.1.147:8088"
+    baseURL: "http://192.168.1.142:8282"
   });
 };
 export const del = async (id) => {
@@ -30,7 +30,7 @@ export const del = async (id) => {
     data: {
       id: id
     },
-    baseURL: "http://192.168.1.147:8088"
+    baseURL: "http://192.168.1.142:8282"
   });
 };
 export const cencortableData = async (teamid) => {
@@ -40,7 +40,7 @@ export const cencortableData = async (teamid) => {
     params: {
       teamid: teamid
     },
-    baseURL: "http://192.168.1.147:8088"
+    baseURL: "http://192.168.1.142:8282"
   });
 };
 export const censorsearch = async (teamid, id, name) => {
@@ -50,9 +50,9 @@ export const censorsearch = async (teamid, id, name) => {
     data: {
       teamid: teamid,
       id: id,
-      name: name
+      name: name  
     },
-    baseURL: "http://192.168.1.147:8088"
+    baseURL: "http://192.168.1.142:8282"
   });
 };
 export const refuse = async (id, teamid) => {
@@ -63,7 +63,7 @@ export const refuse = async (id, teamid) => {
       id: id,
       teamid: teamid
     },
-    baseURL: "http://192.168.1.147:8088"
+    baseURL: "http://192.168.1.142:8282"
   });
 };
 export const agree = async (id, teamid) => {
@@ -74,7 +74,7 @@ export const agree = async (id, teamid) => {
       id: id,
       teamid: teamid
     },
-    baseURL: "http://192.168.1.147:8088"
+    baseURL: "http://192.168.1.142:8282"
   });
 };
 export const getAllUser = async (id, name) => {
@@ -142,6 +142,42 @@ export const reviewed = async (teamid) => {
     method: 'get',
     params: {
       teamid: teamid
+    },
+    baseURL: 'http://192.168.1.147:8088',
+  });
+};
+export const proejectinfo = async (teamid) => {
+  return request({
+    url: 'volunteerProgramDetailscensor/getAll',
+    method: 'get',
+    params: {
+      teamid: teamid
+    },
+    baseURL: 'http://192.168.1.147:8088',
+  });
+};
+export const datasubmit = async (
+  teamid, pname, location, releaseDate, projectDate, recruitDate, serviceObject,
+  volunteerUpport, serviceDescription, projectDetails, postDesc, postCondition, postName, targetNum, type) => {
+  return request({
+    url: 'volunteerProgramDetailscensor/addTeamProject',
+    method: 'post',
+    data: {
+      teamid,
+      pname,
+      location,
+      releaseDate,
+      projectDate,
+      recruitDate,
+      serviceObject,
+      volunteerUpport,
+      serviceDescription,
+      projectDetails,
+      postDesc,
+      postCondition,
+      postName,
+      targetNum,
+      type
     },
     baseURL: 'http://192.168.1.147:8088',
   });
