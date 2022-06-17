@@ -185,7 +185,6 @@
       for(let i = 0;i<project.list.length;i++){
         if(project.list[i].mark == '0'){
           project.list[i].state="待审核"
-          console.log(project.list[i].state)
         }else{
           project.list[i].state="已审核"
         }

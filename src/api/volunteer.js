@@ -177,7 +177,7 @@ export const datasubmit = async (
       postCondition,
       postName,
       targetNum,
-      type
+      mark:type
     },
     baseURL: 'http://192.168.1.147:8088',
   });

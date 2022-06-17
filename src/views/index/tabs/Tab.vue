@@ -1,14 +1,14 @@
 <template>
-  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick" max-height="250">
+  <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
     <el-tab-pane label="待审核项目" name="first">
-      <el-table :data="tableData2" style="width: 100%">
-        <el-table-column fixed prop="pid" label="项目id" width="150" />
+      <el-table :data="tableData2 " style="width: 100%" max-height="250" >
+        <el-table-column sortable fixed prop="pid" label="项目id" width="150" />
         <el-table-column prop="pname" label="项目名称" width="120" />
         <el-table-column prop="postName" label="申请人" width="200" />
         <el-table-column prop="location" label="区域" width="350" />
-        <el-table-column prop="state" label="项目状态" width="200" />
+        <el-table-column sortable prop="state" label="项目状态" width="200" />
          <el-table-column fixed="right" label="Operations" width="137">
-          <template #default>
+          <template #default="scope">
             <el-button link type="primary" size="small" @click="btnClick('programExamine')"
               >详情</el-button
             >
@@ -17,7 +17,6 @@
       </el-table>
     </el-tab-pane>
     <el-tab-pane label="待审核人员" name="second">
- 
       <el-table :data="tableData" style="width: 100%" max-height="250">
         <el-table-column fixed prop="name" label="姓名" width="150" />
         <el-table-column prop="sex" label="性别" width="120" />
@@ -27,7 +26,7 @@
         <el-table-column prop="area" label="区域" width="120" />
         <el-table-column fixed="right" label="Operations" width="137">
           <template #default>
-            <el-button link type="primary" size="small" @click="btnClick('volunteerExamine')"
+            <el-button  link type="primary" size="small" @click="btnClick('volunteerExamine')"
               >详情</el-button
             >
           </template>
@@ -40,16 +39,13 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, ref ,reactive,toRaw,onBeforeUpdate, onBeforeMount, toRefs} from 'vue'
+import { onMounted, ref ,watch,reactive} from 'vue'
 import type { TabsPaneContext } from 'element-plus'
-import Table from './Table.vue'
 import { useRouter } from "vue-router";
 const activeName = ref('first')
-const router = useRouter();
+const router = useRouter(); 
 
 const handleClick = (tab: TabsPaneContext, event: Event) => {
-  
-  console.log(tab, event)
 }
 const btnClick = (index) => {
   router.push(index)
@@ -64,10 +60,6 @@ const props = defineProps({
     default: () => [] 
     }
 })
-onBeforeMount(() => {
-  const tableData = props.tableData
-  const tableData2 = props.tableData2
-});
 
 </script>
 <style>

@@ -75,10 +75,10 @@
 
     <el-form-item label="服务类别" prop="type">
       <el-radio-group v-model="ruleForm.type">
-        <el-radio label="Online activities" name="type" />
-        <el-radio label="Promotion activities" name="type" />
-        <el-radio label="Offline activities" name="type" />
-        <el-radio label="Simple brand exposure" name="type" />
+        <el-radio label="Online activities" value="Online activities" name="type" />
+        <el-radio label="Promotion activities" value="Promotion activities" name="type" />
+        <el-radio label="Offline activities" value="Offline activities" name="type" />
+        <el-radio label="Simple brand exposure" value="Simple brand exposure" name="type" />
       </el-radio-group>
     </el-form-item>
 
@@ -89,8 +89,7 @@
       <el-button type="primary" @click="submitForm(ruleFormRef)"
         >提交</el-button
       >
-      <el-button @click="resetForm(ruleFormRef)">Reset</el-button>
-        <el-button @click="handleClose">Cancel</el-button>
+      <el-button @click="resetForm(ruleFormRef)">重置</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -116,7 +115,7 @@ const ruleForm = reactive({
   postCondition:'',
   postName:'',
   targetNum:'',
-  type: [],
+  type: '',
 })
 
 const fun = (count) =>{
@@ -182,7 +181,6 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-    console.log(ruleForm)
     datasubmit(1, ruleForm.pname, ruleForm.location, ruleForm.releaseDate, ruleForm.projectDate, ruleForm.recruitDate, ruleForm.serviceObject,
     ruleForm.volunteerUpport, ruleForm.serviceDescription, ruleForm.projectDetails, ruleForm.postDesc, ruleForm.postCondition, ruleForm.postName, ruleForm.targetNum, ruleForm.type)
     .then(res =>{
@@ -191,7 +189,8 @@ const submitForm = async (formEl: FormInstance | undefined) => {
     })
     Object.keys(ruleForm).map(key => {
     delete ruleForm[key]
-    })
+    formEl.resetFields()
+    }) 
     } else {
       console.log('error submit!', fields)
       alert("请完善相关信息")
