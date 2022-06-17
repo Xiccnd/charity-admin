@@ -6,15 +6,9 @@
         <el-table-column prop="pname" label="项目名称" width="120" />
         <el-table-column prop="postName" label="申请人" width="200" />
         <el-table-column prop="location" label="区域" width="350" />
-<<<<<<< HEAD
         <el-table-column sortable prop="state" label="项目状态" width="200" />
          <el-table-column fixed="right" label="Operations" width="137">
           <template #default="scope">
-=======
-        <el-table-column prop="state" label="项目状态" width="200" />
-        <el-table-column fixed="right" label="Operations" width="137">
-          <template #default>
->>>>>>> fbda24b38132c6c25ae5a5644e4d49a52ab40cd1
             <el-button link type="primary" size="small" @click="btnClick('programExamine')"
             >详情
             </el-button

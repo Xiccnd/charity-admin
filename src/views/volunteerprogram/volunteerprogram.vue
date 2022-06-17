@@ -29,14 +29,6 @@
         <el-form :model="form">
           <Addform ref="addform" v-model:ruleForm="ruleForm" v-model="ruleForm"></Addform>
         </el-form>
-        <template #footer>
-
-      <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false,submitpro()">
-        提交</el-button>
-      </span>
-        </template>
       </el-dialog>
     </div>
   </div>

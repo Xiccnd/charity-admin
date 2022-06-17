@@ -55,8 +55,9 @@
 </script>
 
 <script setup>
-  import { ref, computed, reactive, onBeforeMount, onMounted,toRaw} from 'vue';
+  import { ref, computed, reactive, onBeforeMount} from 'vue';
   import {indexinfo,reviewed,proejectinfo} from  '../../api/volunteer';
+  import { getTeamid} from '@/utils/accessToken';
   import { CountTo } from 'vue3-count-to';
   import Description from 'views/index/descriptions/Description.vue';
   import Collapse from 'views/index/descriptions/Collapse.vue';
@@ -195,9 +196,9 @@
   }
   onBeforeMount(() => {
     onGetResouceList();
-    baseinfo(1)
-    basereviewed(1)
-    baseproject(1)
+    baseinfo(getTeamid())
+    basereviewed(getTeamid())
+    baseproject(getTeamid())
     
   });
 </script>
