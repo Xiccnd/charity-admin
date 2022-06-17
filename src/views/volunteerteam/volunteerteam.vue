@@ -62,7 +62,7 @@
 <script setup>
 
   import store from '@/store';
-  import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,getTeamid} from '@/utils/accessToken';
+  import { getTeamid} from '@/utils/accessToken';
   import { ref, computed, reactive, onBeforeMount } from 'vue';
   import { CountTo } from 'vue3-count-to';
   import Echarts from '@/components/Echarts/index.vue';
@@ -85,7 +85,7 @@ const tableDatalist = reactive({
   currentRowIndex: 1,
   pageSize: 3,
   currentPage: 1,
-  teamid: 1,
+  teamid:getTeamid(),
   id: 1,
   list: [{
     id: "",
@@ -149,17 +149,9 @@ const selectAll = () => {
 const handlePageChange = (pageNum) =>{
       console.log(pageNum)
       tableDatalist.currentPage=pageNum
-      // this.searchItem.limit = this.pageSize;
-      // this.searchItem.page = pageNum;
-      // this.currentPageNum = this.searchItem.page;
-      // this.search(this.searchItem);
     }
 onMounted(() => {
      selectAll();
-    //  console.log(hasto)
-    let num = getTeamid()
-    console.log("getTeamid:"+getTeamid())
-    console.log("num:"+num)
     });
     
 </script>

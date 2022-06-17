@@ -47,82 +47,14 @@ export const asyncRoutes = [
       }
     ]
   },
-  //组件
-  {
-    path: "/comp",
-    component: Layout,
-    name: "Comp",
-    meta: { title: global.t("route.components"), icon: "icon-code" },
-    children: [
-      {
-        path: "/element",
-        name: "ElementComp",
-        component: () => import("@/views/element/index.vue"),
-        meta: {
-          title: global.t("route.eleComponents"),
-          icon: "icon-code"
-        }
-      },
-      {
-        path: "/iconPark",
-        name: "IconPark",
-        component: () => import("@/views/icon/index.vue"),
-        meta: {
-          title: global.t("route.icons"),
-          icon: "icon-like"
-        }
-      },
-      {
-        path: "/chart",
-        name: "Chart",
-        component: () => import("@/views/echarts/index.vue"),
-        meta: {
-          title: global.t("route.charts"),
-          icon: "icon-chart-line"
-        },
-        children: [
-          {
-            path: "/line",
-            name: "Line",
-            component: () => import("@/views/echarts/line.vue"),
-            meta: {
-              title: global.t("route.lineChart")
-            }
-          },
-          {
-            path: "/bar",
-            name: "Bar",
-            component: () => import("@/views/echarts/bar.vue"),
-            meta: {
-              title: global.t("route.barChart")
-            }
-          },
-          {
-            path: "/otherChart",
-            name: "OtherChart",
-            component: () => import("@/views/echarts/other.vue"),
-            meta: {
-              title: global.t("route.mixedChart")
-            }
-          }
-        ]
-      }
-    ]
-  },
-
-  // {
-  //   path: '*',
-  //   redirect: '/404',
-  //   hidden: true,
-  // },
-
   {
     path: "/volunteerprogram",
     name: "Volunteerprogram",
     component: Layout,
     meta: {
       title: "志愿项目",
-      icon: "icon-peoples"
+      icon: "icon-peoples",
+      permissions:['user']
     },
     children: [
       {
@@ -131,9 +63,8 @@ export const asyncRoutes = [
         component: () => import("../views/volunteerprogram/volunteerprogram.vue"),
         meta: {
           title: "已过审",
-
           icon: 'icon-personal-collection',
-          permissions:['user']
+          
         },
       },
       {
@@ -143,7 +74,6 @@ export const asyncRoutes = [
         meta: {
           title: "待审批",
           icon: 'icon-people',
-          permissions:['admin']
         },
       },
     ],
@@ -155,7 +85,8 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
       title: "志愿队伍",
-      icon: "icon-peoples"
+      icon: "icon-peoples",
+      permissions:['user']
     },
     children: [
       {
@@ -186,7 +117,7 @@ export const asyncRoutes = [
 
       title: '个人中心',
       icon: 'icon-link-cloud-faild',
-      permissions:['admin']
+      permissions:['user']
 
     },
     children: [
@@ -208,7 +139,8 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
       title: "项目相关",
-      icon: "icon-projector"
+      icon: "icon-projector",
+      permissions:['admin']
     },
     children: [
       {
@@ -238,7 +170,8 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
       title: "队伍相关",
-      icon: "icon-every-user"
+      icon: "icon-every-user",
+      permissions:['admin']
     },
     children: [
       {
@@ -262,10 +195,34 @@ export const asyncRoutes = [
     ]
   },
   //管理员用户相关
+  // {
+  //   path: "/adminUser",
+  //   name: "adminUser",
+  //   component: Layout,
+  //   meta: {
+  //     title: "队伍相关",
+  //     icon: "icon-every-user",
+  //     permissions:['admin']
+  //   },
+  //   children: [
+  //     {
+  //       path: "/user_manage",
+  //       name: "user_manage",
+  //       component: () => import("../views/admin/user_manage.vue"),
+  //       meta: {
+  //         title: "用户管理",
+  //         icon: "icon-baby",
+  //         permissions:['admin'],
+  //       }
+  //     }
+  //   ]
+  // },
   {
     path: "/adminUser",
-    name: "adminUser",
     component: Layout,
+    redirect: "/adminUser",
+    name: "adminUser",
+    permissions:['admin'],
     children: [
       {
         path: "/user_manage",
@@ -273,7 +230,7 @@ export const asyncRoutes = [
         component: () => import("../views/admin/user_manage.vue"),
         meta: {
           title: "用户管理",
-          icon: "icon-baby",
+          icon: "icon-baby",  
         }
       }
     ]

@@ -96,6 +96,7 @@
   import { useStore } from 'vuex';
   import { method } from 'lodash-unified';
   import { tableData,search} from '@/api/program';
+    import { getTeamid} from '@/utils/accessToken';
   import { ElMessage, ElMessageBox } from 'element-plus'
   components: {
     Addform
@@ -142,7 +143,7 @@ const tableDatalist = reactive({
   currentRowIndex: 1,
   pageSize: 3,
   currentPage: 1,
-  teamid: 1,
+  teamid: getTeamid,
   id: 1,
   list: [{
     pname: "",

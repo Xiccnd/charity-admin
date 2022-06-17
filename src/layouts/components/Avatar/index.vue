@@ -30,11 +30,13 @@ import { ElMessageBox } from "element-plus";
 import { setting } from "@/config/setting";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-
+import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,getUname} from '@/utils/accessToken';
+const uname=getUname();
 const { title, recordRoute } = setting;
 const { t } = useI18n();
 const avatar = ref("https://i.gtimg.cn/club/item/face/img/2/15922_100.gif");
-const userName = ref("hu-snail");
+const userName = ref(uname);
+
 const store = useStore();
 const router = useRouter();
 
@@ -50,7 +52,7 @@ const handleCommand = (command) => {
     case "logout":
       handleLogout();
       break;
-    case "github":
+    case "前往官网":
       window.open("https://github.com/hu-snail/vue3-admin-element-template");
       break;
     default:
@@ -70,7 +72,9 @@ const handleLogout = () => {
       if (recordRoute) {
         const { fullPath } = router.currentRoute._value;
         console.log(fullPath);
-        router.push({ path: `/login?redirect=${fullPath}` });
+        let url ='http://localhost:8082/volunteer_login2';
+        window.location.href =url;
+        // router.push({ path: `/login?redirect=${fullPath}` });
       } else {
         router.push("/login");
       }

@@ -1,6 +1,6 @@
 
 import { getUserInfo, login } from "@/api/user";
-import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid} from "@/utils/accessToken";
+import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,setUname,getUname,removeUname} from "@/utils/accessToken";
 
 import { setting } from "@/config/setting";
 
@@ -17,14 +17,16 @@ const state = {
   accessToken: getAccessToken(),
   username: "",
   avatar: "",
-  permissions: []
+  permissions: [],
+  uname:getUname(),
 };
 
 const getters = {
   accessToken: (state) => state.accessToken,
   username: (state) => state.username,
   avatar: (state) => state.avatar,
-  permissions: (state) => state.permissions
+  permissions: (state) => state.permissions,
+  uname:(state) => state.uname,
 };
 const mutations = {
   setAccessToken(state, accessToken) {
@@ -33,6 +35,9 @@ const mutations = {
   },
   setTeamid(state, teamid) {
     setTeamid(teamid);
+  },
+  setUname(state, uname) {
+    setUname(uname);
   },
   setUsername(state, username) {
     state.username = username;
@@ -53,6 +58,9 @@ const actions = {
   },
   async setTeamid({ commit }, teamid) {
     commit('setTeamid', teamid);
+  },
+  async setUname({ commit }, uname) {
+    commit('setUname', uname);
   },
   async login({ commit }, userInfo) {
     const { data } = await login(userInfo);
@@ -105,7 +113,9 @@ const actions = {
   resetAccessToken({ commit }) {
     commit("setPermissions", []);
     commit("setAccessToken", "");
+    commit("setUname", "");
     removeAccessToken();
+    removeUname();
   }
 };
 export default { state, getters, mutations, actions };

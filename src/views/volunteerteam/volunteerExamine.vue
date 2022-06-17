@@ -62,6 +62,7 @@
 <script setup>
   import { ref, computed, reactive, onBeforeMount } from 'vue';
   import { CountTo } from 'vue3-count-to';
+    import { getTeamid} from '@/utils/accessToken';
   import Echarts from '@/components/Echarts/index.vue';
   import packpage from '../../../package.json';
   import { useI18n } from 'vue-i18n';
@@ -82,7 +83,7 @@ const tableDatalist = reactive({
      currentRowIndex:1,
      pageSize:3,
      currentPage:1,
-     teamid:1,
+     teamid:getTeamid(),
      id:1,
      list:[{
               id:'',  

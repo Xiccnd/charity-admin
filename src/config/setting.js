@@ -45,6 +45,8 @@ export const setting = {
   //token在localStorage、sessionStorage存储的key的名称
   tokenTableName: 'vue3-admin-template',
   //
+  Uname:'uname',
+  //
   teamidName: 'team-id',
   // lang storage
   langKey: "i18nLang",
