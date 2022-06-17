@@ -60,7 +60,10 @@
         <el-input v-model="userDetail.id" disabled />
       </el-form-item>
       <el-form-item label="用户名" :label-width="detailFormLabelWidth">
-        <el-input v-model="userDetail.uname" disabled/>
+        <el-input v-model="userDetail.uname" disabled />
+      </el-form-item>
+      <el-form-item label="密码" :label-width="detailFormLabelWidth">
+        <el-input v-model="userDetail.password" @input="change($event)" />
       </el-form-item>
       <el-form-item label="姓名" :label-width="detailFormLabelWidth">
         <el-input v-model="userDetail.name" @input="change($event)" />
@@ -84,7 +87,7 @@
     <template #footer>
       <span class="dialog-footer">
         <el-button @click="detailFormVisible = false; cancelChange()">取消</el-button>
-        <el-button type="primary" @click="changeInfo(); addFormVisible = false">修改</el-button>
+        <el-button type="primary" @click="changeInfo(); detailFormVisible = false">修改</el-button>
       </span>
     </template>
   </el-dialog>
@@ -111,9 +114,8 @@
 
 <script lang="ts" setup>
 import { Search } from "@element-plus/icons-vue";
-import { onBeforeMount, onBeforeUpdate, onMounted, reactive, ref } from "vue";
+import { onMounted, reactive, ref } from "vue";
 import { getAllUser, getDetail, deleteUser, addOneUser, updateInfo } from "../../api/volunteer";
-import { h } from "vue";
 import { ElMessage, ElMessageBox } from "element-plus";
 import type { Action } from "element-plus";
 
@@ -126,11 +128,10 @@ const cancelChange = () => {
     type: "info",
     message: "取消修改"
   });
-}
+};
 
 const changeInfo = () => {
-  updateInfo(userDetail.id, userDetail.name, userDetail.telephone, userDetail.mailbox, userDetail.qq, userDetail.weixin, userDetail.area).then(res => {
-    detailFormVisible.value = false;
+  updateInfo(userDetail.uid, userDetail.id, userDetail.name, userDetail.password, userDetail.telephone, userDetail.mailbox, userDetail.qq, userDetail.weixin, userDetail.area).then(res => {
     ElMessage({
       type: "success",
       message: "修改成功"
@@ -174,8 +175,11 @@ const openDetail = (e) => {
     id = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   }
   getDetail(id).then(res => {
-    userDetail = res.data;
-    console.log(userDetail.name);
+    userDetail = res.data.personalData;
+    userDetail.password = res.data.password
+    userDetail.uid = res.data.uid
+    console.log(res.data);
+    console.log(userDetail.uid);
     detailFormVisible.value = true;
   }).catch(err => {
     console.log(err);
@@ -197,7 +201,7 @@ const openDelete = (e) => {
     perName = e.target.parentElement.parentElement.parentElement.childNodes[3].innerText;
   }
   getDetail(id).then(res => {
-    userDetail = res.data;
+    userDetail = res.data.personalData;
     ElMessageBox({
       title: "删除用户",
       message: "确认删除" + userDetail.uname + "吗?",
@@ -253,8 +257,10 @@ let selectUser = reactive({
 });
 
 let userDetail = reactive({
+  uid: "",
   id: "",
   name: "",
+  password: "",
   uname: "",
   telephone: "",
   mailbox: "",
