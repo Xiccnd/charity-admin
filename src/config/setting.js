@@ -43,9 +43,9 @@ export const setting = {
   //是否开启登录拦截
   loginInterception: false,
   //token在localStorage、sessionStorage存储的key的名称
-  tokenTableName: 'vue3-admin-template',
+  tokenTableName: "vue3-admin-template",
   //
-  teamidName: 'team-id',
+  teamidName: "team-id",
   // lang storage
   langKey: "i18nLang",
   // theme storage

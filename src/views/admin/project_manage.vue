@@ -147,11 +147,7 @@ const tableDatalist = reactive({
     statusName: "",
     prop: "",
     pid: ""
-  }
-
-
-  ]
-
+  }]
 });
 const onSubmit = () => {
   search(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
@@ -182,8 +178,6 @@ const handleClick = (e) => {
   } else {
     console.log("你取消了操作");
   }
-
-
 };
 const selectAll = () => {
   tableData(tableDatalist.teamid).then(res => {

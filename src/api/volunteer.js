@@ -1,4 +1,3 @@
-
 import request from "@/utils/request.js";
 
 export const tableData = async (teamid) => {
@@ -84,7 +83,7 @@ export const getAllUser = async (id, name) => {
     baseURL: "http://192.168.1.147:8088",
     data: {
       id,
-      name,
+      name
     }
   });
 };
@@ -95,24 +94,24 @@ export const getDetail = async (id) => {
     method: "get",
     baseURL: "http://192.168.1.147:8088",
     params: {
-      id,
+      id
     }
   });
 };
 
-export const deleteUser= async (id, perName) => {
+export const deleteUser = async (id, perName) => {
   return request({
     url: "user/deleteUser",
     method: "post",
     baseURL: "http://192.168.1.147:8088",
     data: {
       id,
-      perName,
+      perName
     }
   });
 };
 
-export const addOneUser= async (name, password, telephone, perid) => {
+export const addOneUser = async (name, password, telephone, perid) => {
   return request({
     url: "user/end/addUser",
     method: "post",
@@ -121,38 +120,56 @@ export const addOneUser= async (name, password, telephone, perid) => {
       name,
       password,
       telephone,
-      perid,
+      perid
     }
   });
-  
+
 };
 export const indexinfo = async (teamid) => {
   return request({
-    url: 'volunteerTeam/selectOne',
-    method: 'get',
+    url: "volunteerTeam/selectOne",
+    method: "get",
     params: {
       id: teamid
     },
-    baseURL: 'http://192.168.1.147:8088',
+    baseURL: "http://192.168.1.147:8088"
   });
 };
 export const reviewed = async (teamid) => {
   return request({
-    url: 'personalData/end/getJoinIn',
-    method: 'get',
+    url: "personalData/end/getJoinIn",
+    method: "get",
     params: {
       teamid: teamid
     },
-    baseURL: 'http://192.168.1.147:8088',
+    baseURL: "http://192.168.1.147:8088"
   });
 };
 export const proejectinfo = async (teamid) => {
   return request({
-    url: 'volunteerProgramDetailscensor/getAll',
-    method: 'get',
+    url: "volunteerProgramDetailscensor/getAll",
+    method: "get",
     params: {
       teamid: teamid
     },
-    baseURL: 'http://192.168.1.147:8088',
+    baseURL: "http://192.168.1.147:8088"
   });
 };
+
+export const updateInfo = async (id, name, telephone, mailbox, qq, weixin, area) => {
+  return request({
+    url: "personalData/end/upData",
+    method: "post",
+    data: {
+      id,
+      name,
+      telephone,
+      mailbox,
+      qq,
+      weixin,
+      area
+    },
+    baseURL: "http://192.168.1.147:8088"
+  });
+};
+

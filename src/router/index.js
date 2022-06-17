@@ -192,21 +192,21 @@ export const asyncRoutes = [
         meta: {
           title: "已过审",
 
-          icon: 'icon-personal-collection',
+          icon: "icon-personal-collection"
           // permissions:['user']
-        },
+        }
       },
       {
-        path: '/programExamine',
-        name: 'ProgramExamine',
-        component: () => import('../views/volunteerprogram/programExamine.vue'),
+        path: "/programExamine",
+        name: "ProgramExamine",
+        component: () => import("../views/volunteerprogram/programExamine.vue"),
         meta: {
           title: "待审批",
-          icon: 'icon-people',
-          permissions:['admin']
-        },
-      },
-    ],
+          icon: "icon-people",
+          permissions: ["admin"]
+        }
+      }
+    ]
 
   },
   {
@@ -244,9 +244,9 @@ export const asyncRoutes = [
     component: Layout,
     meta: {
 
-      title: '个人中心',
-      icon: 'icon-link-cloud-faild',
-      permissions:['admin']
+      title: "个人中心",
+      icon: "icon-link-cloud-faild",
+      permissions: ["admin"]
 
     },
     children: [
@@ -333,11 +333,11 @@ export const asyncRoutes = [
         component: () => import("../views/admin/user_manage.vue"),
         meta: {
           title: "用户管理",
-          icon: "icon-baby",
+          icon: "icon-baby"
         }
       }
     ]
-  },
+  }
 ];
 
 const router = createRouter({
