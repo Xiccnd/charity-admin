@@ -113,6 +113,18 @@ export const getAllProject = async (pid, pname) => {
   });
 };
 
+export const getVerifyTeam = async (teamid, teamName) => {
+  return request({
+    url: "volunteerTeamcensor/queryAll",
+    method: "get",
+    baseURL: "http://192.168.1.147:8088",
+    params: {
+      teamid,
+      teamName
+    }
+  });
+};
+
 export const getDetail = async (id) => {
   return request({
     url: "personalData/selectOne",
@@ -154,6 +166,28 @@ export const deleteProject = async (pid) => {
     baseURL: "http://192.168.1.147:8088",
     params: {
       pid,
+    }
+  });
+};
+
+export const teamPass = async (teamid) => {
+  return request({
+    url: "/volunteerTeamcensor/update",
+    method: "get",
+    baseURL: "http://192.168.1.147:8088",
+    params: {
+      teamid,
+    }
+  });
+};
+
+export const teamNotPass = async (teamid) => {
+  return request({
+    url: "volunteerTeamcensor/delete",
+    method: "get",
+    baseURL: "http://192.168.1.147:8088",
+    params: {
+      teamid,
     }
   });
 };
