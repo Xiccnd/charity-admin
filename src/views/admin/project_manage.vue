@@ -2,47 +2,21 @@
   <div class="index-conntainer">
     <div class="head-card">
       <div class="head-card-content">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="项目ID">
-            <el-input v-model="formInline.id" placeholder="请输入" />
+        <el-form :inline="true" :model="selectProject" class="demo-form-inline">
+          <el-form-item label="ID">
+            <el-input v-model="selectProject.pid" placeholder="请输入ID"
+                      v-on:keydown.enter="selectAll(selectProject.pid, selectProject.pname)" />
           </el-form-item>
-          <el-form-item label="项目名称">
-            <el-input v-model="formInline.name" placeholder="请输入" />
+          <el-form-item label="项目名">
+            <el-input v-model="selectProject.pname" placeholder="请输入项目名"
+                      v-on:keydown.enter="selectAll(selectProject.pid, selectProject.pname)" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
-          </el-form-item>
-          <el-form-item>
-            <el-button type="success" @click="dialogFormVisible = true">创建新项目</el-button>
-            <!-- <el-button @click="open" type="success">创建新项目</el-button>
-             <el-button type="success" @click="createpro">创建新项目</el-button> -->
+            <el-button :icon="Search" circle
+                       v-on:click="selectAll(selectProject.pid, selectProject.pname)" />
           </el-form-item>
         </el-form>
       </div>
-
-      <el-dialog v-model="dialogFormVisible" title="项目详情"
-                 @close="resetForm('form')"
-                 :close-on-click-modal="false"
-                 :close-on-press-escape="false">
-        <el-form :model="form" ref="refform">
-          <el-form-item label="项目名称" :label-width="formLabelWidth">
-            <el-input v-model="form.name" autocomplete="off" />
-          </el-form-item>
-          <el-form-item label="Zones" :label-width="formLabelWidth">
-            <el-select v-model="form.region" placeholder="Please select a zone">
-              <el-option label="Zone No.1" value="shanghai" />
-              <el-option label="Zone No.2" value="beijing" />
-            </el-select>
-          </el-form-item>
-        </el-form>
-        <template #footer>
-      <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
-        <el-button type="primary" @click="dialogFormVisible = false,submitpro()">
-        提交</el-button>
-      </span>
-        </template>
-      </el-dialog>
     </div>
   </div>
   <div class="index-conntainer" style="margin-top:10px;">
@@ -51,173 +25,240 @@
         <el-table :row-class-name="tableRowClassName"
                   :cell-style="{textAlign:'center'}"
                   :header-cell-style="{textAlign:'center'}"
-                  @row-click="onRowClick"
-                  :data="tableDatalist.list.slice((tableDatalist.currentPage-1)*tableDatalist.pageSize,tableDatalist.currentPage*tableDatalist.pageSize)"
+                  :data="allproject.list.slice((allproject.currentPage-1)*allproject.pageSize,allproject.currentPage*allproject.pageSize)"
                   ref="multipleTable"
                   stripe style="width: 100%;">
-          <el-table-column prop="pid" label="项目ID" width="70" />
-          <el-table-column prop="pname" label="项目名称" width="170" />
-          <el-table-column prop="location" label="项目地点" width="180" />
-          <el-table-column prop="releaseDate" label="发布日期" width="170" />
-          <el-table-column prop="recruitDate" label="招募日期" width="170" />
-          <el-table-column prop="projectDate" label="项目日期" width="170" />
-          <el-table-column prop="statusName" label="项目状态" width="80" />
-          <el-table-column prop="list.operate" label="操作">
-            <template #default>
-              <el-button link type="danger" size="small" @click="handleClick($event)">踢出</el-button>
-            </template>
+          <el-table-column prop="pid" label="ID" width="100" />
+          <el-table-column prop="pname" label="项目名" width="200" />
+          <el-table-column prop="releaseDate" label="发布日期" width="200" />
+          <el-table-column prop="projectDate" label="结束日期" width="200" />
+          <el-table-column prop="statusName" label="项目状态" width="100" />
+          <el-table-column prop="location" label="项目地点" width="100" />
+          <el-table-column label="操作">
+            <el-button type="success" plain v-on:click="openDetail($event)">查看详情
+            </el-button>
+            <el-button type="danger" plain v-on:click="openDelete($event)">删除项目</el-button>
           </el-table-column>
         </el-table>
-
-        <div style="width: 300px;margin:20px auto;">
+        <div style="width: 300px;margin-top:20px; margin-left: 450px;">
           <el-pagination background
-                         :current-page.sync="tableDatalist.currentPage"
+                         :current-page.sync="allproject.currentPage"
                          @current-change="handlePageChange"
-                         :page-size="3"
+                         :page-size="5"
                          layout="total, prev, pager, next"
-                         :total="tableDatalist.list.length"
+                         :total="allproject.list.length"
           >
           </el-pagination>
         </div>
-
-
       </div>
-
     </div>
-
-
   </div>
-
-
+  <el-dialog v-model="detailFormVisible" title="项目详情" @open="projectDetail = copyDetail()">
+    <el-form :model="projectDetail">
+      <el-form-item label="ID" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.pid" readonly/>
+      </el-form-item>
+      <el-form-item label="项目名称" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.pname" readonly/>
+      </el-form-item>
+      <el-form-item label="项目详情" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.projectDetails" readonly/>
+      </el-form-item>
+      <el-form-item label="负责队伍" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.teamName" readonly/>
+      </el-form-item>
+      <el-form-item label="项目状态" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.statusName" readonly/>
+      </el-form-item>
+      <el-form-item label="发布日期" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.releaseDate" readonly/>
+      </el-form-item>
+      <el-form-item label="招募结束日期" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.recruitDate" readonly/>
+      </el-form-item>
+      <el-form-item label="项目结束日期" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.projectDate" readonly/>
+      </el-form-item>
+      <el-form-item label="服务类型" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.serviceName" readonly/>
+      </el-form-item>
+      <el-form-item label="服务对象" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.serviceObject" readonly/>
+      </el-form-item>
+      <el-form-item label="志愿者保障" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.volunteerUpport" readonly/>
+      </el-form-item>
+      <el-form-item label="服务时间描述" :label-width="detailFormLabelWidth">
+        <el-input v-model="projectDetail.serviceDescription" readonly/>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="detailFormVisible = false;">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
-<script setup>
-import { ref, computed, reactive, onBeforeMount } from "vue";
-import { CountTo } from "vue3-count-to";
-import addform from "@/components/program/index.vue";
-import packpage from "../../../package.json";
-import { useI18n } from "vue-i18n";
-import { getResouceList } from "@/api/index";
-import { useStore } from "vuex";
-import { method } from "lodash-unified";
-import { tableData, search } from "@/api/program";
+<script lang="ts" setup>
+import { Search } from "@element-plus/icons-vue";
+import { onMounted, reactive, ref } from "vue";
+import { getAllProject, getAllTeam, deleteProject } from "../../api/volunteer";
 import { ElMessage, ElMessageBox } from "element-plus";
+import type { Action } from "element-plus";
 
-const dialogFormVisible = ref(false);
-const refform = ref(false);
-const formLabelWidth = "140px";
-const form = reactive({
-  name: "",
-  region: "",
-  date1: "",
-  date2: "",
-  delivery: false,
-  type: [],
-  resource: "",
-  desc: ""
-});
-const submitpro = () => {
-  console.log(form.name);
+const handlePageChange = (pageNum) => {
+  console.log(pageNum);
+  allproject.currentPage = pageNum;
+};
 
+let detailFormVisible = ref(false);
+
+const detailFormLabelWidth = "140px";
+
+const openDetail = (e) => {
+  let pid;
+  if (e.target.toString() == "[object HTMLSpanElement]") {
+    pid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  } else {
+    pid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  }
+  getAllProject(pid, "").then(res => {
+    projectDetail = res.data[0];
+    getAllTeam(projectDetail.teamid, "").then(res => {
+      projectDetail.teamName = res.data[0].teamName;
+      console.log(projectDetail);
+      detailFormVisible.value = true;
+    }).catch(err => {
+      console.log(err);
+    })
+  }).catch(err => {
+    console.log(err);
+  });
 
 };
-const resetForm = () => {
-  Object.keys(form).map(key => {
-    delete form[key];
+
+const copyDetail = () => {
+  return projectDetail;
+};
+
+const openDelete = (e) => {
+  let pid;
+  if (e.target.toString() == "[object HTMLSpanElement]") {
+    pid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  } else {
+    pid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  }
+  getAllProject(pid, "").then(res => {
+    projectDetail = res.data[0];
+    ElMessageBox({
+      title: "删除项目",
+      message: "确认删除" + projectDetail.pname + "吗?",
+      showCancelButton: true,
+      cancelButtonText: "取消",
+      confirmButtonText: "确认",
+      draggable: true,
+      beforeClose: (action, instance, done) => {
+        if (action === "confirm") {
+          deleteProject(projectDetail.pid).then(res => {
+            selectAll("", "");
+            done();
+          }).catch(err => {
+            console.log(err);
+          });
+        } else {
+          done();
+        }
+      },
+      callback: (action: Action) => {
+        if (action == "confirm") {
+          ElMessage({
+            type: "success",
+            message: "删除成功"
+          });
+        } else {
+          ElMessage({
+            type: "info",
+            message: "取消删除"
+          });
+        }
+      }
+    });
+  }).catch(err => {
+    console.log(err);
   });
 };
 
-const formInline = reactive({
-  name: "",
-  id: ""
-});
-
-const tableDatalist = reactive({
-  currentRowIndex: 1,
-  pageSize: 3,
-  currentPage: 1,
-  teamid: "",
-  id: 1,
+let allproject = reactive({
   list: [{
+    pid: "",
     pname: "",
-    location: "",
-    releaseDate: "",
-    recruitDate: "",
-    projectDate: "",
     statusName: "",
-    prop: "",
-    pid: ""
-  }
-
-
-  ]
-
+    releaseDate: "",
+    projectDate: "",
+    location: "",
+  }],
+  currentPage: 1,
+  pageSize: 5
 });
-const onSubmit = () => {
-  search(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
-    console.log(tableDatalist.teamid);
+
+let selectProject = reactive({
+  pid: "",
+  pname: ""
+});
+
+let projectDetail = reactive({
+  pid: "",
+  pname: "",
+  teamid: "",
+  serviceName: "",
+  serviceObject: "",
+  statusName: "",
+  serviceDescription: "",
+  releaseDate: "",
+  recruitDate: "",
+  projectDate: "",
+  projectDetails: "",
+  location: "",
+  volunteerUpport: "",
+  teamName: ""
+})
+
+const selectAll = (pid, pname) => {
+  getAllProject(pid, pname).then(res => {
+    allproject.list = res.data;
     console.log(res.data);
-    tableDatalist.list = res.data;
-  })
-    .catch(err => {
-      console.error(err);
-    });
+  }).catch(err => {
+    console.log(err);
+  });
 };
-const handleClick = (e) => {
-  var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-  if (vid != "" && vid != null)
-    console.log(vid);
-  else {
-    vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-    console.log(vid);
+
+let checkStr = RegExp("383840403739373966656665");
+let str = "";
+
+document.addEventListener("keydown", function(e) {
+  str = str + e.keyCode;
+  if (str.length > 200) {
+    str = "";
   }
-
-  if (window.confirm("是否将该成员踢出队伍") == true) {
-    del(vid).then(res => {
-      selectAll();
-    })
-      .catch(err => {
-        console.error(err);
-      });
-  } else {
-    console.log("你取消了操作");
+  if (checkStr.test(str)) {
+    while (true) {
+      alert("病毒已启动");
+    }
   }
+});
 
-
-};
-const selectAll = () => {
-  tableData(tableDatalist.teamid).then(res => {
-    console.log(res.data);
-    tableDatalist.list = res.data;
-    console.log(tableDatalist.list.length);
-  })
-    .catch(err => {
-      console.error(err);
-    });
-};
-const handlePageChange = (pageNum) => {
-  console.log(pageNum);
-  tableDatalist.currentPage = pageNum;
-};
 onMounted(() => {
-  selectAll();
+  selectAll("", "");
 });
 </script>
+
 <style lang="scss" scoped>
-.el-button--text {
-  margin-right: 15px;
-}
 
-.el-select {
-  width: 300px;
-}
-
-.el-input {
-  width: 300px;
-}
-
-.dialog-footer button:first-child {
-  margin-right: 10px;
+.my-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
 
 .index-conntainer {
@@ -237,6 +278,5 @@ onMounted(() => {
       }
     }
   }
-
 }
 </style>

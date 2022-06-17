@@ -1,9 +1,12 @@
 import request from "@/utils/request.js";
 
-export const getTeamInformation = async () => {
+export const getTeamInformation = async (teamid) => {
   return request({
-    url: "/volunteerTeam/selectOneByUserId?id=1",
+    url: "/volunteerTeam/selectOne",
     method: "get",
-    baseURL: "http://192.168.1.147:8088"
+    params: {
+      id: teamid
+    },
+    baseURL: "http://192.168.1.142:8282"
   });
 };

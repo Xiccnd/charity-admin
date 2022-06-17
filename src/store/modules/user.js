@@ -1,6 +1,5 @@
-
 import { getUserInfo, login } from "@/api/user";
-import { getAccessToken, removeAccessToken, setAccessToken } from "@/utils/accessToken";
+import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,setUname,getUname,removeUname} from "@/utils/accessToken";
 
 import { setting } from "@/config/setting";
 
@@ -17,14 +16,16 @@ const state = {
   accessToken: getAccessToken(),
   username: "",
   avatar: "",
-  permissions: []
+  permissions: [],
+  uname:getUname(),
 };
 
 const getters = {
   accessToken: (state) => state.accessToken,
   username: (state) => state.username,
   avatar: (state) => state.avatar,
-  permissions: (state) => state.permissions
+  permissions: (state) => state.permissions,
+  uname:(state) => state.uname,
 };
 const mutations = {
   setAccessToken(state, accessToken) {
@@ -33,6 +34,9 @@ const mutations = {
   },
   setTeamid(state, teamid) {
     setTeamid(teamid);
+  },
+  setUname(state, uname) {
+    setUname(uname);
   },
   setUsername(state, username) {
     state.username = username;
@@ -49,10 +53,13 @@ const actions = {
     commit("setPermissions", permissions);
   },
   async setAccessToken({ commit }, accessToken) {
-    commit('setAccessToken', accessToken);
+    commit("setAccessToken", accessToken);
   },
   async setTeamid({ commit }, teamid) {
-    commit('setTeamid', teamid);
+    commit("setTeamid", teamid);
+  },
+  async setUname({ commit }, uname) {
+    commit('setUname', uname);
   },
   async login({ commit }, userInfo) {
     const { data } = await login(userInfo);
@@ -80,7 +87,7 @@ const actions = {
     }
   },
   async getUserInfo({ commit, state }) {
-    console.log("state.accessToken:"+state.accessToken);
+    console.log("state.accessToken:" + state.accessToken);
     const { data } = await getUserInfo(state.accessToken);
     if (!data) {
       ElMessage.error("验证失败，请重新登录...");
@@ -105,7 +112,9 @@ const actions = {
   resetAccessToken({ commit }) {
     commit("setPermissions", []);
     commit("setAccessToken", "");
+    commit("setUname", "");
     removeAccessToken();
+    removeUname();
   }
 };
 export default { state, getters, mutations, actions };

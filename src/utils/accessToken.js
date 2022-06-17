@@ -1,7 +1,8 @@
-
+import { setting } from "@/config/setting";
 import { setting } from '@/config/setting';
-const { tokenTableName, teamidName} = setting;
+const { tokenTableName, teamidName ,Uname} = setting;
 import Cookies from 'js-cookie';
+
 
 export function getAccessToken() {
   return Cookies.get(tokenTableName);
@@ -16,10 +17,19 @@ export function removeAccessToken() {
 }
 
 export function setTeamid(teamid) {
-  return Cookies.set(teamidName,teamid);
+  return Cookies.set(teamidName, teamid);
 }
 
 export function getTeamid() {
   return Cookies.get(teamidName);
 }
 
+export function setUname(uname) {
+  return Cookies.set(Uname,uname);
+}
+export function getUname() {
+  return Cookies.get(Uname);
+}
+export function removeUname() {
+  return Cookies.remove(Uname);
+}

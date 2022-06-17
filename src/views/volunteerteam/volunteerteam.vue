@@ -61,8 +61,9 @@
 
 <script setup>
 
+
   import store from '@/store';
-  import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,getTeamid} from '@/utils/accessToken';
+  import { getTeamid} from '@/utils/accessToken';
   import { ref, computed, reactive, onBeforeMount } from 'vue';
   import { CountTo } from 'vue3-count-to';
   import Echarts from '@/components/Echarts/index.vue';
@@ -85,7 +86,7 @@ const tableDatalist = reactive({
   currentRowIndex: 1,
   pageSize: 3,
   currentPage: 1,
-  teamid: 1,
+  teamid:getTeamid(),
   id: 1,
   list: [{
     id: "",
@@ -102,66 +103,60 @@ const tableDatalist = reactive({
 });
 
 const onSubmit = () => {
-
-  search(tableDatalist.teamid,formInline.id,formInline.name).then(res => {
-            console.log(tableDatalist.teamid)  
-            console.log(res.data)  
-                 tableDatalist.list=res.data
-              })
-              .catch(err => {
-                console.error(err); 
-              })
-}
-const handleClick = (e) => {
-      var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText  
-    if(vid != '' && vid != null)  
-    console.log(vid);
-    else {
-      vid=e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText
-      console.log(vid);
-    }  
-
-  if (window.confirm("是否将该成员踢出队伍")==true){
-   del(vid).then(res => {
-      selectAll();
-              })
-              .catch(err => {
-                console.error(err); 
-              })
-    }
-    else{
-         console.log("你取消了操作")
-    }
-
-   
-}
-const selectAll = () => {
- tableData(tableDatalist.teamid).then(res => {
-                console.log(res.data) 
-                tableDatalist.list=res.data
-                console.log (tableDatalist.list.length)
-                 
-              })
-              .catch(err => {
-                console.error(err); 
-              })
-}
-const handlePageChange = (pageNum) =>{
-      console.log(pageNum)
-      tableDatalist.currentPage=pageNum
-      // this.searchItem.limit = this.pageSize;
-      // this.searchItem.page = pageNum;
-      // this.currentPageNum = this.searchItem.page;
-      // this.search(this.searchItem);
-    }
-onMounted(() => {
-     selectAll();
-    //  console.log(hasto)
-    let num = getTeamid()
-    console.log("getTeamid:"+getTeamid())
-    console.log("num:"+num)
+  search(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
+    console.log(tableDatalist.teamid);
+    console.log(res.data);
+    tableDatalist.list = res.data;
+  })
+    .catch(err => {
+      console.error(err);
     });
-    
+};
+const handleClick = (e) => {
+  var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  if (vid != "" && vid != null)
+    console.log(vid);
+  else {
+    vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+    console.log(vid);
+  }
+
+  if (window.confirm("是否将该成员踢出队伍") == true) {
+    del(vid).then(res => {
+      selectAll();
+    })
+      .catch(err => {
+        console.error(err);
+      });
+  } else {
+    console.log("你取消了操作");
+  }
+
+
+};
+const selectAll = () => {
+  tableData(tableDatalist.teamid).then(res => {
+    console.log(res.data);
+    tableDatalist.list = res.data;
+    console.log(tableDatalist.list.length);
+
+  })
+    .catch(err => {
+      console.error(err);
+    });
+};
+const handlePageChange = (pageNum) => {
+  console.log(pageNum);
+  tableDatalist.currentPage = pageNum;
+};
+onMounted(() => {
+  selectAll();
+  //  console.log(hasto)
+  let num = getTeamid();
+  console.log("getTeamid:" + getTeamid());
+  console.log("num:" + num);
+});
+
 </script>
 <style lang="scss" scoped>
 .index-conntainer {

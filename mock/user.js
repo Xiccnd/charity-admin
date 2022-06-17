@@ -50,8 +50,8 @@ export default [
     }
   },
   {
-    url: '/api/userInfo',
-    type: 'post',
+    url: "/api/userInfo",
+    type: "post",
     response(config) {
       const { accessToken } = config.body;
       let permissions = ["admin"];
@@ -68,9 +68,9 @@ export default [
         permissions = ["admin", "editor"];
         username = "test";
       }
-      if ('user-accessToken' === accessToken) {
-        permissions = ['user'];
-        username = 'user';
+      if ("user-accessToken" === accessToken) {
+        permissions = ["user"];
+        username = "user";
       }
       return {
         code: 200,

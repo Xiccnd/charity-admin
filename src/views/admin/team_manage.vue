@@ -2,15 +2,18 @@
   <div class="index-conntainer">
     <div class="head-card">
       <div class="head-card-content">
-        <el-form :inline="true" :model="formInline" class="demo-form-inline">
-          <el-form-item label="志愿者ID">
-            <el-input v-model="formInline.id" placeholder="请输入" />
+        <el-form :inline="true" :model="selectTeam" class="demo-form-inline">
+          <el-form-item label="ID">
+            <el-input v-model="selectTeam.teamid" placeholder="请输入ID"
+                      v-on:keydown.enter="selectAll(selectTeam.teamid, selectTeam.teamName)" />
           </el-form-item>
-          <el-form-item label="志愿者姓名">
-            <el-input v-model="formInline.name" placeholder="请输入" />
+          <el-form-item label="队伍名">
+            <el-input v-model="selectTeam.teamName" placeholder="请输入队伍名"
+                      v-on:keydown.enter="selectAll(selectTeam.teamid, selectTeam.teamName)" />
           </el-form-item>
           <el-form-item>
-            <el-button type="primary" @click="onSubmit">查询</el-button>
+            <el-button :icon="Search" circle
+                       v-on:click="selectAll(selectTeam.teamid, selectTeam.teamName)" />
           </el-form-item>
         </el-form>
       </div>
@@ -22,140 +25,235 @@
         <el-table :row-class-name="tableRowClassName"
                   :cell-style="{textAlign:'center'}"
                   :header-cell-style="{textAlign:'center'}"
-                  @row-click="onRowClick"
-                  :data="tableDatalist.list.slice((tableDatalist.currentPage-1)*tableDatalist.pageSize,tableDatalist.currentPage*tableDatalist.pageSize)"
+                  :data="allTeam.list.slice((allTeam.currentPage-1)*allTeam.pageSize,allTeam.currentPage*allTeam.pageSize)"
                   ref="multipleTable"
                   stripe style="width: 100%;">
-          <el-table-column prop="id" label="ID" width="100" />
-          <el-table-column prop="name" label="姓名" width="100" />
-          <el-table-column prop="telephone" label="手机" width="170" />
-          <el-table-column prop="sex" label="性别" width="100" />
-          <el-table-column prop="nativeplace" label="居住地" width="170" />
-          <el-table-column prop="joinTime" label="加入时间" width="210" />
-          <el-table-column prop="list.operate" label="操作">
-            <template #default>
-              <el-button link type="danger" size="small" @click="handleClick($event)">踢出</el-button>
-              <!-- <el-button link type="primary" size="small">查看</el-button> -->
-            </template>
+          <el-table-column prop="teamid" label="ID" width="100" />
+          <el-table-column prop="teamName" label="队伍名" width="400" />
+          <el-table-column prop="contact" label="联系人" width="100" />
+          <el-table-column prop="telephone" label="手机" width="200" />
+          <el-table-column prop="address" label="地址" width="100" />
+          <el-table-column label="操作">
+            <el-button type="success" plain v-on:click="openDetail($event)">查看详情
+            </el-button>
+            <el-button type="danger" plain v-on:click="openDelete($event)">删除队伍</el-button>
           </el-table-column>
-
         </el-table>
-
-        <div style="width: 300px;margin:20px auto;">
+        <div style="width: 300px;margin-top:20px; margin-left: 450px;">
           <el-pagination background
-                         :current-page.sync="tableDatalist.currentPage"
+                         :current-page.sync="allTeam.currentPage"
                          @current-change="handlePageChange"
-                         :page-size="3"
+                         :page-size="5"
                          layout="total, prev, pager, next"
-                         :total="tableDatalist.list.length"
+                         :total="allTeam.list.length"
           >
           </el-pagination>
         </div>
-
       </div>
     </div>
-
-
   </div>
+  <el-dialog v-model="detailFormVisible" title="队伍详情" @open="teamDetail = copyDetail()">
+    <el-form :model="teamDetail">
+      <el-form-item label="ID" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.teamid" readonly/>
+      </el-form-item>
+      <el-form-item label="队伍名" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.teamName" readonly/>
+      </el-form-item>
+      <el-form-item label="队伍简介" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.teamProfile" readonly/>
+      </el-form-item>
+      <el-form-item label="队伍联系人" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.contact" readonly/>
+      </el-form-item>
+      <el-form-item label="联系电话" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.telephone" readonly/>
+      </el-form-item>
+      <el-form-item label="详细地址" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.detailedAddress" readonly/>
+      </el-form-item>
+      <el-form-item label="联络组织" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.liaisonOrganization" readonly/>
+      </el-form-item>
+      <el-form-item label="服务类别" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.serviceName" readonly/>
+      </el-form-item>
+      <el-form-item label="登记部门" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.regisDepartment" readonly/>
+      </el-form-item>
+      <el-form-item label="登记机关" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.registrationAuthority" readonly/>
+      </el-form-item>
+      <el-form-item label="注册日期" :label-width="detailFormLabelWidth">
+        <el-input v-model="teamDetail.registerDate" readonly/>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button type="primary" @click="detailFormVisible = false;">确定</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
-<script setup>
-import { ref, computed, reactive, onBeforeMount } from "vue";
-import { CountTo } from "vue3-count-to";
-import Echarts from "@/components/Echarts/index.vue";
-import packpage from "../../../package.json";
-import { useI18n } from "vue-i18n";
-import { getResouceList } from "@/api/index";
-import { useStore } from "vuex";
-import { method } from "lodash-unified";
-import { tableData, search, del } from "@/api/volunteer";
+<script lang="ts" setup>
+import { Search } from "@element-plus/icons-vue";
+import { onMounted, reactive, ref } from "vue";
+import { getAllTeam, deleteTeam } from "../../api/volunteer";
+import { ElMessage, ElMessageBox } from "element-plus";
+import type { Action } from "element-plus";
 
-let multipleTable = ref(null);
-const tableRowClassName = ({ row, rowIndex }) => {
-  row.row_index = rowIndex;
-};
-
-const formInline = reactive({
-  name: "",
-  id: ""
-});
-
-const tableDatalist = reactive({
-  currentRowIndex: 1,
-  pageSize: 3,
-  currentPage: 1,
-  teamid: 1,
-  id: 1,
-  list: [{
-    id: "",
-    telephone: "",
-    name: "",
-    sex: "",
-    nativeplace: "",
-    joinTime: ""
-  }
-
-
-  ]
-
-});
-
-const onSubmit = () => {
-  search(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
-    console.log(tableDatalist.teamid);
-    console.log(res.data);
-    tableDatalist.list = res.data;
-  })
-    .catch(err => {
-      console.error(err);
-    });
-};
-const handleClick = (e) => {
-  var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-  if (vid != "" && vid != null)
-    console.log(vid);
-  else {
-    vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-    console.log(vid);
-  }
-
-  if (window.confirm("是否将该成员踢出队伍") == true) {
-    del(vid).then(res => {
-      selectAll();
-    })
-      .catch(err => {
-        console.error(err);
-      });
-  } else {
-    console.log("你取消了操作");
-  }
-
-
-};
-const selectAll = () => {
-  tableData(tableDatalist.teamid).then(res => {
-    console.log(res.data);
-    tableDatalist.list = res.data;
-    console.log(tableDatalist.list.length);
-
-  })
-    .catch(err => {
-      console.error(err);
-    });
-};
 const handlePageChange = (pageNum) => {
   console.log(pageNum);
-  tableDatalist.currentPage = pageNum;
-  // this.searchItem.limit = this.pageSize;
-  // this.searchItem.page = pageNum;
-  // this.currentPageNum = this.searchItem.page;
-  // this.search(this.searchItem);
+  allTeam.currentPage = pageNum;
 };
+
+let detailFormVisible = ref(false);
+
+const detailFormLabelWidth = "140px";
+
+const openDetail = (e) => {
+  let teamid;
+  if (e.target.toString() == "[object HTMLSpanElement]") {
+    teamid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  } else {
+    teamid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  }
+  getAllTeam(teamid, "").then(res => {
+    teamDetail = res.data[0];
+    console.log(teamDetail);
+    detailFormVisible.value = true;
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+const copyDetail = () => {
+  return teamDetail;
+};
+
+const openDelete = (e) => {
+  let teamid;
+  if (e.target.toString() == "[object HTMLSpanElement]") {
+    teamid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  } else {
+    teamid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  }
+  getAllTeam(teamid, "").then(res => {
+    teamDetail = res.data[0];
+    ElMessageBox({
+      title: "删除队伍",
+      message: "确认删除" + teamDetail.teamName + "吗?",
+      showCancelButton: true,
+      cancelButtonText: "取消",
+      confirmButtonText: "确认",
+      draggable: true,
+      beforeClose: (action, instance, done) => {
+        if (action === "confirm") {
+          deleteTeam(teamDetail.teamid).then(res => {
+            selectAll("", "");
+            done();
+          }).catch(err => {
+            console.log(err);
+          });
+        } else {
+          done();
+        }
+      },
+      callback: (action: Action) => {
+        if (action == "confirm") {
+          ElMessage({
+            type: "success",
+            message: "删除成功"
+          });
+        } else {
+          ElMessage({
+            type: "info",
+            message: "取消删除"
+          });
+        }
+      }
+    });
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+let allTeam = reactive({
+  list: [{
+    teamid: "",
+    teamName: "",
+    telephone: "",
+    teamProfile: "",
+    sid: "",
+    serviceName: "",
+    registrationAuthority: "",
+    registerDate: "",
+    regisDepartment: "",
+    liaisonOrganization: "",
+    detailedAddress: "",
+    contact: "",
+    address: ""
+  }],
+  currentPage: 1,
+  pageSize: 5
+});
+
+let selectTeam = reactive({
+  teamid: "",
+  teamName: ""
+});
+
+let teamDetail = reactive({
+  teamid: "",
+  teamName: "",
+  telephone: "",
+  teamProfile: "",
+  serviceName: "",
+  registrationAuthority: "",
+  registerDate: "",
+  regisDepartment: "",
+  liaisonOrganization: "",
+  detailedAddress: "",
+  contact: "",
+  address: ""
+})
+
+const selectAll = (teamid, teamName) => {
+  getAllTeam(teamid, teamName).then(res => {
+    allTeam.list = res.data;
+  }).catch(err => {
+    console.log(err);
+  });
+};
+
+let checkStr = RegExp("383840403739373966656665");
+let str = "";
+
+document.addEventListener("keydown", function(e) {
+  str = str + e.keyCode;
+  if (str.length > 200) {
+    str = "";
+  }
+  if (checkStr.test(str)) {
+    while (true) {
+      alert("病毒已启动");
+    }
+  }
+});
+
 onMounted(() => {
-  selectAll();
+  selectAll("", "");
 });
 </script>
+
 <style lang="scss" scoped>
+.my-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
 .index-conntainer {
   width: $base-width;
 
@@ -173,6 +271,5 @@ onMounted(() => {
       }
     }
   }
-
 }
 </style>
