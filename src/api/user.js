@@ -35,8 +35,10 @@ export const register = async () => {
 };
 export const LoginTeam = async () => {
   return request({
+
     url: "/user/LoginTeam",
     method: "get",
     baseURL: "http://192.168.1.147:8088"
+
   });
 };

@@ -87,24 +87,24 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive, onBeforeMount } from "vue";
-import { CountTo } from "vue3-count-to";
-import Addform from "@/components/program/index.vue";
-import packpage from "../../../package.json";
-import { useI18n } from "vue-i18n";
-import { getResouceList } from "@/api/index";
-import { useStore } from "vuex";
-import { method } from "lodash-unified";
-import { tableData, search } from "@/api/program";
-import { ElMessage, ElMessageBox } from "element-plus";
-
-components: {
-  Addform;
-}
-const refform = ref(false);
-const dialogFormVisible = ref(false);
-const addform = ref(false);
-const formLabelWidth = "140px";
+  import { ref, computed, reactive, onBeforeMount } from 'vue';
+  import { CountTo } from 'vue3-count-to';
+  import Addform from '@/components/program/index.vue';
+  import packpage from '../../../package.json';
+  import { useI18n } from 'vue-i18n';
+  import { getResouceList } from '@/api/index';
+  import { useStore } from 'vuex';
+  import { method } from 'lodash-unified';
+  import { tableData,search} from '@/api/program';
+  import { getTeamid} from '@/utils/accessToken';
+  import { ElMessage, ElMessageBox } from 'element-plus'
+  components: {
+    Addform
+  }
+const refform = ref(false)
+let dialogFormVisible = ref(false)
+const addform = ref(false)
+const formLabelWidth = '140px'
 const ruleForm = reactive({
   pname: "",
   location: "",
@@ -143,7 +143,7 @@ const tableDatalist = reactive({
   currentRowIndex: 1,
   pageSize: 3,
   currentPage: 1,
-  teamid: 1,
+  teamid: getTeamid,
   id: 1,
   list: [{
     pname: "",

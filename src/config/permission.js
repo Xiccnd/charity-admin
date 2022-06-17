@@ -22,21 +22,29 @@ NProgress.configure({
 });
 router.beforeEach(async (to, from, next) => {
   if (progressBar) NProgress.start();
-  let hasToken = store.getters["user/accessToken"];
-  // if (!hasToken) {
-  //   console.log('即将执行LoginTeam');
-  //   const { data } = await LoginTeam();
-  //   hasToken = data.accessToken;
-  //   console.log('hasToken:'+hasToken);
-  //   if (hasToken != 999) {
-  //     await store.dispatch('user/setTeamid', hasToken);
-  //     await store.dispatch('user/setAccessToken', 'user-accessToken');
-  //   }else{
-  //     await store.dispatch('user/setTeamid', hasToken);
-  //     await store.dispatch('user/setAccessToken', 'admin-accessToken');
-  //   }
-  // }
-  console.log("hasToken======:" + hasToken);
+
+  let hasToken = store.getters['user/accessToken'];
+  let uname = store.getters['user/uname'];
+  if (!hasToken) {
+    console.log('即将执行LoginTeam');
+    const { data } = await LoginTeam();
+    uname=data.uname;
+    hasToken = data.accessToken;
+    console.log('uname:'+uname);
+    console.log('hasToken:'+hasToken);
+    if (hasToken != 999) {
+      await store.dispatch('user/setUname', uname);
+      await store.dispatch('user/setTeamid', hasToken);
+      await store.dispatch('user/setAccessToken', 'user-accessToken');
+    }else{
+      await store.dispatch('user/setUname', 'admin');
+      await store.dispatch('user/setTeamid', hasToken);
+      await store.dispatch('user/setAccessToken', 'admin-accessToken');
+    }
+  }
+  console.log('hasToken======:'+hasToken);
+  console.log('uname===========:'+uname);
+
   if (!loginInterception) hasToken = true;
   if (hasToken) {
     if (to.path === "/login") {

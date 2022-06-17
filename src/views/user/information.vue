@@ -150,7 +150,7 @@
 <script setup>
 import { ref, reactive, onMounted, computed, onBeforeMount } from "vue";
 import { getTeamInformation } from "@/api/team";
-
+import { getTeamid} from '@/utils/accessToken';
 const value1 = ref("");
 const textarea = ref("");
 const formInline = reactive({
@@ -162,7 +162,7 @@ const teamInformation = reactive({
   list: [
     {
       teamName: "",
-      teamid: "123",
+      teamid: getTeamid(),
       contact: "",
       telephone: "",
       address: "",
@@ -176,12 +176,12 @@ const teamInformation = reactive({
   ]
 });
 onMounted(() => {
-  console.log("1222222222");
-  console.log(localStorage.getItem("tokenName"));
-  getTeamInformation().then((res) => {
+  getTeamInformation(getTeamid()).then((res) => {
     console.log(res.data);
     teamInformation.list = res.data;
     console.log(teamInformation);
+  }).catch(err =>{
+    console.err(err)
   });
 });
 const labelPosition = ref("left");
