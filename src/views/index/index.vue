@@ -69,10 +69,10 @@ import packpage from "../../../package.json";
 import { useI18n } from "vue-i18n";
 import { getResouceList } from "@/api/index";
 import { useStore } from "vuex";
-import { getUname} from '@/utils/accessToken';
+import { getUname,getTeamid} from '@/utils/accessToken';
 const activeName = ref("first");
 const store = useStore();
-
+const { t } = useI18n();
   const state = reactive({
     list: [],
     prefix: '',

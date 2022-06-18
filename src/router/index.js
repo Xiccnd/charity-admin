@@ -31,8 +31,29 @@ export const asyncRoutes = [
   {
     path: "/",
     component: Layout,
+    redirect: "/adminindex",
+    name: "Root",
+    permissions:['admin'],
+    children: [
+      {
+        path: "/adminindex",
+        name: "Adminindex",
+        component: () => import("../views/index/adminindex.vue"),
+        meta: {
+          title: global.t("route.home"),
+          icon: "icon-home",
+          affix: true,
+          noKeepAlive: true
+        }
+      }
+    ]
+  },
+  {
+    path: "/",
+    component: Layout,
     redirect: "/index",
     name: "Root",
+    permissions:['user'],
     children: [
       {
         path: "/index",
@@ -47,7 +68,6 @@ export const asyncRoutes = [
       }
     ]
   },
-
   {
     path: "/volunteerprogram",
     name: "Volunteerprogram",
@@ -214,23 +234,7 @@ export const asyncRoutes = [
       }
     ]
   },
-  {
-    path: "/loginTeamTest",
-    component: Layout,
-    redirect: "/loginTeamTest",
-    name: "LoginTeamTest",
-    children: [
-      {
-        path: "/loginTeamTest1",
-        name: " LoginTeamTest1",
-        component: () => import("../views/admin/user_manage.vue"),
-        meta: {
-          title: "用户管理",
-          icon: "icon-baby",  
-        }
-      }
-    ]
-  }
+
 ];
 
 const router = createRouter({

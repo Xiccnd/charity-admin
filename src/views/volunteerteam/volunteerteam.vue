@@ -155,7 +155,6 @@ onMounted(() => {
   let num = getTeamid();
   console.log("getTeamid:" + getTeamid());
   console.log("num:" + num);
-  alert(uname)
 });
 
 </script>

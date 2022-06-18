@@ -72,6 +72,7 @@ const handleLogout = () => {
       if (recordRoute) {
         const { fullPath } = router.currentRoute._value;
         console.log(fullPath);
+        sessionStorage.clear()
         let url ='http://localhost:8082/volunteer_login2';
         window.location.href =url;
         // router.push({ path: `/login?redirect=${fullPath}` });
