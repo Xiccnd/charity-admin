@@ -58,9 +58,9 @@ export const setting = {
   //token存储位置localStorage sessionStorage
   storage: "localStorage",
   // 标题
-  title: "vue3-admin-template",
+  title: "志愿网站管理系统",
   // 版权信息
-  copyright: "© hu-snail-2021 vue3-admin-element-template",
+  copyright: "© 2022 第九小组",
   // 是否显示页面底部自定义版权信息
   footerCopyright: true,
   // 缓存路由的最大数量

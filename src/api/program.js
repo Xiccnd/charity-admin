@@ -22,3 +22,13 @@ export const search = async (teamid, pid, pname) => {
     baseURL: "http://192.168.1.147:8088"
   });
 };
+export const cencortableData = async (teamid) => {
+  return request({
+    url: "/volunteerProgramDetails/end/selectJoinProjiect",
+    method: "get",
+    params: {
+      teamid: teamid
+    },
+    baseURL: "http://192.168.1.147:8088"
+  });
+};

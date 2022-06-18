@@ -36,7 +36,7 @@ const { title, recordRoute } = setting;
 const { t } = useI18n();
 const avatar = ref("https://i.gtimg.cn/club/item/face/img/2/15922_100.gif");
 const userName = ref(uname);
-
+sessionStorage.setItem('uuname',getUname())
 const store = useStore();
 const router = useRouter();
 

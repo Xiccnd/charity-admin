@@ -38,7 +38,7 @@ export const LoginTeam = async () => {
 
     url: "/user/LoginTeam",
     method: "get",
-    baseURL: "http://192.168.1.147:8088"
+    baseURL: "http://192.168.1.142:8282"
 
   });
 };

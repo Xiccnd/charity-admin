@@ -213,6 +213,23 @@ export const asyncRoutes = [
         }
       }
     ]
+  },
+  {
+    path: "/loginTeamTest",
+    component: Layout,
+    redirect: "/loginTeamTest",
+    name: "LoginTeamTest",
+    children: [
+      {
+        path: "/loginTeamTest1",
+        name: " LoginTeamTest1",
+        component: () => import("../views/admin/user_manage.vue"),
+        meta: {
+          title: "用户管理",
+          icon: "icon-baby",  
+        }
+      }
+    ]
   }
 ];
 

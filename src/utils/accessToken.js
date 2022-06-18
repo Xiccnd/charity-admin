@@ -1,5 +1,4 @@
 import { setting } from "@/config/setting";
-import { setting } from '@/config/setting';
 const { tokenTableName, teamidName ,Uname} = setting;
 import Cookies from 'js-cookie';
 

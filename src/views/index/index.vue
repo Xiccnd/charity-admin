@@ -6,7 +6,7 @@
         <el-avatar :size="50" :src="avatar"></el-avatar>
       </div>
       <div class="head-card-content">
-        <h2 class="title">{{ sayHi }}! Admin, {{ t("indexPage.descTitle") }}</h2>
+        <h2 class="title">{{ sayHi }}! {{getUname()}}, {{ t("indexPage.descTitle") }}</h2>
         <p class="desc">
         </p>
       </div>
@@ -69,7 +69,7 @@ import packpage from "../../../package.json";
 import { useI18n } from "vue-i18n";
 import { getResouceList } from "@/api/index";
 import { useStore } from "vuex";
-
+import { getUname} from '@/utils/accessToken';
 const activeName = ref("first");
 const store = useStore();
 

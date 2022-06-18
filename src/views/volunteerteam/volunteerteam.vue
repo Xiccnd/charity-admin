@@ -61,7 +61,7 @@
 
 <script setup>
 
-
+  // import { uname } from '@/layouts/components/Avatar/index'
   import store from '@/store';
   import { getTeamid} from '@/utils/accessToken';
   import { ref, computed, reactive, onBeforeMount } from 'vue';
@@ -155,6 +155,7 @@ onMounted(() => {
   let num = getTeamid();
   console.log("getTeamid:" + getTeamid());
   console.log("num:" + num);
+  alert(uname)
 });
 
 </script>

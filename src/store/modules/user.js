@@ -36,6 +36,7 @@ const mutations = {
     setTeamid(teamid);
   },
   setUname(state, uname) {
+    state.uname = uname;
     setUname(uname);
   },
   setUsername(state, username) {

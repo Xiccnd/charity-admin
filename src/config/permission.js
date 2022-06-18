@@ -11,7 +11,7 @@ import { getPageTitle } from "@/utils/index";
 import { setting } from "@/config/setting";
 import { LoginTeam } from "@/api/user";
 import Cookies from "js-cookie";
-
+import { getUname} from '@/utils/accessToken';
 const { authentication, loginInterception, progressBar, routesWhiteList, recordRoute } = setting;
 
 NProgress.configure({
@@ -22,10 +22,13 @@ NProgress.configure({
 });
 router.beforeEach(async (to, from, next) => {
   if (progressBar) NProgress.start();
-
+  // alert(localStorage.getItem('oldName'))
+  // let oldname = localStorage.getItem('oldName')
+  // console.log("oldname"+oldname)
   let hasToken = store.getters['user/accessToken'];
   let uname = store.getters['user/uname'];
-  if (!hasToken) {
+  console.log("to.path:"+to.path);
+  if(to.path==='/'){
     console.log('即将执行LoginTeam');
     const { data } = await LoginTeam();
     uname=data.uname;
@@ -42,6 +45,21 @@ router.beforeEach(async (to, from, next) => {
       await store.dispatch('user/setAccessToken', 'admin-accessToken');
     }
   }
+  else{
+    if(sessionStorage.getItem('uuname') == null){
+    }else if(sessionStorage.getItem('uuname') == getUname()){
+    }else{
+      alert("登陆信息失效");
+      sessionStorage.clear()
+      let url ='http://localhost:8082/volunteer_login2';
+      window.location.href =url;
+    }
+  }
+  // if (!hasToken) {
+  // }
+  console.log("local:"+sessionStorage.getItem('uuname'))
+
+  console.log("getUname:"+getUname())
   console.log('hasToken======:'+hasToken);
   console.log('uname===========:'+uname);
 
@@ -89,9 +107,13 @@ router.beforeEach(async (to, from, next) => {
       next();
     } else {
       if (recordRoute) {
-        next(`/login?redirect=${to.path}`);
+        let url ='http://localhost:8082/volunteer_login2';
+        window.location.href =url;
+        // next(`/login?redirect=${to.path}`);
       } else {
-        next("/login");
+        let url ='http://localhost:8082/volunteer_login2';
+        window.location.href =url;
+        // next("/login");
       }
       if (progressBar) NProgress.done();
     }
