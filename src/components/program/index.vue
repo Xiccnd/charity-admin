@@ -98,7 +98,7 @@
 import { reactive, ref } from 'vue'
 import type { FormInstance, FormRules } from 'element-plus'
 import {datasubmit} from  '../../api/volunteer';
-
+import { getTeamid} from '../../utils/accessToken';
 const formSize = ref('default')
 const ruleFormRef = ref<FormInstance>()
 const ruleForm = reactive({
@@ -181,7 +181,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return
   await formEl.validate((valid, fields) => {
     if (valid) {
-    datasubmit(1, ruleForm.pname, ruleForm.location, ruleForm.releaseDate, ruleForm.projectDate, ruleForm.recruitDate, ruleForm.serviceObject,
+    datasubmit(getTeamid(), ruleForm.pname, ruleForm.location, ruleForm.releaseDate, ruleForm.projectDate, ruleForm.recruitDate, ruleForm.serviceObject,
     ruleForm.volunteerUpport, ruleForm.serviceDescription, ruleForm.projectDetails, ruleForm.postDesc, ruleForm.postCondition, ruleForm.postName, ruleForm.targetNum, ruleForm.type)
     .then(res =>{
       alert("提交成功")
