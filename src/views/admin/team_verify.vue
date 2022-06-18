@@ -29,14 +29,14 @@
                   ref="multipleTable"
                   stripe style="width: 100%;">
           <el-table-column prop="teamid" label="ID" width="100" />
-          <el-table-column prop="teamName" label="队伍名" width="400" />
+          <el-table-column prop="teamName" label="队伍名" width="200" />
+          <el-table-column prop="teamProfile" label="队伍详情" width="400" />
           <el-table-column prop="contact" label="联系人" width="100" />
-          <el-table-column prop="telephone" label="手机" width="200" />
-          <el-table-column prop="address" label="地址" width="100" />
+          <el-table-column prop="registerDate" label="注册时间" width="200" />
           <el-table-column label="操作">
-            <el-button type="success" plain v-on:click="openDetail($event)">查看详情
+            <el-button type="success" plain v-on:click="openDetail($event)">通过
             </el-button>
-            <el-button type="danger" plain v-on:click="openDelete($event)">删除队伍</el-button>
+            <el-button type="danger" plain v-on:click="openDelete($event)">不通过</el-button>
           </el-table-column>
         </el-table>
         <div style="width: 300px;margin-top:20px; margin-left: 450px;">
@@ -75,9 +75,6 @@
       <el-form-item label="联络组织" :label-width="detailFormLabelWidth">
         <el-input v-model="teamDetail.liaisonOrganization" readonly/>
       </el-form-item>
-      <el-form-item label="服务类别" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.serviceName" readonly/>
-      </el-form-item>
       <el-form-item label="登记部门" :label-width="detailFormLabelWidth">
         <el-input v-model="teamDetail.regisDepartment" readonly/>
       </el-form-item>
@@ -90,7 +87,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="detailFormVisible = false;">确定</el-button>
+        <el-button type="primary" @click="teamVerifyPass(); detailFormVisible = false">审核通过</el-button>
       </span>
     </template>
   </el-dialog>
@@ -99,9 +96,21 @@
 <script lang="ts" setup>
 import { Search } from "@element-plus/icons-vue";
 import { onMounted, reactive, ref } from "vue";
-import { getAllTeam, deleteTeam } from "../../api/volunteer";
+import { getVerifyTeam, teamNotPass, teamPass } from "../../api/volunteer";
 import { ElMessage, ElMessageBox } from "element-plus";
 import type { Action } from "element-plus";
+
+const teamVerifyPass = () => {
+  teamPass(teamDetail.teamid).then(res => {
+    selectAll("","");
+    ElMessage({
+      type: "success",
+      message: "审核通过"
+    });
+  }).catch(err => {
+    console.log(err);
+  })
+}
 
 const handlePageChange = (pageNum) => {
   console.log(pageNum);
@@ -119,7 +128,7 @@ const openDetail = (e) => {
   } else {
     teamid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   }
-  getAllTeam(teamid, "").then(res => {
+  getVerifyTeam(teamid, "").then(res => {
     teamDetail = res.data[0];
     console.log(teamDetail);
     detailFormVisible.value = true;
@@ -139,18 +148,18 @@ const openDelete = (e) => {
   } else {
     teamid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   }
-  getAllTeam(teamid, "").then(res => {
+  getVerifyTeam(teamid, "").then(res => {
     teamDetail = res.data[0];
     ElMessageBox({
-      title: "删除队伍",
-      message: "确认删除" + teamDetail.teamName + "吗?",
+      title: "队伍审核",
+      message: teamDetail.teamName + "审核不通过。",
       showCancelButton: true,
       cancelButtonText: "取消",
       confirmButtonText: "确认",
       draggable: true,
       beforeClose: (action, instance, done) => {
         if (action === "confirm") {
-          deleteTeam(teamDetail.teamid).then(res => {
+          teamNotPass(teamDetail.teamid).then(res => {
             selectAll("", "");
             done();
           }).catch(err => {
@@ -163,13 +172,13 @@ const openDelete = (e) => {
       callback: (action: Action) => {
         if (action == "confirm") {
           ElMessage({
-            type: "success",
-            message: "删除成功"
+            type: "warning",
+            message: "审核不通过"
           });
         } else {
           ElMessage({
             type: "info",
-            message: "取消删除"
+            message: "取消"
           });
         }
       }
@@ -183,17 +192,10 @@ let allTeam = reactive({
   list: [{
     teamid: "",
     teamName: "",
-    telephone: "",
     teamProfile: "",
-    sid: "",
-    serviceName: "",
-    registrationAuthority: "",
     registerDate: "",
-    regisDepartment: "",
-    liaisonOrganization: "",
-    detailedAddress: "",
     contact: "",
-    address: ""
+    status: ""
   }],
   currentPage: 1,
   pageSize: 5
@@ -209,7 +211,6 @@ let teamDetail = reactive({
   teamName: "",
   telephone: "",
   teamProfile: "",
-  serviceName: "",
   registrationAuthority: "",
   registerDate: "",
   regisDepartment: "",
@@ -220,8 +221,18 @@ let teamDetail = reactive({
 })
 
 const selectAll = (teamid, teamName) => {
-  getAllTeam(teamid, teamName).then(res => {
-    allTeam.list = res.data;
+  getVerifyTeam(teamid, teamName).then(res => {
+    let j = 0
+    if (res.data.length == 0) {
+      allTeam.list = null;
+    } else {
+      for (let i = 0; i < res.data.length; i++) {
+        if (res.data[i].status != "审核未通过") {
+          allTeam.list[j] = res.data[i];
+          j++;
+        }
+      }
+    }
   }).catch(err => {
     console.log(err);
   });

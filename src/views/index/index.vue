@@ -1,5 +1,5 @@
 <template>
-  <div id="main"></div>
+<div id="main"></div>
   <div class="index-conntainer">
     <div class="head-card">
       <div class="avatar">
@@ -13,7 +13,7 @@
     </div>
     <div class="content">
       <el-row :gutter="10">
-        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"> 
           <el-card class="card" shadow="hover">
             <template #header>
               <h3 class="title">队伍信息</h3>
@@ -24,7 +24,7 @@
         </el-col>
       </el-row>
       <el-row :gutter="10">
-        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24"> 
           <el-card class="card" shadow="hover">
             <template #header>
               <h3 class="title">待办事项</h3>
@@ -33,25 +33,25 @@
           </el-card>
         </el-col>
       </el-row>
-      <el-row :gutter="10">
-        <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
+       <el-row :gutter="10">
+         <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24">
           <el-card class="card" shadow="hover">
             <template #header>
               <h3 class="title">人员分布</h3>
             </template>
-            <Map></Map>
+              <Map></Map>
           </el-card>
         </el-col>
       </el-row>
-
+     
     </div>
   </div>
 </template>
 
 <script>
-export default {
-  name: "Index"
-};
+  export default {
+    name: 'Index',
+  };
 </script>
 
 <script setup>
@@ -73,156 +73,132 @@ import { getUname} from '@/utils/accessToken';
 const activeName = ref("first");
 const store = useStore();
 
-const { t } = useI18n();
+  const state = reactive({
+    list: [],
+    prefix: '',
+    orderList: [],
+    skillList: [],
+  });
+  
+  const teaminfo = reactive({
+      teamid: '',
+      teamName: '',
+      contact: '',
+      telephone: '',
+      address: '',
+      detailedAddress: '',
+      registrationAuthority: '',
+      regisDepartment: '',
+      teamProfile:'',
+  })
 
-const state = reactive({
-  list: [],
-  prefix: "",
-  orderList: [],
-  skillList: []
-});
-
-const teaminfo = reactive({
-  teamid: "",
-  teamName: "",
-  contact: "",
-  telephone: "",
-  address: "",
-  detailedAddress: "",
-  registrationAuthority: "",
-  regisDepartment: "",
-  teamProfile: ""
-});
-
-let review = reactive({
-  list: [{
-    name: "",
-    sex: "",
-    area: "",
-    address: "",
-    telephone: "",
-    mailbox: ""
-  }]
-});
-let project = reactive({
-  list: [{
-    pid: "",
-    pname: "",
-    postName: "",
-    location: "",
-    mark: "",
-    state: ""
-  }]
-});
-
-
-const hour = new Date().getHours();
-const thisTime =
-  hour < 8
-    ? t("sayHi.early")
-    : hour <= 11
-      ? t("sayHi.morning")
+  let review = reactive({
+    list: [{
+      name:'',
+      sex:'',
+      area:'',
+      address:'',
+      telephone:'',
+      mailbox:''
+    }]
+  })
+  let project = reactive({
+    list: [{
+      pid:'',
+      pname:'',
+      postName:'',
+      location:'',
+      mark:'',
+      state:''
+    }]
+  })
+  
+ 
+  const hour = new Date().getHours();
+  const thisTime =
+    hour < 8
+      ? t('sayHi.early')
+      : hour <= 11
+      ? t('sayHi.morning')
       : hour <= 13
-        ? t("sayHi.noon")
-        : hour < 18
-          ? t("sayHi.afternoon")
-          : t("sayHi.evening");
-const sayHi = ref(thisTime);
-const avatar = ref("https://i.gtimg.cn/club/item/face/img/2/15922_100.gif");
+      ? t('sayHi.noon')
+      : hour < 18
+      ? t('sayHi.afternoon')
+      : t('sayHi.evening');
+  const sayHi = ref(thisTime);
+  const avatar = ref('https://i.gtimg.cn/club/item/face/img/2/15922_100.gif');
 
-const series2 = reactive([
-  {
-    data: [820, 932, 901, 934, 1290, 1330, 1320],
-    type: "line",
-    smooth: true
-  }
-]);
+  const series2 = reactive([
+    {
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      type: 'line',
+      smooth: true,
+    },
+  ]);
 
-const xAxis = reactive({
-  type: "category",
-  data: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
-});
-
-const yAxis = reactive({
-  type: "value"
-});
-
-const toolbox = reactive({
-  show: true
-});
-
-const isMobile = computed(() => {
-  return store.getters["setting/isMobile"];
-});
-
-const onGetResouceList = () => {
-  getResouceList().then((res) => {
-    const { list, prefix, orderList, skillList } = res.data;
-    Object.assign(state, { list, prefix, orderList, skillList });
+  const xAxis = reactive({
+    type: 'category',
+    data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
   });
-};
 
-const handleToDetail = (url) => {
-  window.open(url);
-};
-const baseinfo = (teamid) => {
-  indexinfo(teamid).then(res => {
-    const {
-      teamid,
-      contact,
-      teamName,
-      telephone,
-      address,
-      detailedAddress,
-      registrationAuthority,
-      regisDepartment,
-      teamProfile
-    } = res.data;
-    Object.assign(teaminfo, {
-      teamid,
-      contact,
-      teamName,
-      telephone,
-      address,
-      detailedAddress,
-      registrationAuthority,
-      regisDepartment,
-      teamProfile
+  const yAxis = reactive({
+    type: 'value',
+  });
+
+  const toolbox = reactive({
+    show: true,
+  });
+
+  const isMobile = computed(() => {
+    return store.getters['setting/isMobile'];
+  });
+      
+  const onGetResouceList = () => {
+    getResouceList().then((res) => {
+      const { list, prefix, orderList, skillList } = res.data;
+      Object.assign(state, { list, prefix, orderList, skillList});
     });
-  }).catch(err => {
-    console.log(err);
-  });
-};
-const basereviewed = (teamid) => {
-  reviewed(teamid).then(res => {
-    review.list = res.data;
-  }).catch(err => {
-    console.log(err);
-  });
-};
-const baseproject = (teamid) => {
-  proejectinfo(teamid).then(res => {
-    project.list = res.data;
-    for (let i = 0; i < project.list.length; i++) {
-      if (project.list[i].mark == "1") {
-        project.list[i].state = "待审核";
-        console.log(project.list[i].state);
-      } else {
-        console.log(project.list[i].state = "已审核");
-        console.log("error");
+  };
+ 
+  const handleToDetail = (url) => {
+    window.open(url);
+  };
+  const baseinfo = (teamid) =>{
+    indexinfo(teamid).then(res =>{
+      const {teamid,contact,teamName,telephone,address,detailedAddress,registrationAuthority,regisDepartment,teamProfile} = res.data;
+      Object.assign(teaminfo,{ teamid,contact,teamName,telephone,address,detailedAddress,registrationAuthority,regisDepartment,teamProfile})
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+  const basereviewed = (teamid) =>{
+    reviewed(teamid).then(res =>{
+      review.list = res.data 
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+  const baseproject = (teamid) =>{
+    proejectinfo(teamid).then(res =>{
+      project.list = res.data 
+      for(let i = 0;i<project.list.length;i++){
+        if(project.list[i].mark == '0'){
+          project.list[i].state="待审核"
+        }else{
+          project.list[i].state="已审核"
+        }
       }
-    }
-  }).catch(err => {
-    console.log(err);
+    }).catch(err =>{
+      console.log(err)
+    })
+  }
+  onBeforeMount(() => {
+    onGetResouceList();
+    baseinfo(getTeamid())
+    basereviewed(getTeamid())
+    baseproject(getTeamid())
+    
   });
-};
-onBeforeMount(() => {
-  onGetResouceList();
-  baseinfo(1);
-  basereviewed(1);
-  baseproject(1);
-
-});
 </script>
 
 
@@ -233,122 +209,100 @@ onBeforeMount(() => {
   font-size: 32px;
   font-weight: 600;
 }
-
-.index-conntainer {
-  width: $base-width;
-
-  .head-card {
-    display: flex;
-    align-items: center;
-    padding: $base-main-padding;
-    background-color: $base-color-white;
-
-    &-content {
-      padding-left: 15px;
-
-      .desc {
-        color: $base-font-color;
-      }
-    }
-  }
-
-  .content {
-    margin: 15px 0;
-
-    .count-box {
+  .index-conntainer {
+    width: $base-width;
+    .head-card {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-
-      .item {
-        display: flex;
-        flex-direction: column;
-        text-align: center;
-
-        .label {
-          padding: 10px 0;
-          font-size: $base-font-size-big;
-        }
-
-        .count {
-          font-size: $base-font-size-max;
-          font-weight: bolder;
-          color: $base-color-primary;
-
-          &.error {
-            color: var(--el-color-danger);
-          }
-
-          &.success {
-            color: var(--el-color-success);
-          }
+      padding: $base-main-padding;
+      background-color: $base-color-white;
+      &-content {
+        padding-left: 15px;
+        .desc {
+          color: $base-font-color;
         }
       }
     }
-
-    .title {
-      margin: 0;
-    }
-
-    .skill-title {
-      padding: 10px 0;
-      font-weight: 500;
-    }
-
-    .card {
-      margin-bottom: 15px;
-
-      &-body {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-
-        &.mobile {
-          grid-template-columns: repeat(1, 1fr);
-        }
-
+    .content {
+      margin: 15px 0;
+      .count-box {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
         .item {
-          box-sizing: border-box;
-          padding: 10px 20px;
-          margin-top: -1px;
-          margin-left: -1px;
-          overflow: hidden;
-          cursor: pointer;
-          border: 1px solid black;
-          border: 1px solid #eee;
-          transition: box-shadow 0.5;
-
-          .lf {
-            display: flex;
-            align-items: center;
-            max-width: 140px;
-
-            .img {
-              width: auto;
-              max-width: 120px;
-              height: auto;
-              max-height: 40px;
+          display: flex;
+          flex-direction: column;
+          text-align: center;
+          .label {
+            padding: 10px 0;
+            font-size: $base-font-size-big;
+          }
+          .count {
+            font-size: $base-font-size-max;
+            font-weight: bolder;
+            color: $base-color-primary;
+            &.error {
+              color: var(--el-color-danger);
+            }
+            &.success {
+              color: var(--el-color-success);
             }
           }
-
-          &:hover {
-            box-shadow: $base-box-shadow;
+        }
+      }
+      .title {
+        margin: 0;
+      }
+      .skill-title {
+        padding: 10px 0;
+        font-weight: 500;
+      }
+      .card {
+        margin-bottom: 15px;
+        &-body {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr);
+          &.mobile {
+            grid-template-columns: repeat(1, 1fr);
           }
-
-          .title {
-            padding-left: 5px;
-            font-size: 18px;
-            font-weight: bold;
-          }
-
-          .desc {
-            padding: 5px 0;
-            font-size: 13px;
-            line-height: 1.5;
-            color: $base-font-color;
+          .item {
+            box-sizing: border-box;
+            padding: 10px 20px;
+            margin-top: -1px;
+            margin-left: -1px;
+            overflow: hidden;
+            cursor: pointer;
+            border: 1px solid black;
+            border: 1px solid #eee;
+            transition: box-shadow 0.5;
+            .lf {
+              display: flex;
+              align-items: center;
+              max-width: 140px;
+              .img {
+                width: auto;
+                max-width: 120px;
+                height: auto;
+                max-height: 40px;
+              }
+            }
+            &:hover {
+              box-shadow: $base-box-shadow;
+            }
+            .title {
+              padding-left: 5px;
+              font-size: 18px;
+              font-weight: bold;
+            }
+            .desc {
+              padding: 5px 0;
+              font-size: 13px;
+              line-height: 1.5;
+              color: $base-font-color;
+            }
           }
         }
       }
     }
   }
-}
 </style>

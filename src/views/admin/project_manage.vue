@@ -38,7 +38,7 @@
             <el-button type="success" plain v-on:click="openDetail($event)">查看详情
             </el-button>
             <el-button type="danger" plain v-on:click="openDelete($event)">删除项目</el-button>
-          </el-table-column>
+            </el-table-column>
         </el-table>
         <div style="width: 300px;margin-top:20px; margin-left: 450px;">
           <el-pagination background
