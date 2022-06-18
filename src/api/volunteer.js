@@ -283,3 +283,25 @@ export const datasubmit = async (
     baseURL: baseURL
   });
 };
+
+export const countnumber = async (pid) => {
+  return request({
+    url: "volunteersProject/countNunber",
+    method: "get",
+    params: {
+     pid
+    },
+    baseURL: baseURL
+  });
+};
+export const deleteprojectNum = async (pid,id) => {
+  return request({
+    url: "volunteersProject/deleteProjectNum",
+    method: "get",
+    params: {
+      pid,
+      id
+    },
+    baseURL: baseURL
+  });
+};

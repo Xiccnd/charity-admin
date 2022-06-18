@@ -80,23 +80,14 @@
         </span>
       </div> 
     </template>
-    <el-table v-show="pshow" :data="tableData1" style="width: 100%" max-height="500">
-    <el-table-column fixed prop="date" label="Date" width="150" />
-    <el-table-column prop="name" label="Name" width="120" />
-    <el-table-column prop="state" label="State" width="120" />
-    <el-table-column prop="city" label="City" width="120" />
-    <el-table-column prop="address" label="Address" width="600" />
-    <el-table-column prop="zip" label="Zip" width="120" />
-    <el-table-column fixed="right" label="Operations" width="120">
+    <el-table v-show="pshow" :data="peopleNum.list" style="width: 100%" max-height="500">
+    <el-table-column fixed prop="id" label="id" width="150" />
+    <el-table-column prop="name" label="姓名" width="150" />
+    <el-table-column prop="telephone" label="电话" width="150" />
+    <el-table-column prop="area" label="所属区域" width="200" />
+    <el-table-column fixed="right" label="操作" width="120">
       <template #default="scope">
-        <el-button
-          link
-          type="primary"
-          size="small"
-          @click.prevent="deleteRow(scope.$index)"
-        >
-          Remove
-        </el-button>
+       <el-button type="danger" plain v-on:click="openDelete(projectDetail.pid,$event)">Remove</el-button>
       </template>
     </el-table-column>
     </el-table>
@@ -138,7 +129,7 @@
               <el-input v-model="projectDetail.serviceDescription" readonly/>
             </el-form-item>
             <el-form-item label="成员数量" :label-width="detailFormLabelWidth">
-              <el-input v-model="projectDetail.serviceDescription" readonly/>
+              <el-input v-model="peopleNum.list.length" readonly/>
               &nbsp;&nbsp;<el-button type="primary" @click="pshow = true;">查看成员</el-button>
             </el-form-item>
     </el-form>
@@ -151,19 +142,19 @@
   
 </template>
 
-<script setup>
-  import { ref, reactive } from 'vue';
+<script lang="ts" setup>
+  import { ref, reactive,onMounted } from 'vue';
   import { CountTo } from 'vue3-count-to';
   import Addform from '@/components/program/index.vue';
-  import packpage from '../../../package.json';
   import { useI18n } from 'vue-i18n';
-  import { getResouceList } from '@/api/index';
+  import { getResouceList } from '../../api/index';
   import { useStore } from 'vuex';
   import { method } from 'lodash-unified';
-  import { tableData,search} from '@/api/program';
-  import { getAllProject, getAllTeam, deleteProject } from "../../api/volunteer";
-  import { getTeamid} from '@/utils/accessToken';
-  import { ElMessage, ElMessageBox } from 'element-plus'
+  import { tableData,search} from '../../api/program';
+  import { getAllProject, getAllTeam,countnumber,deleteprojectNum} from "../../api/volunteer";
+  import { getTeamid} from '../../utils/accessToken';
+  import { ElMessage, ElMessageBox} from 'element-plus'
+  import type { Action } from "element-plus";
   components: {
     Addform
   }
@@ -189,30 +180,7 @@ const ruleForm = reactive({
   type: ''
 });
 const tableData1 = ref([
-  {
-    date: '2016-05-01',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-  },
-  {
-    date: '2016-05-02',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-  },
-  {
-    date: '2016-05-03',
-    name: 'Tom',
-    state: 'California',
-    city: 'Los Angeles',
-    address: 'No. 189, Grove St, Los Angeles',
-    zip: 'CA 90036',
-  },
+ 
 ])
 const goBack = () => {
   pshow.value = false
@@ -255,6 +223,7 @@ const tableDatalist = reactive({
     pid: ""
   }]
 });
+
 let projectDetail = reactive({
   pid: "",
   pname: "",
@@ -270,6 +239,15 @@ let projectDetail = reactive({
   location: "",
   volunteerUpport: "",
   teamName: ""
+})
+
+let peopleNum = reactive({
+  list: [{
+    id: "",
+    name: "",
+    telephone:"",
+    area:""
+  }]
 })
 const onSubmit = () => {
   search(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
@@ -311,15 +289,66 @@ const openDetail = (e) => {
   }
   getAllProject(pid, "").then(res => {
     projectDetail = res.data[0];
-    
     getAllTeam(projectDetail.teamid, "").then(res => {
       projectDetail.teamName = res.data[0].teamName;
       detailFormVisible.value = true;
-      console.log(projectDetail);
     }).catch(err => {
       console.log(err);
     })
   })
+   countnumber(pid).then(res =>{
+    peopleNum.list = res.data
+  }).catch(err => {
+    console.log(err);
+  })
+};
+
+const openDelete = (pid,e) => {
+  let id,name;
+  if (e.target.toString() == "[object HTMLSpanElement]") {
+    id = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+    name = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.nextSibling.firstChild.innerText;
+  } else {
+    id = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+    name = e.target.parentElement.parentElement.parentElement.firstChild.nextSibling.firstChild.innerText;
+  }
+  ElMessageBox({
+      title: "删除项目",
+      message: "确认删除" + name + "吗?",
+      showCancelButton: true,
+      cancelButtonText: "取消",
+      confirmButtonText: "确认",
+      draggable: true,
+      beforeClose: (action, instance, done) => {
+        if (action === "confirm") {
+          deleteprojectNum(pid,id).then(res => {
+            countnumber(pid).then(res =>{
+              peopleNum.list = res.data
+            }).catch(err => {
+              console.log(err);
+            })
+            done();
+          }).catch(err => {
+            console.log(err);
+          });
+        } else {
+          done();
+        }
+      },
+      callback: (action: Action) => {
+        if (action == "confirm") {
+          ElMessage({
+            type: "success",
+            message: "删除成功"
+          });
+        } else {
+          ElMessage({
+            type: "info",
+            message: "取消删除"
+          });
+        }
+      }
+    });
 };
 const copyDetail = () => {
   return projectDetail;
