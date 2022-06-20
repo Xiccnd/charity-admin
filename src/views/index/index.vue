@@ -70,9 +70,10 @@ import { useI18n } from "vue-i18n";
 import { getResouceList } from "@/api/index";
 import { useStore } from "vuex";
 import { getUname,getTeamid} from '@/utils/accessToken';
+const { t } = useI18n();
 const activeName = ref("first");
 const store = useStore();
-const { t } = useI18n();
+
   const state = reactive({
     list: [],
     prefix: '',
@@ -94,6 +95,7 @@ const { t } = useI18n();
 
   let review = reactive({
     list: [{
+      id:'',
       name:'',
       sex:'',
       area:'',

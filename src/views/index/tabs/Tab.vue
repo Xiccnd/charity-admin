@@ -19,11 +19,11 @@
     </el-tab-pane>
     <el-tab-pane label="待审核人员" name="second">
       <el-table :data="tableData" style="width: 100%" max-height="250">
-        <el-table-column fixed prop="name" label="姓名" width="150" />
+        <el-table-column fixed prop="id" label="id" width="120" />
+        <el-table-column prop="name" label="姓名" width="150" />
         <el-table-column prop="sex" label="性别" width="120" />
         <el-table-column prop="telephone" label="联系电话" width="120" />
-        <el-table-column prop="mailbox" label="邮箱" width="120" />
-        <el-table-column prop="address" label="地址" width="350" />
+        <el-table-column prop="mailbox" label="邮箱" width="350" />
         <el-table-column prop="area" label="区域" width="120" />
         <el-table-column fixed="right" label="Operations" width="137">
           <template #default>

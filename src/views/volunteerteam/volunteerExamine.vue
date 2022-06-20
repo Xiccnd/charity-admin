@@ -164,10 +164,9 @@ if (window.confirm("是否同意其退出队伍") == true) {
  
 
 };
-const selectAll = () => {
-  cencortableData(tableDatalist.teamid).then(res => {
+const selectAll = (id) => {
+  cencortableData(tableDatalist.teamid,id).then(res => {
     tableDatalist.list = res.data;
-    console.log(tableDatalist.list.length);
   })
     .catch(err => {
       console.error(err);
@@ -177,9 +176,18 @@ const handlePageChange = (pageNum) => {
   tableDatalist.currentPage = pageNum;
 };
 onMounted(() => {
-  if(router.currentRoute.value.query.id!==''){
-    selectAll(router.currentRoute.value.query.id);
-  }else{selectAll();}
+  
+  if(router.currentRoute.value.query.id!==undefined&&router.currentRoute.value.query.id!==''){
+     censorsearch(tableDatalist.teamid,router.currentRoute.value.query.id).then(res => {
+     tableDatalist.list = res.data;
+  })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+  else{
+    selectAll();
+    console.log(12)}
 });
 </script>
 <style lang="scss" scoped>

@@ -11,6 +11,18 @@ export const tableData = async (teamid) => {
     baseURL: baseURL
   });
 };
+export const search = async (teamid, pid, pname) => {
+  return request({
+    url: "/volunteerProgramDetails/end/selectByTeamIdANDName",
+    method: "post",
+    data: {
+      teamid: teamid,
+      pid: pid,
+      pname: pname
+    },
+    baseURL: baseURL
+  });
+};
 export const cencorsearch = async (teamid, pid, pname) => {
   return request({
     url: "/volunteerProgramDetails/end/selectAllJoinProjiect",
