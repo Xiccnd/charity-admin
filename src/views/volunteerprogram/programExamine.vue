@@ -155,8 +155,8 @@ const refusehandleClick = (e) => {
 
 
 };
-const selectAll = () => {
-  cencortableData(tableDatalist.teamid).then(res => {
+const selectAll = (id) => {
+  cencortableData(tableDatalist.teamid,id).then(res => {
     tableDatalist.list = res.data;
   })
     .catch(err => {
@@ -168,9 +168,17 @@ const handlePageChange = (pageNum) => {
   tableDatalist.currentPage = pageNum;
 };
 onMounted(() => {
-  if(router.currentRoute.value.query.id!==''){
-    selectAll(router.currentRoute.value.query.id);
-  }else{selectAll();}
+  if(router.currentRoute.value.query.id!==undefined&&router.currentRoute.value.query.id!==''){
+     cencorsearch(tableDatalist.teamid,router.currentRoute.value.query.id).then(res => {
+     tableDatalist.list = res.data;
+  })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+  else{
+    selectAll();
+   }
 });
 </script>
 

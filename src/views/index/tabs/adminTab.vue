@@ -9,7 +9,7 @@
         <el-table-column sortable prop="state" label="项目状态" width="200" />
          <el-table-column fixed="right" label="Operations" width="137">
           <template #default="scope">
-            <el-button link type="primary" size="small" @click="btnClick('programExamine',$event)"
+            <el-button link type="primary" size="small" @click="btnClick('project_verify',$event)"
             >详情
             </el-button
             >

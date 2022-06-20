@@ -97,11 +97,12 @@
 
 <script lang="ts" setup>
 import { Search } from "@element-plus/icons-vue";
+import { useRouter } from "vue-router";
 import { onMounted, reactive, ref } from "vue";
 import { getVerifyProject, projectNotPass, projectPass, getAllTeam } from "../../api/volunteer";
 import { ElMessage, ElMessageBox } from "element-plus";
 import type { Action } from "element-plus";
-
+const router = useRouter(); 
 const projectVerifyPass = () => {
   projectPass(projectDetail.pid).then(res => {
     ElMessage({
@@ -265,7 +266,9 @@ document.addEventListener("keydown", function(e) {
 });
 
 onMounted(() => {
-  selectAll("", "");
+  if(router.currentRoute.value.query.id!==''){
+    selectAll(router.currentRoute.value.query.id, "");
+  }else{selectAll("", "");}
 });
 </script>
 

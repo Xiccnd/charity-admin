@@ -187,7 +187,7 @@ onMounted(() => {
   }
   else{
     selectAll();
-    console.log(12)}
+   }
 });
 </script>
 <style lang="scss" scoped>
