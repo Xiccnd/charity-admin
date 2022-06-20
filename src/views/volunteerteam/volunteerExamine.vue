@@ -71,7 +71,7 @@
 
 <script setup>
 
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
+  import { ref,reactive} from 'vue';
   import { CountTo } from 'vue3-count-to';
   import { getTeamid} from '@/utils/accessToken';
   import Echarts from '@/components/Echarts/index.vue';
@@ -80,8 +80,10 @@
   import { getResouceList } from '@/api/index';
   import { useStore } from 'vuex';
   import { method } from 'lodash-unified';
+  import { useRouter } from "vue-router";
   import { cencortableData,censorsearch,refuse,agree,refusequit,agreequit} from '@/api/volunteer';
-let multipleTable =ref(null)
+  const router = useRouter(); 
+  let multipleTable =ref(null)
 
 
 
@@ -124,60 +126,15 @@ const onSubmit = () => {
       console.error(err);
     });
 };
-const refusevo = (e,row) => {
-//   let vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-//   let opstatus;
-//   if (vid != "" && vid != null)
-//    { 
-//     opstatus = e.target.parentElement.parentElement.parentElement.children[6].innerText;
-//     console.log("opstatus"+opstatus)
-//     console.log(vid);
-//     console.log(222);
-//     }else {
-//     vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-//     opstatus = e.target.parentElement.parentElement.parentElement.parentElement.children[6].innerText
-//     console.log("opstatus"+opstatus)
-//     console.log(vid);
-//     console.log(111);
-//   }
-// if(opstatus == "加入申请"){
-//    if (window.confirm("是否拒绝其加入队伍") == true) {
-//     refuse(vid, tableDatalist.teamid).then(res => {
-//       selectAll();
-//     })
-//       .catch(err => {
-//         console.error(err);
-//       });
-//   } else {
-//     console.log("你取消了操作");
-//   }
-// }else if(opstatus == "退出申请"){
-//    if (window.confirm("是否拒绝其退出队伍") == true) {
-//     refusequit(vid, tableDatalist.teamid).then(res => {
-//       selectAll();
-//     })
-//       .catch(err => {
-//         console.error(err);
-//       });
-//   } else {
-//     console.log("你取消了操作");
-//   }
-// }
 
-console.log(row)
-};
 const agreevo = (e) => {
   var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   let opstatus;
   if (vid != "" && vid != null)
     {opstatus = e.target.parentElement.parentElement.parentElement.children[6].innerText;
-    console.log("opstatus"+opstatus)
-    console.log(vid);
     }else {
     opstatus = e.target.parentElement.parentElement.parentElement.parentElement.children[6].innerText
-    console.log("opstatus"+opstatus)
     vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-    console.log(vid);
   }
 if(opstatus == "加入申请"){
  if (window.confirm("是否同意其加入队伍") == true) {
@@ -209,8 +166,6 @@ if (window.confirm("是否同意其退出队伍") == true) {
 };
 const selectAll = () => {
   cencortableData(tableDatalist.teamid).then(res => {
-    console.log(res);
-    console.log(res.data);
     tableDatalist.list = res.data;
     console.log(tableDatalist.list.length);
   })
@@ -219,11 +174,12 @@ const selectAll = () => {
     });
 };
 const handlePageChange = (pageNum) => {
-  console.log(pageNum);
   tableDatalist.currentPage = pageNum;
 };
 onMounted(() => {
-  selectAll();
+  if(router.currentRoute.value.query.id!==''){
+    selectAll(router.currentRoute.value.query.id);
+  }else{selectAll();}
 });
 </script>
 <style lang="scss" scoped>

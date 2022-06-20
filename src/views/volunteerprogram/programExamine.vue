@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
+  import { ref, reactive} from 'vue';
   import { CountTo } from 'vue3-count-to';
   import Addform from '@/components/program/index.vue';
   import packpage from '../../../package.json';
@@ -75,10 +75,12 @@
   import { method } from 'lodash-unified';
   import { cencortableData,cencorsearch} from '@/api/program';
   import { getTeamid} from '@/utils/accessToken';
+  import { useRouter } from "vue-router";
   import { ElMessage, ElMessageBox } from 'element-plus'
   components: {
     Addform
   }
+  const router = useRouter(); 
 const refform = ref(false)
 let dialogFormVisible = ref(false)
 const addform = ref(false)
@@ -132,10 +134,6 @@ const tableDatalist = reactive({
 });
 const onSubmit = () => {
   cencorsearch(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
-    console.log(tableDatalist.teamid);
-     console.log(formInline.id);
-      console.log(formInline.name);
-    console.log(res.data);
     tableDatalist.list = res.data;
   })
     .catch(err => {
@@ -155,16 +153,6 @@ const refusehandleClick = (e) => {
     console.log(vid);
   }
 
-  // if (window.confirm("是否拒绝该申请") == true) {
-  //   refusejoin(vid).then(res => {
-  //     selectAll();
-  //   }).catch(err => {
-  //       console.error(err);
-  //     });
-  // } else {
-  //   console.log("你取消了操作");
-  // }
-
 
 };
 const selectAll = () => {
@@ -180,7 +168,9 @@ const handlePageChange = (pageNum) => {
   tableDatalist.currentPage = pageNum;
 };
 onMounted(() => {
-  selectAll();
+  if(router.currentRoute.value.query.id!==''){
+    selectAll(router.currentRoute.value.query.id);
+  }else{selectAll();}
 });
 </script>
 
