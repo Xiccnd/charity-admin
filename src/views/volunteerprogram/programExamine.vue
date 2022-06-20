@@ -36,8 +36,8 @@
           <el-table-column prop="status" label="申请事项" width="140" />
           <el-table-column prop="list.operate" label="操作">
             <template #default>
-              <el-button link type="danger" size="small" @click="handleClick($event)">拒绝</el-button>
-              <el-button link type="success" size="small" @click="handleClick($event)">同意</el-button>
+              <el-button link type="danger" size="small" @click="refusehandleClick($event)">拒绝</el-button>
+              <el-button link type="success" size="small" @click="agreehandleClick($event)">同意</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -73,7 +73,7 @@
   import { getResouceList } from '@/api/index';
   import { useStore } from 'vuex';
   import { method } from 'lodash-unified';
-  import { cencortableData,search} from '@/api/program';
+  import { cencortableData,cencorsearch} from '@/api/program';
   import { getTeamid} from '@/utils/accessToken';
   import { ElMessage, ElMessageBox } from 'element-plus'
   components: {
@@ -101,18 +101,6 @@ const ruleForm = reactive({
   targetNum: "",
   type: []
 });
-
-const submitpro = () => {
-  console.log(addform.value);
-  // addform.value.handleClose()
-  console.log(ruleForm.pname);
-};
-const resetForm = () => {
-  Object.keys(ruleForm).map(key => {
-    delete ruleForm[key];
-  });
-};
-
 const formInline = reactive({
   name: "",
   id: ""
@@ -143,8 +131,10 @@ const tableDatalist = reactive({
 
 });
 const onSubmit = () => {
-  search(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
+  cencorsearch(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
     console.log(tableDatalist.teamid);
+     console.log(formInline.id);
+      console.log(formInline.name);
     console.log(res.data);
     tableDatalist.list = res.data;
   })
@@ -152,7 +142,11 @@ const onSubmit = () => {
       console.error(err);
     });
 };
-const handleClick = (e) => {
+const agreehandleClick = (e) =>{
+
+}
+const refusehandleClick = (e) => {
+  
   var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   if (vid != "" && vid != null)
     console.log(vid);
@@ -161,16 +155,15 @@ const handleClick = (e) => {
     console.log(vid);
   }
 
-  if (window.confirm("是否将该成员踢出队伍") == true) {
-    del(vid).then(res => {
-      selectAll();
-    })
-      .catch(err => {
-        console.error(err);
-      });
-  } else {
-    console.log("你取消了操作");
-  }
+  // if (window.confirm("是否拒绝该申请") == true) {
+  //   refusejoin(vid).then(res => {
+  //     selectAll();
+  //   }).catch(err => {
+  //       console.error(err);
+  //     });
+  // } else {
+  //   console.log("你取消了操作");
+  // }
 
 
 };
