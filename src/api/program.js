@@ -47,7 +47,31 @@ export const refusejoin = async (id,pid,postid) => {
 };
 export const agreejoin = async (id,pid,postid) => {
   return request({
-    url: "/volunteersProject/rufuseProjectNum",
+    url: "/volunteersProject/agreeProjectNum",
+    method: "post",
+    data: {
+      id: id,
+      pid: pid,
+      postid: postid
+    },
+    baseURL: baseURL
+  });
+};
+export const refusejoinpro = async (id,pid,postid) => {
+  return request({
+    url: "/volunteersProject/refusejoinpro",
+    method: "post",
+    data: {
+      id: id,
+      pid: pid,
+      postid: postid
+    },
+    baseURL: baseURL
+  });
+};
+export const refusequitpro = async (id,pid,postid) => {
+  return request({
+    url: "/volunteersProject/refusequitpro",
     method: "post",
     data: {
       id: id,

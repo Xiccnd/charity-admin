@@ -4,7 +4,7 @@
     class="logo-wrapper"
     :class="{ unfold: collapse, horizontal: mode === 'horizontal' }"
   >
-    <svg-icon name="vue" size="35px" />
+    <!-- <svg-icon name="vue" size="35px" /> -->
     <span class="logo-title" :style="{ color: textColor }" v-if="!collapse"> 志愿网站管理系统 </span>
   </div>
 </template>
@@ -64,9 +64,9 @@ const handleClick = () => {
 
   .logo-title {
     display: inline-block;
-    max-width: calc(246px - 60px);
-    padding-left: $base-padding-10;
-    overflow: hidden;
+    // max-width: calc(246px - 60px);
+    // padding-left: $base-padding-10;
+    // overflow: hidden;
     font-size: $base-font-size-max;
     line-height: $base-logo-height;
     color: #333;

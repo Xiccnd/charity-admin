@@ -35,9 +35,9 @@
           <el-table-column prop="joinTime" label="申请时间" width="160" />
           <el-table-column prop="status" label="申请事项" width="140" />
           <el-table-column prop="list.operate" label="操作">
-            <template #default>
-              <el-button link type="danger" size="small" @click="refusehandleClick($event)">拒绝</el-button>
-              <el-button link type="success" size="small" @click="agreehandleClick($event)">同意</el-button>
+            <template #default="scope">
+              <el-button link type="danger" size="small" @click="refusehandleClick(scope.row)">拒绝</el-button>
+              <el-button link type="success" size="small" @click="agreehandleClick(scope.row)">同意</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -73,7 +73,7 @@
   import { getResouceList } from '@/api/index';
   import { useStore } from 'vuex';
   import { method } from 'lodash-unified';
-  import { cencortableData,cencorsearch} from '@/api/program';
+  import { cencortableData,cencorsearch,refusejoin,agreejoin,refusejoinpro,refusequitpro} from '@/api/program';
   import { getTeamid} from '@/utils/accessToken';
   import { ElMessage, ElMessageBox } from 'element-plus'
   components: {
@@ -105,7 +105,6 @@ const formInline = reactive({
   name: "",
   id: ""
 });
-
 const tableDatalist = reactive({
   currentRowIndex: 1,
   pageSize: 3,
@@ -125,8 +124,6 @@ const tableDatalist = reactive({
     prop: "",
     pid: ""
   }
-
-
   ]
 
 });
@@ -142,33 +139,58 @@ const onSubmit = () => {
       console.error(err);
     });
 };
-const agreehandleClick = (e) =>{
-
-}
-const refusehandleClick = (e) => {
-  
-  var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-  if (vid != "" && vid != null)
-    console.log(vid);
-  else {
-    vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-    console.log(vid);
+const agreehandleClick = (row) =>{
+if(row.status == "加入申请中"){
+      if (window.confirm("是否同意其加入项目") == true) {
+          agreejoin(row.id,row.pid,row.postid).then(res => {
+            console.log(row.id+row.pid+row.postid)
+            selectAll();
+          }).catch(err => {
+              console.error(err);
+            });
+        } else {
+          console.log("你取消了操作");
+        }
+  }else if(row.status == "退出申请中"){
+       if (window.confirm("是否同意其退出项目") == true) {
+          refusejoinpro(row.id,row.pid,row.postid).then(res => {
+            selectAll();
+          }).catch(err => {
+              console.error(err);
+            });
+        } else {
+          console.log("你取消了操作");
+        }
   }
+}
+const refusehandleClick = (row) => {
 
-  // if (window.confirm("是否拒绝该申请") == true) {
-  //   refusejoin(vid).then(res => {
-  //     selectAll();
-  //   }).catch(err => {
-  //       console.error(err);
-  //     });
-  // } else {
-  //   console.log("你取消了操作");
-  // }
-
-
+if(row.status == "加入申请中"){
+      if (window.confirm("是否拒绝其加入项目") == true) {
+          refusejoin(row.id,row.pid,row.postid).then(res => {
+            selectAll();
+          }).catch(err => {
+              console.error(err);
+            });
+        } else {
+          console.log("你取消了操作");
+        }
+  }else if(row.status == "退出申请中"){
+   if (window.confirm("是否拒绝其退出队伍") == true) {
+    refusequitpro(row.id,row.pid,row.postid).then(res => {
+      selectAll();
+    })
+      .catch(err => {
+        console.error(err);
+      });
+  } else {
+    console.log("你取消了操作");
+  }
+}
 };
 const selectAll = () => {
   cencortableData(tableDatalist.teamid).then(res => {
+    console.log(res.data)
     tableDatalist.list = res.data;
   })
     .catch(err => {

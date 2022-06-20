@@ -43,9 +43,9 @@
                    </template>
                    </el-table-column>
                 <el-table-column prop="list.operate" label="操作" >
-            <template #default="scope">
-              <el-button link type="danger" size="small" @click="refusevo($event,scope.row)">拒绝</el-button>
-              <el-button link type="success" size="small" @click="agreevo($event,scope.row)">同意</el-button>
+            <template #default>
+              <el-button link type="danger" size="small" @click="refusevo($event)">拒绝</el-button>
+              <el-button link type="success" size="small" @click="agreevo($event)">同意</el-button>
             </template>
           </el-table-column>
 
@@ -124,47 +124,45 @@ const onSubmit = () => {
       console.error(err);
     });
 };
-const refusevo = (e,row) => {
-//   let vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-//   let opstatus;
-//   if (vid != "" && vid != null)
-//    { 
-//     opstatus = e.target.parentElement.parentElement.parentElement.children[6].innerText;
-//     console.log("opstatus"+opstatus)
-//     console.log(vid);
-//     console.log(222);
-//     }else {
-//     vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-//     opstatus = e.target.parentElement.parentElement.parentElement.parentElement.children[6].innerText
-//     console.log("opstatus"+opstatus)
-//     console.log(vid);
-//     console.log(111);
-//   }
-// if(opstatus == "加入申请"){
-//    if (window.confirm("是否拒绝其加入队伍") == true) {
-//     refuse(vid, tableDatalist.teamid).then(res => {
-//       selectAll();
-//     })
-//       .catch(err => {
-//         console.error(err);
-//       });
-//   } else {
-//     console.log("你取消了操作");
-//   }
-// }else if(opstatus == "退出申请"){
-//    if (window.confirm("是否拒绝其退出队伍") == true) {
-//     refusequit(vid, tableDatalist.teamid).then(res => {
-//       selectAll();
-//     })
-//       .catch(err => {
-//         console.error(err);
-//       });
-//   } else {
-//     console.log("你取消了操作");
-//   }
-// }
-
-console.log(row)
+const refusevo = (e) => {
+  let vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+  let opstatus;
+  if (vid != "" && vid != null)
+   { 
+    opstatus = e.target.parentElement.parentElement.parentElement.children[6].innerText;
+    console.log("opstatus"+opstatus)
+    console.log(vid);
+    console.log(222);
+    }else {
+    vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
+    opstatus = e.target.parentElement.parentElement.parentElement.parentElement.children[6].innerText
+    console.log("opstatus"+opstatus)
+    console.log(vid);
+    console.log(111);
+  }
+if(opstatus == "加入申请"){
+   if (window.confirm("是否拒绝其加入队伍") == true) {
+    refuse(vid, tableDatalist.teamid).then(res => {
+      selectAll();
+    })
+      .catch(err => {
+        console.error(err);
+      });
+  } else {
+    console.log("你取消了操作");
+  }
+}else if(opstatus == "退出申请"){
+   if (window.confirm("是否拒绝其退出队伍") == true) {
+    refusequit(vid, tableDatalist.teamid).then(res => {
+      selectAll();
+    })
+      .catch(err => {
+        console.error(err);
+      });
+  } else {
+    console.log("你取消了操作");
+  }
+}
 };
 const agreevo = (e) => {
   var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
