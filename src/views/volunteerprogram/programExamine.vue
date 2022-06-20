@@ -36,9 +36,8 @@
           <el-table-column prop="status" label="申请事项" width="140" />
           <el-table-column prop="list.operate" label="操作">
             <template #default>
-              <el-button link type="danger" size="small" @click="handleClick($event)">拒绝</el-button>
-              <el-button link type="success" size="small" @click="handleClick($event)">同意
-              </el-button>
+              <el-button link type="danger" size="small" @click="refusehandleClick($event)">拒绝</el-button>
+              <el-button link type="success" size="small" @click="agreehandleClick($event)">同意</el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -66,29 +65,30 @@
 </template>
 
 <script setup>
-import { ref, computed, reactive, onBeforeMount } from "vue";
-import { CountTo } from "vue3-count-to";
-import Addform from "@/components/program/index.vue";
-import packpage from "../../../package.json";
-import { useI18n } from "vue-i18n";
-import { getResouceList } from "@/api/index";
-import { useStore } from "vuex";
-import { method } from "lodash-unified";
-import { cencortableData, search } from "@/api/program";
-import { getTeamid } from "@/utils/accessToken";
-import { ElMessage, ElMessageBox } from "element-plus";
-
-components: {
-  Addform;
-}
-const refform = ref(false);
-let dialogFormVisible = ref(false);
-const addform = ref(false);
-const formLabelWidth = "140px";
+  import { ref, reactive} from 'vue';
+  import { CountTo } from 'vue3-count-to';
+  import Addform from '@/components/program/index.vue';
+  import packpage from '../../../package.json';
+  import { useI18n } from 'vue-i18n';
+  import { getResouceList } from '@/api/index';
+  import { useStore } from 'vuex';
+  import { method } from 'lodash-unified';
+  import { cencortableData,cencorsearch} from '@/api/program';
+  import { getTeamid} from '@/utils/accessToken';
+  import { useRouter } from "vue-router";
+  import { ElMessage, ElMessageBox } from 'element-plus'
+  components: {
+    Addform
+  }
+  const router = useRouter(); 
+const refform = ref(false)
+let dialogFormVisible = ref(false)
+const addform = ref(false)
+const formLabelWidth = '140px'
 const ruleForm = reactive({
-  status: "",
+  status:"",
   pname: "",
-  telephone: "",
+  telephone:"",
   location: "",
   releaseDate: "",
   projectDate: "",
@@ -103,18 +103,6 @@ const ruleForm = reactive({
   targetNum: "",
   type: []
 });
-
-const submitpro = () => {
-  console.log(addform.value);
-  // addform.value.handleClose()
-  console.log(ruleForm.pname);
-};
-const resetForm = () => {
-  Object.keys(ruleForm).map(key => {
-    delete ruleForm[key];
-  });
-};
-
 const formInline = reactive({
   name: "",
   id: ""
@@ -127,9 +115,9 @@ const tableDatalist = reactive({
   teamid: getTeamid(),
   id: 1,
   list: [{
-    name: "",
-    post_name: "",
-    joinTime: "",
+    name:"",
+    post_name:"",
+    joinTime:"",
     pname: "",
     location: "",
     releaseDate: "",
@@ -145,33 +133,24 @@ const tableDatalist = reactive({
 
 });
 const onSubmit = () => {
-  search(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
-    console.log(tableDatalist.teamid);
-    console.log(res.data);
+  cencorsearch(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
     tableDatalist.list = res.data;
   })
     .catch(err => {
       console.error(err);
     });
 };
-const handleClick = (e) => {
+const agreehandleClick = (e) =>{
+
+}
+const refusehandleClick = (e) => {
+  
   var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   if (vid != "" && vid != null)
     console.log(vid);
   else {
     vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
     console.log(vid);
-  }
-
-  if (window.confirm("是否将该成员踢出队伍") == true) {
-    del(vid).then(res => {
-      selectAll();
-    })
-      .catch(err => {
-        console.error(err);
-      });
-  } else {
-    console.log("你取消了操作");
   }
 
 
@@ -189,7 +168,9 @@ const handlePageChange = (pageNum) => {
   tableDatalist.currentPage = pageNum;
 };
 onMounted(() => {
-  selectAll();
+  if(router.currentRoute.value.query.id!==''){
+    selectAll(router.currentRoute.value.query.id);
+  }else{selectAll();}
 });
 </script>
 

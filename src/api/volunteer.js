@@ -78,7 +78,28 @@ export const agree = async (id, teamid) => {
     baseURL: baseURL
   });
 };
-
+export const refusequit = async (id, teamid) => {
+  return request({
+    url: "/personalData/end/refusequit",
+    method: "post",
+    data: {
+      id: id,
+      teamid: teamid
+    },
+    baseURL: baseURL
+  });
+};
+export const agreequit = async (id, teamid) => {
+  return request({
+    url: "/personalData/end/agreequit",
+    method: "post",
+    data: {
+      id: id,
+      teamid: teamid
+    },
+    baseURL: baseURL
+  });
+};
 export const getAllUser = async (id, name) => {
   return request({
     url: "/user/usersUpData",

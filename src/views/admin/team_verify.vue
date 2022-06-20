@@ -98,9 +98,10 @@
 import { Search } from "@element-plus/icons-vue";
 import { onMounted, reactive, ref } from "vue";
 import { getVerifyTeam, teamNotPass, teamPass } from "../../api/volunteer";
+import { useRouter } from "vue-router";
 import { ElMessage, ElMessageBox } from "element-plus";
 import type { Action } from "element-plus";
-
+const router = useRouter(); 
 const teamVerifyPass = () => {
   teamPass(teamDetail.teamid).then(res => {
     ElMessage({
@@ -131,7 +132,6 @@ const openDetail = (e) => {
   }
   getVerifyTeam(teamid, "").then(res => {
     teamDetail = res.data[0];
-    console.log(teamDetail);
     detailFormVisible.value = true;
   }).catch(err => {
     console.log(err);
@@ -256,7 +256,9 @@ document.addEventListener("keydown", function(e) {
 });
 
 onMounted(() => {
-  selectAll("", "");
+  if(router.currentRoute.value.query.id!==''){
+    selectAll(router.currentRoute.value.query.id, "");
+  }else{selectAll("", "");}
 });
 </script>
 
