@@ -155,14 +155,10 @@
 
 <script setup>
 import { ref, reactive, onMounted, computed, onBeforeMount } from "vue";
-<<<<<<< HEAD
+
 import { getTeamInformation,UpdateSubmit } from "@/api/team";
 import { getTeamid} from '@/utils/accessToken';
-=======
-import { getTeamInformation } from "@/api/team";
-import { getTeamid } from "@/utils/accessToken";
 
->>>>>>> 36db5b56fe91615af31b3667b37277aa2c18cd5f
 const value1 = ref("");
 const textarea = ref("");
 const formInline = reactive({

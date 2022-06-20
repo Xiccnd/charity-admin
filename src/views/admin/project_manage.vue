@@ -30,9 +30,9 @@
                   stripe style="width: 100%;">
           <el-table-column prop="pid" label="ID" width="100" sortable />
           <el-table-column prop="pname" label="项目名" width="200" />
-          <el-table-column prop="releaseDate" label="发布日期" width="200" sortable />
+          <el-table-column prop="releaseDate" label="提交日期" width="200" sortable />
           <el-table-column prop="projectDate" label="结束日期" width="200" sortable />
-          <el-table-column prop="statusName" label="项目状态" width="100" />
+          <el-table-column prop="projectStatus" label="项目状态" width="100" />
           <el-table-column prop="location" label="项目地点" width="100" />
           <el-table-column label="操作">
             <el-button type="success" plain v-on:click="openDetail($event)">查看详情
@@ -193,7 +193,7 @@ let allproject = reactive({
   list: [{
     pid: "",
     pname: "",
-    statusName: "",
+    projectStatus: "",
     releaseDate: "",
     projectDate: "",
     location: ""

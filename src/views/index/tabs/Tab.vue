@@ -2,19 +2,11 @@
   <el-tabs v-model="activeName" class="demo-tabs" @tab-click="handleClick">
     <el-tab-pane label="待审核项目" name="first">
       <el-table :data="tableData2 " style="width: 100%" max-height="250" >
-        <el-table-column sortable fixed prop="pid" label="项目id" width="150" />
-        <el-table-column prop="pname" label="项目名称" width="120" />
+        <el-table-column sortable fixed prop="pid" label="项目id" width="200" />
+        <el-table-column prop="pname" label="项目名称" width="200" />
         <el-table-column prop="postName" label="申请人" width="200" />
-        <el-table-column prop="location" label="区域" width="350" />
-        <el-table-column sortable prop="state" label="项目状态" width="200" />
-         <el-table-column fixed="right" label="Operations" width="137">
-          <template #default="scope">
-            <el-button link type="primary" size="small" @click="btnClick('programExamine',$event)"
-            >详情
-            </el-button
-            >
-          </template>
-        </el-table-column>
+        <el-table-column prop="location" label="区域" width="300" />
+        <el-table-column sortable prop="projectStatus" label="项目状态" width="200" />
       </el-table>
     </el-tab-pane>
     <el-tab-pane label="待审核人员" name="second">

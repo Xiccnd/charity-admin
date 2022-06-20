@@ -163,7 +163,6 @@ if(row.status == "加入申请中"){
 }
 const refusehandleClick = (row) => {
 
-<<<<<<< HEAD
 if(row.status == "加入申请中"){
       if (window.confirm("是否拒绝其加入项目") == true) {
           refusejoin(row.id,row.pid,row.postid).then(res => {
@@ -187,15 +186,10 @@ if(row.status == "加入申请中"){
   }
 }
 };
-const selectAll = () => {
-  cencortableData(tableDatalist.teamid).then(res => {
-    console.log(res.data)
-=======
 
-};
 const selectAll = (id) => {
   cencortableData(tableDatalist.teamid,id).then(res => {
->>>>>>> 36db5b56fe91615af31b3667b37277aa2c18cd5f
+
     tableDatalist.list = res.data;
   })
     .catch(err => {
@@ -207,17 +201,7 @@ const handlePageChange = (pageNum) => {
   tableDatalist.currentPage = pageNum;
 };
 onMounted(() => {
-  if(router.currentRoute.value.query.id!==undefined&&router.currentRoute.value.query.id!==''){
-     cencorsearch(tableDatalist.teamid,router.currentRoute.value.query.id).then(res => {
-     tableDatalist.list = res.data;
-  })
-    .catch(err => {
-      console.error(err);
-    });
-  }
-  else{
     selectAll();
-   }
 });
 </script>
 

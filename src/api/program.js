@@ -3,9 +3,9 @@ import { link } from "@/utils/link.js";
 const { baseURL} =link;
 export const tableData = async (teamid) => {
   return request({
-    url: "/volunteerProgramDetails/end/selectByTeamIdANDName",
-    method: "post",
-    data: {
+    url: "/volunteerProgramDetails/end/selectAll",
+    method: "get",
+    params: {
       teamid: teamid
     },
     baseURL: baseURL

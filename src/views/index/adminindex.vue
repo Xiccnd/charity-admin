@@ -74,8 +74,7 @@ const { t } = useI18n();
       pname:'',
       postName:'',
       location:'',
-      mark:'',
-      state:''
+      projectStatus:''
     }]
   })
   
@@ -132,13 +131,6 @@ const { t } = useI18n();
    const baseproject = (teamid) =>{
     proejectinfo(teamid).then(res =>{
       project.list = res.data 
-      for(let i = 0;i<project.list.length;i++){
-        if(project.list[i].mark == '0'){
-          project.list[i].state="待审核"
-        }else{
-          project.list[i].state="已审核"
-        }
-      }
     }).catch(err =>{
       console.log(err)
     })

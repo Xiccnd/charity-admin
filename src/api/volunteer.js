@@ -314,7 +314,7 @@ export const updateInfo = async (uid, id, name, password, telephone, mailbox, qq
 };
 
 export const datasubmit = async (
-  teamid, pname, location, releaseDate, projectDate, recruitDate, serviceObject,
+  teamid, pname, location, projectDate, recruitDate, serviceObject,
   volunteerUpport, serviceDescription, projectDetails, postDesc, postCondition, postName, targetNum, type) => {
   return request({
     url: "volunteerProgramDetailscensor/addTeamProject",
@@ -323,7 +323,6 @@ export const datasubmit = async (
       teamid,
       pname,
       location,
-      releaseDate,
       projectDate,
       recruitDate,
       serviceObject,

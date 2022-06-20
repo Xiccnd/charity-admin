@@ -48,7 +48,7 @@
           <el-table-column prop="releaseDate" label="发布日期" width="200" />
           <el-table-column prop="projectDate" label="结束日期" width="200" />
           <el-table-column prop="location" label="项目地点" width="100" />
-          <el-table-column prop="statusName" label="项目状态" width="100" />
+          <el-table-column prop="projectStatus" label="项目状态" width="100" />
           <el-table-column prop="list.operate" label="操作">
             <el-button type="success" plain v-on:click="openDetail($event)">查看详情
             </el-button>
@@ -145,28 +145,6 @@
 </template>
 
 <script lang="ts" setup>
-<<<<<<< HEAD
-  import { ref, reactive,onMounted } from 'vue';
-  import { CountTo } from 'vue3-count-to';
-  import Addform from '@/components/program/index.vue';
-  import { useI18n } from 'vue-i18n';
-  import { getResouceList } from '../../api/index';
-  import { useStore } from 'vuex';
-  import { method } from 'lodash-unified';
-  import { tableData} from '../../api/program';
-  import { getAllProject, getAllTeam,countnumber,deleteprojectNum} from "../../api/volunteer";
-  import { getTeamid} from '../../utils/accessToken';
-  import { ElMessage, ElMessageBox} from 'element-plus'
-  import type { Action } from "element-plus";
-  components: {
-    Addform
-  }
-  const detailFormLabelWidth = "140px";
-const refform = ref(false)
-let dialogFormVisible = ref(false)
-const addform = ref(false)
-const formLabelWidth = '140px'
-=======
 import { ref, reactive, onMounted } from "vue";
 import { CountTo } from "vue3-count-to";
 import Addform from "@/components/program/index.vue";
@@ -188,7 +166,6 @@ const refform = ref(false);
 let dialogFormVisible = ref(false);
 const addform = ref(false);
 const formLabelWidth = "140px";
->>>>>>> 36db5b56fe91615af31b3667b37277aa2c18cd5f
 const ruleForm = reactive({
   pname: "",
   location: "",
@@ -234,7 +211,7 @@ const tableDatalist = reactive({
   currentRowIndex: 1,
   pageSize: 3,
   currentPage: 1,
-  teamid: getTeamid,
+  teamid: getTeamid(),
   id: 1,
   list: [{
     pname: "",
@@ -242,7 +219,7 @@ const tableDatalist = reactive({
     releaseDate: "",
     recruitDate: "",
     projectDate: "",
-    statusName: "",
+    projectStatus: "",
     prop: "",
     pid: ""
   }]
@@ -281,28 +258,6 @@ const onSubmit = () => {
       console.error(err);
     });
 };
-// const handleClick = (e) => {
-//   var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-//   if (vid != "" && vid != null)
-//     console.log(vid);
-//   else {
-//     vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-//     console.log(vid);
-//   }
-
-//   if (window.confirm("是否将该成员踢出队伍") == true) {
-//     del(vid).then(res => {
-//       selectAll();
-//     })
-//       .catch(err => {
-//         console.error(err);
-//       });
-//   } else {
-//     console.log("你取消了操作");
-//   }
-
-
-// };
 
 const openDetail = (e) => {
   let pid;

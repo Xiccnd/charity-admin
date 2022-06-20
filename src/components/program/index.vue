@@ -75,10 +75,10 @@
 
     <el-form-item label="服务类别" prop="type">
       <el-radio-group v-model="ruleForm.type">
-        <el-radio label="Online activities" value="Online activities" name="type" />
-        <el-radio label="Promotion activities" value="Promotion activities" name="type" />
-        <el-radio label="Offline activities" value="Offline activities" name="type" />
-        <el-radio label="Simple brand exposure" value="Simple brand exposure" name="type" />
+        <el-radio label="全部" value="全部" name="type" />
+        <el-radio label="社区服务" value="社区服务" name="type" />
+        <el-radio label="卫生健康" value="卫生健康" name="type" />
+        <el-radio label="应急救援" value="应急救援" name="type" />
       </el-radio-group>
     </el-form-item>
 
@@ -136,10 +136,6 @@ const rules = reactive<FormRules>({
   targetNum: [
     { required: true, message: "请输入岗位计划招募数", trigger: "blur" }
   ],
-
-  releaseDate: [
-    { required: true, message: "请输入发布日期", trigger: "blur" }
-  ],
   recruitDate: [
     { required: true, message: "请输入招募日期", trigger: "blur" }
   ],
@@ -183,7 +179,7 @@ const submitForm = async (formEl: FormInstance | undefined) => {
   if (!formEl) return;
   await formEl.validate((valid, fields) => {
     if (valid) {
-      datasubmit(getTeamid(), ruleForm.pname, ruleForm.location, ruleForm.releaseDate, ruleForm.projectDate, ruleForm.recruitDate, ruleForm.serviceObject,
+      datasubmit(getTeamid(), ruleForm.pname, ruleForm.location, ruleForm.projectDate, ruleForm.recruitDate, ruleForm.serviceObject,
         ruleForm.volunteerUpport, ruleForm.serviceDescription, ruleForm.projectDetails, ruleForm.postDesc, ruleForm.postCondition, ruleForm.postName, ruleForm.targetNum, ruleForm.type)
         .then(res => {
           alert("提交成功");

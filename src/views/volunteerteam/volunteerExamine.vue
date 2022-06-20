@@ -117,31 +117,25 @@ const tableDatalist = reactive({
 })
 
 const onSubmit = () => {
-  console.log(tableDatalist.teamid + formInline.id + formInline.name);
   censorsearch(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
-    console.log(tableDatalist.teamid + formInline.id + formInline.name);
     tableDatalist.list = res.data;
   })
     .catch(err => {
       console.error(err);
     });
 };
-<<<<<<< HEAD
+
 const refusevo = (e) => {
   let vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   let opstatus;
   if (vid != "" && vid != null)
    { 
     opstatus = e.target.parentElement.parentElement.parentElement.children[6].innerText;
-    console.log("opstatus"+opstatus)
-    console.log(vid);
-    console.log(222);
+
     }else {
     vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
     opstatus = e.target.parentElement.parentElement.parentElement.parentElement.children[6].innerText
-    console.log("opstatus"+opstatus)
-    console.log(vid);
-    console.log(111);
+
   }
 if(opstatus == "加入申请"){
    if (window.confirm("是否拒绝其加入队伍") == true) {
@@ -167,9 +161,9 @@ if(opstatus == "加入申请"){
   }
 }
 };
-=======
 
->>>>>>> 36db5b56fe91615af31b3667b37277aa2c18cd5f
+
+
 const agreevo = (e) => {
   var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   let opstatus;
