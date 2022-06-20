@@ -71,7 +71,7 @@
 
 <script setup>
 
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
+  import { ref,reactive} from 'vue';
   import { CountTo } from 'vue3-count-to';
   import { getTeamid} from '@/utils/accessToken';
   import Echarts from '@/components/Echarts/index.vue';
@@ -80,8 +80,10 @@
   import { getResouceList } from '@/api/index';
   import { useStore } from 'vuex';
   import { method } from 'lodash-unified';
+  import { useRouter } from "vue-router";
   import { cencortableData,censorsearch,refuse,agree,refusequit,agreequit} from '@/api/volunteer';
-let multipleTable =ref(null)
+  const router = useRouter(); 
+  let multipleTable =ref(null)
 
 
 
@@ -124,6 +126,7 @@ const onSubmit = () => {
       console.error(err);
     });
 };
+<<<<<<< HEAD
 const refusevo = (e) => {
   let vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   let opstatus;
@@ -164,18 +167,17 @@ if(opstatus == "加入申请"){
   }
 }
 };
+=======
+
+>>>>>>> 36db5b56fe91615af31b3667b37277aa2c18cd5f
 const agreevo = (e) => {
   var vid = e.target.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
   let opstatus;
   if (vid != "" && vid != null)
     {opstatus = e.target.parentElement.parentElement.parentElement.children[6].innerText;
-    console.log("opstatus"+opstatus)
-    console.log(vid);
     }else {
     opstatus = e.target.parentElement.parentElement.parentElement.parentElement.children[6].innerText
-    console.log("opstatus"+opstatus)
     vid = e.target.parentElement.parentElement.parentElement.parentElement.firstChild.firstChild.innerText;
-    console.log(vid);
   }
 if(opstatus == "加入申请"){
  if (window.confirm("是否同意其加入队伍") == true) {
@@ -205,23 +207,30 @@ if (window.confirm("是否同意其退出队伍") == true) {
  
 
 };
-const selectAll = () => {
-  cencortableData(tableDatalist.teamid).then(res => {
-    console.log(res);
-    console.log(res.data);
+const selectAll = (id) => {
+  cencortableData(tableDatalist.teamid,id).then(res => {
     tableDatalist.list = res.data;
-    console.log(tableDatalist.list.length);
   })
     .catch(err => {
       console.error(err);
     });
 };
 const handlePageChange = (pageNum) => {
-  console.log(pageNum);
   tableDatalist.currentPage = pageNum;
 };
 onMounted(() => {
-  selectAll();
+  
+  if(router.currentRoute.value.query.id!==undefined&&router.currentRoute.value.query.id!==''){
+     censorsearch(tableDatalist.teamid,router.currentRoute.value.query.id).then(res => {
+     tableDatalist.list = res.data;
+  })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+  else{
+    selectAll();
+   }
 });
 </script>
 <style lang="scss" scoped>

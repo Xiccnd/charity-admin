@@ -28,7 +28,7 @@
                   :data="allTeam.list.slice((allTeam.currentPage-1)*allTeam.pageSize,allTeam.currentPage*allTeam.pageSize)"
                   ref="multipleTable"
                   stripe style="width: 100%;">
-          <el-table-column prop="teamid" label="ID" width="100" />
+          <el-table-column prop="teamid" label="ID" width="100" sortable />
           <el-table-column prop="teamName" label="队伍名" width="400" />
           <el-table-column prop="contact" label="联系人" width="100" />
           <el-table-column prop="telephone" label="手机" width="200" />
@@ -55,37 +55,37 @@
   <el-dialog v-model="detailFormVisible" title="队伍详情" @open="teamDetail = copyDetail()">
     <el-form :model="teamDetail">
       <el-form-item label="ID" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.teamid" readonly/>
+        <el-input v-model="teamDetail.teamid" readonly />
       </el-form-item>
       <el-form-item label="队伍名" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.teamName" readonly/>
+        <el-input v-model="teamDetail.teamName" readonly />
       </el-form-item>
       <el-form-item label="队伍简介" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.teamProfile" readonly/>
+        <el-input v-model="teamDetail.teamProfile" readonly />
       </el-form-item>
       <el-form-item label="队伍联系人" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.contact" readonly/>
+        <el-input v-model="teamDetail.contact" readonly />
       </el-form-item>
       <el-form-item label="联系电话" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.telephone" readonly/>
+        <el-input v-model="teamDetail.telephone" readonly />
       </el-form-item>
       <el-form-item label="详细地址" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.detailedAddress" readonly/>
+        <el-input v-model="teamDetail.detailedAddress" readonly />
       </el-form-item>
       <el-form-item label="联络组织" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.liaisonOrganization" readonly/>
+        <el-input v-model="teamDetail.liaisonOrganization" readonly />
       </el-form-item>
       <el-form-item label="服务类别" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.serviceName" readonly/>
+        <el-input v-model="teamDetail.serviceName" readonly />
       </el-form-item>
       <el-form-item label="登记部门" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.regisDepartment" readonly/>
+        <el-input v-model="teamDetail.regisDepartment" readonly />
       </el-form-item>
       <el-form-item label="登记机关" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.registrationAuthority" readonly/>
+        <el-input v-model="teamDetail.registrationAuthority" readonly />
       </el-form-item>
       <el-form-item label="注册日期" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.registerDate" readonly/>
+        <el-input v-model="teamDetail.registerDate" readonly />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -217,7 +217,7 @@ let teamDetail = reactive({
   detailedAddress: "",
   contact: "",
   address: ""
-})
+});
 
 const selectAll = (teamid, teamName) => {
   getAllTeam(teamid, teamName).then(res => {

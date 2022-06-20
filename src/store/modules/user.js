@@ -1,5 +1,13 @@
 import { getUserInfo, login } from "@/api/user";
-import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,setUname,getUname,removeUname} from "@/utils/accessToken";
+import {
+  getAccessToken,
+  removeAccessToken,
+  setAccessToken,
+  setTeamid,
+  setUname,
+  getUname,
+  removeUname
+} from "@/utils/accessToken";
 
 import { setting } from "@/config/setting";
 
@@ -17,7 +25,7 @@ const state = {
   username: "",
   avatar: "",
   permissions: [],
-  uname:getUname(),
+  uname: getUname()
 };
 
 const getters = {
@@ -25,7 +33,7 @@ const getters = {
   username: (state) => state.username,
   avatar: (state) => state.avatar,
   permissions: (state) => state.permissions,
-  uname:(state) => state.uname,
+  uname: (state) => state.uname
 };
 const mutations = {
   setAccessToken(state, accessToken) {
@@ -60,7 +68,7 @@ const actions = {
     commit("setTeamid", teamid);
   },
   async setUname({ commit }, uname) {
-    commit('setUname', uname);
+    commit("setUname", uname);
   },
   async login({ commit }, userInfo) {
     const { data } = await login(userInfo);

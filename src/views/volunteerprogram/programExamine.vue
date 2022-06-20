@@ -65,7 +65,7 @@
 </template>
 
 <script setup>
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
+  import { ref, reactive} from 'vue';
   import { CountTo } from 'vue3-count-to';
   import Addform from '@/components/program/index.vue';
   import packpage from '../../../package.json';
@@ -75,10 +75,12 @@
   import { method } from 'lodash-unified';
   import { cencortableData,cencorsearch,refusejoin,agreejoin,refusejoinpro,refusequitpro} from '@/api/program';
   import { getTeamid} from '@/utils/accessToken';
+  import { useRouter } from "vue-router";
   import { ElMessage, ElMessageBox } from 'element-plus'
   components: {
     Addform
   }
+  const router = useRouter(); 
 const refform = ref(false)
 let dialogFormVisible = ref(false)
 const addform = ref(false)
@@ -129,10 +131,6 @@ const tableDatalist = reactive({
 });
 const onSubmit = () => {
   cencorsearch(tableDatalist.teamid, formInline.id, formInline.name).then(res => {
-    console.log(tableDatalist.teamid);
-     console.log(formInline.id);
-      console.log(formInline.name);
-    console.log(res.data);
     tableDatalist.list = res.data;
   })
     .catch(err => {
@@ -165,6 +163,7 @@ if(row.status == "加入申请中"){
 }
 const refusehandleClick = (row) => {
 
+<<<<<<< HEAD
 if(row.status == "加入申请中"){
       if (window.confirm("是否拒绝其加入项目") == true) {
           refusejoin(row.id,row.pid,row.postid).then(res => {
@@ -191,6 +190,12 @@ if(row.status == "加入申请中"){
 const selectAll = () => {
   cencortableData(tableDatalist.teamid).then(res => {
     console.log(res.data)
+=======
+
+};
+const selectAll = (id) => {
+  cencortableData(tableDatalist.teamid,id).then(res => {
+>>>>>>> 36db5b56fe91615af31b3667b37277aa2c18cd5f
     tableDatalist.list = res.data;
   })
     .catch(err => {
@@ -202,7 +207,17 @@ const handlePageChange = (pageNum) => {
   tableDatalist.currentPage = pageNum;
 };
 onMounted(() => {
-  selectAll();
+  if(router.currentRoute.value.query.id!==undefined&&router.currentRoute.value.query.id!==''){
+     cencorsearch(tableDatalist.teamid,router.currentRoute.value.query.id).then(res => {
+     tableDatalist.list = res.data;
+  })
+    .catch(err => {
+      console.error(err);
+    });
+  }
+  else{
+    selectAll();
+   }
 });
 </script>
 

@@ -9,7 +9,7 @@
         <el-table-column sortable prop="state" label="项目状态" width="200" />
          <el-table-column fixed="right" label="Operations" width="137">
           <template #default="scope">
-            <el-button link type="primary" size="small" @click="btnClick('programExamine',$event)"
+            <el-button link type="primary" size="small" @click="btnClick('project_verify',$event)"
             >详情
             </el-button
             >
@@ -17,20 +17,18 @@
         </el-table-column>
       </el-table>
     </el-tab-pane>
-    <el-tab-pane label="待审核人员" name="second">
+    <el-tab-pane label="待审核队伍" name="second">
       <el-table :data="tableData" style="width: 100%" max-height="250">
-        <el-table-column fixed prop="id" label="id" width="120" />
-        <el-table-column prop="name" label="姓名" width="150" />
-        <el-table-column prop="sex" label="性别" width="120" />
-        <el-table-column prop="telephone" label="联系电话" width="120" />
-        <el-table-column prop="mailbox" label="邮箱" width="350" />
-        <el-table-column prop="area" label="区域" width="120" />
-        <el-table-column fixed="right" label="Operations" width="137">
+         <el-table-column sortable prop="teamid" label="ID" width="242.8" />
+          <el-table-column prop="teamName" label="队伍名" width="242.8" />
+          <el-table-column prop="teamProfile" label="队伍详情" width="242.8" />
+          <el-table-column prop="contact" label="联系人" width="242.8" />
+        <el-table-column fixed="right" label="操作" width="242.8">
           <template #default>
-            <el-button link type="primary" size="small" @click="btnClick('volunteerExamine',$event)"
-            >详情
-            </el-button
-            >
+              <el-button link type="primary" size="small" @click="btnClick('team_verify',$event)"
+              >详情
+              </el-button
+              >
           </template>
         </el-table-column>
       </el-table>
@@ -41,7 +39,7 @@
 </template>
 
 <script lang="ts" setup>
-import {ref} from 'vue'
+import { onMounted, ref ,watch,reactive} from 'vue'
 import type { TabsPaneContext } from 'element-plus'
 import { useRouter } from "vue-router";
 const activeName = ref('first')
