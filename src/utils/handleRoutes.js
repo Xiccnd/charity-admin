@@ -31,10 +31,10 @@ const setRoutes = (route, list) => {
 };
 
 function hasPermission(permissions, route) {
-  if(route.permissions){
+  if (route.permissions) {
     return permissions.some((role) => route.permissions.includes(role));
   }
-  if (route.meta && route.meta.permissions ) {
+  if (route.meta && route.meta.permissions) {
     return permissions.some((role) => route.meta.permissions.includes(role));
   } else {
     return true;

@@ -150,7 +150,8 @@
 <script setup>
 import { ref, reactive, onMounted, computed, onBeforeMount } from "vue";
 import { getTeamInformation } from "@/api/team";
-import { getTeamid} from '@/utils/accessToken';
+import { getTeamid } from "@/utils/accessToken";
+
 const value1 = ref("");
 const textarea = ref("");
 const formInline = reactive({
@@ -180,8 +181,8 @@ onMounted(() => {
     console.log(res.data);
     teamInformation.list = res.data;
     console.log(teamInformation);
-  }).catch(err =>{
-    console.err(err)
+  }).catch(err => {
+    console.err(err);
   });
 });
 const labelPosition = ref("left");

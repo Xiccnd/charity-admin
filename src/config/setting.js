@@ -46,9 +46,9 @@ export const setting = {
   tokenTableName: "vue3-admin-template",
   //
 
-  Uname:'uname',
+  Uname: "uname",
   //
-  teamidName: 'team-id',
+  teamidName: "team-id",
   // lang storage
   langKey: "i18nLang",
   // theme storage

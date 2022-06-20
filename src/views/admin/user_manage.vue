@@ -28,7 +28,7 @@
                   :data="allUser.list.slice((allUser.currentPage-1)*allUser.pageSize,allUser.currentPage*allUser.pageSize)"
                   ref="multipleTable"
                   stripe style="width: 100%;">
-          <el-table-column prop="id" label="ID" width="200" />
+          <el-table-column prop="id" label="ID" width="200" sortable />
           <el-table-column prop="name" label="用户名" width="200" />
           <el-table-column prop="telephone" label="手机" width="300" />
           <el-table-column prop="perName" label="权限" width="200" />
@@ -176,8 +176,8 @@ const openDetail = (e) => {
   }
   getDetail(id).then(res => {
     userDetail = res.data.personalData;
-    userDetail.password = res.data.password
-    userDetail.uid = res.data.uid
+    userDetail.password = res.data.password;
+    userDetail.uid = res.data.uid;
     console.log(res.data);
     console.log(userDetail.uid);
     detailFormVisible.value = true;

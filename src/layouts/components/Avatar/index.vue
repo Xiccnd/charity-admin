@@ -30,13 +30,20 @@ import { ElMessageBox } from "element-plus";
 import { setting } from "@/config/setting";
 import { useRouter } from "vue-router";
 import { useI18n } from "vue-i18n";
-import { getAccessToken, removeAccessToken, setAccessToken ,setTeamid,getUname} from '@/utils/accessToken';
-const uname=getUname();
+import {
+  getAccessToken,
+  removeAccessToken,
+  setAccessToken,
+  setTeamid,
+  getUname
+} from "@/utils/accessToken";
+
+const uname = getUname();
 const { title, recordRoute } = setting;
 const { t } = useI18n();
 const avatar = ref("https://i.gtimg.cn/club/item/face/img/2/15922_100.gif");
 const userName = ref(uname);
-sessionStorage.setItem('uuname',getUname())
+sessionStorage.setItem("uuname", getUname());
 const store = useStore();
 const router = useRouter();
 
@@ -72,9 +79,9 @@ const handleLogout = () => {
       if (recordRoute) {
         const { fullPath } = router.currentRoute._value;
         console.log(fullPath);
-        sessionStorage.clear()
-        let url ='http://localhost:8082/volunteer_login2';
-        window.location.href =url;
+        sessionStorage.clear();
+        let url = "http://localhost:8082/volunteer_login2";
+        window.location.href = url;
         // router.push({ path: `/login?redirect=${fullPath}` });
       } else {
         router.push("/login");
