@@ -61,22 +61,23 @@
 
 <script setup>
 
-  // import { uname } from '@/layouts/components/Avatar/index'
-  import store from '@/store';
-  import { getTeamid} from '@/utils/accessToken';
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
-  import { CountTo } from 'vue3-count-to';
-  import Echarts from '@/components/Echarts/index.vue';
-  import packpage from '../../../package.json';
-  import { useI18n } from 'vue-i18n';
-  import { getResouceList } from '@/api/index';
-  import { useStore } from 'vuex';
-  import { method } from 'lodash-unified';
-  import { tableData,search,del} from '@/api/volunteer';
-let multipleTable =ref(null)
-const tableRowClassName=({row, rowIndex}) =>{
-    row.row_index = rowIndex;
-}
+// import { uname } from '@/layouts/components/Avatar/index'
+import store from "@/store";
+import { getTeamid } from "@/utils/accessToken";
+import { ref, computed, reactive, onBeforeMount } from "vue";
+import { CountTo } from "vue3-count-to";
+import Echarts from "@/components/Echarts/index.vue";
+import packpage from "../../../package.json";
+import { useI18n } from "vue-i18n";
+import { getResouceList } from "@/api/index";
+import { useStore } from "vuex";
+import { method } from "lodash-unified";
+import { tableData, search, del } from "@/api/volunteer";
+
+let multipleTable = ref(null);
+const tableRowClassName = ({ row, rowIndex }) => {
+  row.row_index = rowIndex;
+};
 const formInline = reactive({
   name: "",
   id: ""
@@ -86,7 +87,7 @@ const tableDatalist = reactive({
   currentRowIndex: 1,
   pageSize: 3,
   currentPage: 1,
-  teamid:getTeamid(),
+  teamid: getTeamid(),
   id: 1,
   list: [{
     id: "",

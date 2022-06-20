@@ -28,11 +28,11 @@
                   :data="allTeam.list.slice((allTeam.currentPage-1)*allTeam.pageSize,allTeam.currentPage*allTeam.pageSize)"
                   ref="multipleTable"
                   stripe style="width: 100%;">
-          <el-table-column prop="teamid" label="ID" width="100" />
+          <el-table-column prop="teamid" label="ID" width="100" sortable />
           <el-table-column prop="teamName" label="队伍名" width="200" />
           <el-table-column prop="teamProfile" label="队伍详情" width="400" />
           <el-table-column prop="contact" label="联系人" width="100" />
-          <el-table-column prop="registerDate" label="注册时间" width="200" />
+          <el-table-column prop="registerDate" label="注册时间" width="200" sortable />
           <el-table-column label="操作">
             <el-button type="success" plain v-on:click="openDetail($event)">通过
             </el-button>
@@ -55,39 +55,40 @@
   <el-dialog v-model="detailFormVisible" title="队伍详情" @open="teamDetail = copyDetail()">
     <el-form :model="teamDetail">
       <el-form-item label="ID" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.teamid" readonly/>
+        <el-input v-model="teamDetail.teamid" readonly />
       </el-form-item>
       <el-form-item label="队伍名" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.teamName" readonly/>
+        <el-input v-model="teamDetail.teamName" readonly />
       </el-form-item>
       <el-form-item label="队伍简介" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.teamProfile" readonly/>
+        <el-input v-model="teamDetail.teamProfile" readonly />
       </el-form-item>
       <el-form-item label="队伍联系人" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.contact" readonly/>
+        <el-input v-model="teamDetail.contact" readonly />
       </el-form-item>
       <el-form-item label="联系电话" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.telephone" readonly/>
+        <el-input v-model="teamDetail.telephone" readonly />
       </el-form-item>
       <el-form-item label="详细地址" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.detailedAddress" readonly/>
+        <el-input v-model="teamDetail.detailedAddress" readonly />
       </el-form-item>
       <el-form-item label="联络组织" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.liaisonOrganization" readonly/>
+        <el-input v-model="teamDetail.liaisonOrganization" readonly />
       </el-form-item>
       <el-form-item label="登记部门" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.regisDepartment" readonly/>
+        <el-input v-model="teamDetail.regisDepartment" readonly />
       </el-form-item>
       <el-form-item label="登记机关" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.registrationAuthority" readonly/>
+        <el-input v-model="teamDetail.registrationAuthority" readonly />
       </el-form-item>
       <el-form-item label="注册日期" :label-width="detailFormLabelWidth">
-        <el-input v-model="teamDetail.registerDate" readonly/>
+        <el-input v-model="teamDetail.registerDate" readonly />
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button type="primary" @click="teamVerifyPass(); detailFormVisible = false">审核通过</el-button>
+        <el-button type="primary"
+                   @click="teamVerifyPass(); detailFormVisible = false">审核通过</el-button>
       </span>
     </template>
   </el-dialog>
@@ -102,15 +103,15 @@ import type { Action } from "element-plus";
 
 const teamVerifyPass = () => {
   teamPass(teamDetail.teamid).then(res => {
-    selectAll("","");
     ElMessage({
       type: "success",
       message: "审核通过"
     });
+    location.reload();
   }).catch(err => {
     console.log(err);
-  })
-}
+  });
+};
 
 const handlePageChange = (pageNum) => {
   console.log(pageNum);
@@ -160,7 +161,7 @@ const openDelete = (e) => {
       beforeClose: (action, instance, done) => {
         if (action === "confirm") {
           teamNotPass(teamDetail.teamid).then(res => {
-            selectAll("", "");
+            location.reload();
             done();
           }).catch(err => {
             console.log(err);
@@ -218,11 +219,11 @@ let teamDetail = reactive({
   detailedAddress: "",
   contact: "",
   address: ""
-})
+});
 
 const selectAll = (teamid, teamName) => {
   getVerifyTeam(teamid, teamName).then(res => {
-    let j = 0
+    let j = 0;
     if (res.data.length == 0) {
       allTeam.list = null;
     } else {
@@ -233,6 +234,7 @@ const selectAll = (teamid, teamName) => {
         }
       }
     }
+    console.log(allTeam.list);
   }).catch(err => {
     console.log(err);
   });

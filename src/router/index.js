@@ -33,7 +33,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: "/adminindex",
     name: "Root",
-    permissions:['admin'],
+    permissions: ["admin"],
     children: [
       {
         path: "/adminindex",
@@ -53,7 +53,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: "/index",
     name: "Root",
-    permissions:['user'],
+    permissions: ["user"],
     children: [
       {
         path: "/index",
@@ -75,7 +75,7 @@ export const asyncRoutes = [
     meta: {
       title: "志愿项目",
       icon: "icon-peoples",
-      permissions:['user']
+      permissions: ["user"]
     },
     children: [
       {
@@ -84,8 +84,8 @@ export const asyncRoutes = [
         component: () => import("../views/volunteerprogram/volunteerprogram.vue"),
         meta: {
           title: "已过审",
-          icon: 'icon-personal-collection',
-        },
+          icon: "icon-personal-collection"
+        }
       },
       {
         path: "/programExamine",
@@ -93,10 +93,10 @@ export const asyncRoutes = [
         component: () => import("../views/volunteerprogram/programExamine.vue"),
         meta: {
           title: "待审批",
-          icon: 'icon-people',
-        },
-      },
-    ],
+          icon: "icon-people"
+        }
+      }
+    ]
 
 
   },
@@ -107,7 +107,7 @@ export const asyncRoutes = [
     meta: {
       title: "志愿队伍",
       icon: "icon-peoples",
-      permissions:['user']
+      permissions: ["user"]
     },
     children: [
       {
@@ -135,9 +135,9 @@ export const asyncRoutes = [
     name: "UserPage",
     component: Layout,
     meta: {
-      title: '个人中心',
-      icon: 'icon-link-cloud-faild',
-      permissions:['user']
+      title: "个人中心",
+      icon: "icon-link-cloud-faild",
+      permissions: ["user"]
 
 
     },
@@ -161,7 +161,7 @@ export const asyncRoutes = [
     meta: {
       title: "项目相关",
       icon: "icon-projector",
-      permissions:['admin']
+      permissions: ["admin"]
     },
     children: [
       {
@@ -192,7 +192,7 @@ export const asyncRoutes = [
     meta: {
       title: "队伍相关",
       icon: "icon-every-user",
-      permissions:['admin']
+      permissions: ["admin"]
     },
     children: [
       {
@@ -221,7 +221,7 @@ export const asyncRoutes = [
     component: Layout,
     redirect: "/adminUser",
     name: "adminUser",
-    permissions:['admin'],
+    permissions: ["admin"],
     children: [
       {
         path: "/user_manage",
@@ -229,11 +229,11 @@ export const asyncRoutes = [
         component: () => import("../views/admin/user_manage.vue"),
         meta: {
           title: "用户管理",
-          icon: "icon-baby",  
+          icon: "icon-baby"
         }
       }
     ]
-  },
+  }
 
 ];
 

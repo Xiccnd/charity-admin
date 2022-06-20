@@ -37,7 +37,8 @@
           <el-table-column prop="list.operate" label="操作">
             <template #default>
               <el-button link type="danger" size="small" @click="handleClick($event)">拒绝</el-button>
-              <el-button link type="success" size="small" @click="handleClick($event)">同意</el-button>
+              <el-button link type="success" size="small" @click="handleClick($event)">同意
+              </el-button>
             </template>
           </el-table-column>
         </el-table>
@@ -65,28 +66,29 @@
 </template>
 
 <script setup>
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
-  import { CountTo } from 'vue3-count-to';
-  import Addform from '@/components/program/index.vue';
-  import packpage from '../../../package.json';
-  import { useI18n } from 'vue-i18n';
-  import { getResouceList } from '@/api/index';
-  import { useStore } from 'vuex';
-  import { method } from 'lodash-unified';
-  import { cencortableData,search} from '@/api/program';
-  import { getTeamid} from '@/utils/accessToken';
-  import { ElMessage, ElMessageBox } from 'element-plus'
-  components: {
-    Addform
-  }
-const refform = ref(false)
-let dialogFormVisible = ref(false)
-const addform = ref(false)
-const formLabelWidth = '140px'
+import { ref, computed, reactive, onBeforeMount } from "vue";
+import { CountTo } from "vue3-count-to";
+import Addform from "@/components/program/index.vue";
+import packpage from "../../../package.json";
+import { useI18n } from "vue-i18n";
+import { getResouceList } from "@/api/index";
+import { useStore } from "vuex";
+import { method } from "lodash-unified";
+import { cencortableData, search } from "@/api/program";
+import { getTeamid } from "@/utils/accessToken";
+import { ElMessage, ElMessageBox } from "element-plus";
+
+components: {
+  Addform;
+}
+const refform = ref(false);
+let dialogFormVisible = ref(false);
+const addform = ref(false);
+const formLabelWidth = "140px";
 const ruleForm = reactive({
-  status:"",
+  status: "",
   pname: "",
-  telephone:"",
+  telephone: "",
   location: "",
   releaseDate: "",
   projectDate: "",
@@ -125,9 +127,9 @@ const tableDatalist = reactive({
   teamid: getTeamid(),
   id: 1,
   list: [{
-    name:"",
-    post_name:"",
-    joinTime:"",
+    name: "",
+    post_name: "",
+    joinTime: "",
     pname: "",
     location: "",
     releaseDate: "",

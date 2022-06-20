@@ -1,6 +1,7 @@
 import request from "@/utils/request.js";
 import { link } from "@/utils/link.js";
-const { baseURL} =link;
+
+const { baseURL } = link;
 export const tableData = async (teamid) => {
   return request({
     url: "/personalData/end/getAllMessages",
@@ -50,7 +51,7 @@ export const censorsearch = async (teamid, id, name) => {
     data: {
       teamid: teamid,
       id: id,
-      name: name  
+      name: name
     },
     baseURL: baseURL
   });
@@ -126,6 +127,18 @@ export const getVerifyTeam = async (teamid, teamName) => {
   });
 };
 
+export const getVerifyProject = async (pid, pName) => {
+  return request({
+    url: "volunteerProgramDetailscensor/getAll",
+    method: "get",
+    baseURL: baseURL,
+    params: {
+      pid,
+      pName
+    }
+  });
+};
+
 export const getDetail = async (id) => {
   return request({
     url: "personalData/selectOne",
@@ -155,7 +168,7 @@ export const deleteTeam = async (teamid) => {
     method: "get",
     baseURL: baseURL,
     params: {
-      teamid,
+      teamid
     }
   });
 };
@@ -166,7 +179,7 @@ export const deleteProject = async (pid) => {
     method: "get",
     baseURL: baseURL,
     params: {
-      pid,
+      pid
     }
   });
 };
@@ -177,7 +190,7 @@ export const teamPass = async (teamid) => {
     method: "get",
     baseURL: baseURL,
     params: {
-      teamid,
+      teamid
     }
   });
 };
@@ -188,7 +201,29 @@ export const teamNotPass = async (teamid) => {
     method: "get",
     baseURL: baseURL,
     params: {
-      teamid,
+      teamid
+    }
+  });
+};
+
+export const projectPass = async (pid) => {
+  return request({
+    url: "volunteerProgramDetailscensor/agreeTeamProject",
+    method: "get",
+    baseURL: baseURL,
+    params: {
+      pid
+    }
+  });
+};
+
+export const projectNotPass = async (pid) => {
+  return request({
+    url: "volunteerProgramDetailscensor/notInto",
+    method: "get",
+    baseURL: baseURL,
+    params: {
+      pid
     }
   });
 };
@@ -278,7 +313,7 @@ export const datasubmit = async (
       postCondition,
       postName,
       targetNum,
-      mark:type
+      mark: type
     },
     baseURL: baseURL
   });
@@ -289,12 +324,12 @@ export const countnumber = async (pid) => {
     url: "volunteersProject/countNunber",
     method: "get",
     params: {
-     pid
+      pid
     },
     baseURL: baseURL
   });
 };
-export const deleteprojectNum = async (pid,id) => {
+export const deleteprojectNum = async (pid, id) => {
   return request({
     url: "volunteersProject/deleteProjectNum",
     method: "get",

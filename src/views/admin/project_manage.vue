@@ -28,17 +28,17 @@
                   :data="allproject.list.slice((allproject.currentPage-1)*allproject.pageSize,allproject.currentPage*allproject.pageSize)"
                   ref="multipleTable"
                   stripe style="width: 100%;">
-          <el-table-column prop="pid" label="ID" width="100" />
+          <el-table-column prop="pid" label="ID" width="100" sortable />
           <el-table-column prop="pname" label="项目名" width="200" />
-          <el-table-column prop="releaseDate" label="发布日期" width="200" />
-          <el-table-column prop="projectDate" label="结束日期" width="200" />
+          <el-table-column prop="releaseDate" label="发布日期" width="200" sortable />
+          <el-table-column prop="projectDate" label="结束日期" width="200" sortable />
           <el-table-column prop="statusName" label="项目状态" width="100" />
           <el-table-column prop="location" label="项目地点" width="100" />
           <el-table-column label="操作">
             <el-button type="success" plain v-on:click="openDetail($event)">查看详情
             </el-button>
             <el-button type="danger" plain v-on:click="openDelete($event)">删除项目</el-button>
-            </el-table-column>
+          </el-table-column>
         </el-table>
         <div style="width: 300px;margin-top:20px; margin-left: 450px;">
           <el-pagination background
@@ -56,40 +56,40 @@
   <el-dialog v-model="detailFormVisible" title="项目详情" @open="projectDetail = copyDetail()">
     <el-form :model="projectDetail">
       <el-form-item label="ID" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.pid" readonly/>
+        <el-input v-model="projectDetail.pid" readonly />
       </el-form-item>
       <el-form-item label="项目名称" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.pname" readonly/>
+        <el-input v-model="projectDetail.pname" readonly />
       </el-form-item>
       <el-form-item label="项目详情" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.projectDetails" readonly/>
+        <el-input v-model="projectDetail.projectDetails" readonly />
       </el-form-item>
       <el-form-item label="负责队伍" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.teamName" readonly/>
+        <el-input v-model="projectDetail.teamName" readonly />
       </el-form-item>
       <el-form-item label="项目状态" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.statusName" readonly/>
+        <el-input v-model="projectDetail.statusName" readonly />
       </el-form-item>
       <el-form-item label="发布日期" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.releaseDate" readonly/>
+        <el-input v-model="projectDetail.releaseDate" readonly />
       </el-form-item>
       <el-form-item label="招募结束日期" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.recruitDate" readonly/>
+        <el-input v-model="projectDetail.recruitDate" readonly />
       </el-form-item>
       <el-form-item label="项目结束日期" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.projectDate" readonly/>
+        <el-input v-model="projectDetail.projectDate" readonly />
       </el-form-item>
       <el-form-item label="服务类型" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.serviceName" readonly/>
+        <el-input v-model="projectDetail.serviceName" readonly />
       </el-form-item>
       <el-form-item label="服务对象" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.serviceObject" readonly/>
+        <el-input v-model="projectDetail.serviceObject" readonly />
       </el-form-item>
       <el-form-item label="志愿者保障" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.volunteerUpport" readonly/>
+        <el-input v-model="projectDetail.volunteerUpport" readonly />
       </el-form-item>
       <el-form-item label="服务时间描述" :label-width="detailFormLabelWidth">
-        <el-input v-model="projectDetail.serviceDescription" readonly/>
+        <el-input v-model="projectDetail.serviceDescription" readonly />
       </el-form-item>
     </el-form>
     <template #footer>
@@ -131,7 +131,7 @@ const openDetail = (e) => {
       detailFormVisible.value = true;
     }).catch(err => {
       console.log(err);
-    })
+    });
   }).catch(err => {
     console.log(err);
   });
@@ -196,7 +196,7 @@ let allproject = reactive({
     statusName: "",
     releaseDate: "",
     projectDate: "",
-    location: "",
+    location: ""
   }],
   currentPage: 1,
   pageSize: 5
@@ -222,7 +222,7 @@ let projectDetail = reactive({
   location: "",
   volunteerUpport: "",
   teamName: ""
-})
+});
 
 const selectAll = (pid, pname) => {
   getAllProject(pid, pname).then(res => {

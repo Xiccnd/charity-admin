@@ -20,29 +20,30 @@
     <div class="head-card" style="width:100%;">
       <div class="head-card-content" style="width:100%;">
 
-          <el-table :row-class-name="tableRowClassName" 
-          :cell-style="{textAlign:'center'}"
-          :header-cell-style="{textAlign:'center'}"
-          @row-click="onRowClick" 
-          :data="tableDatalist.list.slice((tableDatalist.currentPage-1)*tableDatalist.pageSize,tableDatalist.currentPage*tableDatalist.pageSize)" ref="multipleTable"
-          stripe style="width: 100%;" >
-              <el-table-column prop="id" label="ID" width="70"/>
-              <el-table-column prop="name" label="姓名" width="100" />
-               <el-table-column prop="telephone" label="手机" width="170"/>
-                 <el-table-column prop="sex" label="性别" width="70" />
-                  <el-table-column prop="nativeplace" label="居住地" width="170" />
-                   <el-table-column prop="joinTime" label="申请时间" width="210" />
-                   <el-table-column prop="mark" label="申请内容" width="150">
-                    <template v-slot="scope">
+        <el-table :row-class-name="tableRowClassName"
+                  :cell-style="{textAlign:'center'}"
+                  :header-cell-style="{textAlign:'center'}"
+                  @row-click="onRowClick"
+                  :data="tableDatalist.list.slice((tableDatalist.currentPage-1)*tableDatalist.pageSize,tableDatalist.currentPage*tableDatalist.pageSize)"
+                  ref="multipleTable"
+                  stripe style="width: 100%;">
+          <el-table-column prop="id" label="ID" width="70" />
+          <el-table-column prop="name" label="姓名" width="100" />
+          <el-table-column prop="telephone" label="手机" width="170" />
+          <el-table-column prop="sex" label="性别" width="70" />
+          <el-table-column prop="nativeplace" label="居住地" width="170" />
+          <el-table-column prop="joinTime" label="申请时间" width="210" />
+          <el-table-column prop="mark" label="申请内容" width="150">
+            <template v-slot="scope">
                       <span v-if="scope.row.mark== -1">
                           退出申请
                       </span>
-                      <span v-if="scope.row.mark== 0">
+              <span v-if="scope.row.mark== 0">
                           加入申请
                       </span>
-                   </template>
-                   </el-table-column>
-                <el-table-column prop="list.operate" label="操作" >
+            </template>
+          </el-table-column>
+          <el-table-column prop="list.operate" label="操作">
 
             <template #default>
               <el-button link type="danger" size="small" @click="refusevo($event)">拒绝</el-button>
@@ -72,20 +73,21 @@
 
 <script setup>
 
-  import { ref, computed, reactive, onBeforeMount } from 'vue';
-  import { CountTo } from 'vue3-count-to';
-  import { getTeamid} from '@/utils/accessToken';
-  import Echarts from '@/components/Echarts/index.vue';
-  import packpage from '../../../package.json';
-  import { useI18n } from 'vue-i18n';
-  import { getResouceList } from '@/api/index';
-  import { useStore } from 'vuex';
-  import { method } from 'lodash-unified';
-  import { cencortableData,censorsearch,refuse,agree} from '@/api/volunteer';
-let multipleTable =ref(null)
-const tableRowClassName=({row, rowIndex}) =>{
-    row.row_index = rowIndex;
-}
+import { ref, computed, reactive, onBeforeMount } from "vue";
+import { CountTo } from "vue3-count-to";
+import { getTeamid } from "@/utils/accessToken";
+import Echarts from "@/components/Echarts/index.vue";
+import packpage from "../../../package.json";
+import { useI18n } from "vue-i18n";
+import { getResouceList } from "@/api/index";
+import { useStore } from "vuex";
+import { method } from "lodash-unified";
+import { cencortableData, censorsearch, refuse, agree } from "@/api/volunteer";
+
+let multipleTable = ref(null);
+const tableRowClassName = ({ row, rowIndex }) => {
+  row.row_index = rowIndex;
+};
 
 const formInline = reactive({
   name: "",
@@ -94,24 +96,24 @@ const formInline = reactive({
 
 const tableDatalist = reactive({
 
-     currentRowIndex:1,
-     pageSize:3,
-     currentPage:1,
-     teamid:getTeamid(),
-     id:1,
-     list:[{
-              id:'',  
-              telephone: '',
-              name: '',
-              sex:'',
-              nativeplace: '',
-              joinTime:'',
-              mark:''
-     },
-     
-     ]
-    
-})
+  currentRowIndex: 1,
+  pageSize: 3,
+  currentPage: 1,
+  teamid: getTeamid(),
+  id: 1,
+  list: [{
+    id: "",
+    telephone: "",
+    name: "",
+    sex: "",
+    nativeplace: "",
+    joinTime: "",
+    mark: ""
+  }
+
+  ]
+
+});
 
 
 const onSubmit = () => {
